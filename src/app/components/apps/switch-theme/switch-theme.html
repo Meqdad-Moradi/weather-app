@@ -1,13 +1,7 @@
-<button
-  class="theme-toggle"
-  (click)="toggleTheme()"
-  [attr.aria-label]="'Switch to ' + (theme() === 'light' ? 'dark' : 'light') + ' theme'"
->
+<button class="pill !text-gray-100" matIconButton (click)="toggleTheme()" matTooltip="Switch Theme">
   @if (theme() === 'light') {
-    <span class="icon">☀️</span>
-    <span class="label">Light</span>
+    <mat-icon>light_mode</mat-icon>
   } @else {
-    <span class="icon">🌙</span>
-    <span class="label">Dark</span>
+    <mat-icon>dark_mode</mat-icon>
   }
 </button>

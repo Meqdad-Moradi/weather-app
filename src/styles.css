@@ -1,8 +1,8 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import 'tailwindcss';
 
 :root[data-theme='light'] {
+  color-scheme: light;
+
   --bright-blue: oklch(51.01% 0.274 263.83);
   --electric-violet: oklch(53.18% 0.28 296.97);
   --french-violet: oklch(47.66% 0.246 305.88);
@@ -35,6 +35,8 @@
 }
 
 :root[data-theme='dark'] {
+  color-scheme: dark;
+
   --bright-blue: oklch(51.01% 0.274 263.83);
   --electric-violet: oklch(53.18% 0.28 296.97);
   --french-violet: oklch(47.66% 0.246 305.88);
@@ -65,10 +67,6 @@
   --pill-accent: var(--bright-blue);
 }
 
-html {
-  color-scheme: dark light;
-}
-
 body {
   font-family:
     'Inter',
@@ -90,14 +88,13 @@ body {
   color: var(--gray-500);
 }
 
-/* .pill {
+.pill {
   --pill-accent: var(--bright-blue);
   background: color-mix(in srgb, var(--pill-accent) 5%, transparent);
   color: var(--pill-accent);
   transition: background 0.3s ease;
-  font-family: var(--inter-font);
 }
 
 .pill:hover {
   background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
-} */
+}

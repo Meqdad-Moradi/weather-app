@@ -1,1 +1,19 @@
-<p>sidenav works!</p>
+<app-header />
+<mat-drawer-container class="h-[calc(100vh-64px)] !bg-(--bg)">
+  <mat-drawer class="!bg-(--fg) !shadow-lg !rounded-none" mode="side" [opened]="isSidenavOpen()">
+    <mat-action-list>
+      <mat-divider></mat-divider>
+
+      <!-- weather -->
+      <button mat-list-item class="!flex !items-center" [routerLink]="['/', 'weather']">
+        <span class="material-icons-outlined" matListItemIcon>cloud</span>
+        <span matListItemTitle>Weather</span>
+      </button>
+
+      <mat-divider></mat-divider>
+    </mat-action-list>
+  </mat-drawer>
+  <mat-drawer-content class="h-full">
+    <router-outlet></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

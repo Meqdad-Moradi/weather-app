@@ -1,11 +1,12 @@
 import { Routes } from '@angular/router';
-import { Layout } from './components/layout/layout';
+
 import { Sidenav } from './components/navigations/sidenav/sidenav';
+import { Weather } from './components/pages/weather/weather';
 
 export const routes: Routes = [
   {
     path: '',
-    component: Layout,
-    children: [{ path: '', component: Sidenav, pathMatch: 'full' }],
+    component: Sidenav,
+    children: [{ path: 'weather', component: Weather, pathMatch: 'full' }],
   },
 ];
