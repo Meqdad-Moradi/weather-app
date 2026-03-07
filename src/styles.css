@@ -88,6 +88,11 @@ body {
   color: var(--gray-500);
 }
 
+.container {
+  max-width: 80%;
+  margin-inline: auto;
+}
+
 .pill {
   --pill-accent: var(--bright-blue);
   background: color-mix(in srgb, var(--pill-accent) 5%, transparent);

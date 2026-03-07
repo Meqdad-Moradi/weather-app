@@ -1,17 +1,24 @@
 <app-header />
-<mat-drawer-container class="h-[calc(100vh-64px)] !bg-(--bg)">
-  <mat-drawer class="!bg-(--fg) !shadow-lg !rounded-none" mode="side" [opened]="isSidenavOpen()">
-    <mat-action-list>
-      <mat-divider></mat-divider>
+<mat-drawer-container class="h-[calc(100vh-64px)] bg-(--bg)!">
+  <mat-drawer class="bg-(--fg)! shadow-lg! rounded-none!" mode="side" [opened]="isSidenavOpen()">
+    <div class="h-full w-full flex flex-col justify-between">
+      <mat-action-list>
+        <mat-divider></mat-divider>
 
-      <!-- weather -->
-      <button mat-list-item class="!flex !items-center" [routerLink]="['/', 'weather']">
-        <span class="material-icons-outlined" matListItemIcon>cloud</span>
-        <span matListItemTitle>Weather</span>
-      </button>
+        <!-- weather -->
+        <button mat-list-item [routerLink]="['/', 'weather']">
+          <span class="material-icons-outlined" matListItemIcon>cloud</span>
+          <span matListItemTitle>Weather</span>
+        </button>
 
-      <mat-divider></mat-divider>
-    </mat-action-list>
+        <mat-divider></mat-divider>
+      </mat-action-list>
+      <div class="grid place-content-center py-4">
+        <h1 class="font-bold cursor-pointer text-(--electric-violet)" [routerLink]="['/']">
+          Weather App
+        </h1>
+      </div>
+    </div>
   </mat-drawer>
   <mat-drawer-content class="h-full">
     <router-outlet></router-outlet>
