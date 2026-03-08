@@ -1,1 +1,64 @@
-<section class="container"></section>
+<section class="container">
+  <app-main-title title="How is the sky looking today?" />
+
+  <div class="w-full max-w-md">
+    <mat-form-field class="w-full pill-input" appearance="outline">
+      <mat-label>Search for a place...</mat-label>
+      <input
+        type="text"
+        matInput
+        [formControl]="searchControl"
+        [matAutocomplete]="auto"
+        (keydown.enter)="searchPlace()"
+      />
+
+      <!-- suffix button -->
+      <div matSuffix class="flex items-center">
+        @if (searchControl.value) {
+          <button matIconButton (click)="resetControl()">
+            <mat-icon>close</mat-icon>
+          </button>
+        }
+
+        <!-- search button -->
+        <button
+          mat-raised-button
+          color="primary"
+          class="bg-(--electric-violet)! text-white!"
+          (click)="searchPlace()"
+        >
+          Search
+        </button>
+      </div>
+
+      <!-- prefix button -->
+      <button matIconButton matPrefix>
+        <mat-icon>search</mat-icon>
+      </button>
+      <mat-autocomplete
+        autoActiveFirstOption
+        #auto="matAutocomplete"
+        (optionSelected)="chooseCity()"
+        [displayWith]="displayFn"
+      >
+        @if (isLoading()) {
+          <mat-option value="">
+            <mat-progress-spinner
+              mode="indeterminate"
+              diameter="20"
+              class="mx-auto"
+            ></mat-progress-spinner>
+          </mat-option>
+        } @else {
+          @for (option of results(); track option) {
+            <mat-option [value]="option">{{ option.name }} ({{ option.country }})</mat-option>
+          }
+        }
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+
+  <div>
+    {{ weather()?.current_weather?.temperature }}
+  </div>
+</section>

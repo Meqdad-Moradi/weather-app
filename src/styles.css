@@ -12,10 +12,10 @@
 
   --gray-900: hsl(260, 7%, 8%);
   --gray-700: hsl(262, 6%, 26%);
-  --gray-500: hsl(220, 9%, 46%);
   --gray-400: hsl(264, 5%, 64%);
   --bg: hsl(0, 0%, 96%);
   --fg: hsl(0, 0%, 98%);
+  --text: hsl(220, 9%, 36%);
 
   --red-to-pink-to-purple-vertical-gradient: linear-gradient(
     180deg,
@@ -49,6 +49,7 @@
   --gray-400: hsl(264, 60%, 95%);
   --bg: hsl(0, 0%, 17%);
   --fg: hsl(0, 0%, 19%);
+  --text: hsl(220, 9%, 76%);
 
   --red-to-pink-to-purple-vertical-gradient: linear-gradient(
     180deg,
@@ -85,7 +86,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 
   background-color: var(--bg);
-  color: var(--gray-500);
+  color: var(--text);
 }
 
 .container {
@@ -102,4 +103,58 @@ body {
 
 .pill:hover {
   background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
+}
+
+/* Schiebt den gesamten Inhalt (inkl. Icons) von den runden Rändern weg */
+.pill-input .mat-mdc-text-field-wrapper {
+  padding-left: 8px !important;
+  padding-right: 8px !important;
+}
+
+/* Abstand zum Text */
+.pill-input .mat-mdc-form-field-icon-prefix {
+  margin-right: 4px;
+}
+/* Abstand zum Text */
+.pill-input .mat-mdc-form-field-icon-suffix {
+  margin-left: 4px;
+}
+
+/* pill shape mat-form-field */
+.pill-input {
+  /* This variable controls the entire container shape */
+  --mdc-outlined-text-field-container-shape: 28px !important;
+}
+
+.pill-input .mdc-notched-outline__leading {
+  width: 28px !important;
+  border-radius: 28px 0 0 28px !important;
+}
+
+.pill-input .mdc-notched-outline__trailing {
+  border-radius: 0 28px 28px 0 !important;
+}
+
+.pill-input .mat-mdc-text-field-wrapper {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Reduce the overall button size and the background ripple area */
+.pill-input .mat-mdc-icon-button[matprefix],
+.pill-input .mat-mdc-icon-button[matsuffix] {
+  /* --mdc-icon-button-state-layer-size: 32px !important;
+  width: 32px !important;
+  height: 32px !important;
+  padding: 0 !important; */
+  display: grid;
+  place-items: center;
+}
+
+/* Shrink the actual icon inside the button */
+.pill-input .mat-mdc-icon-button .mat-icon {
+  --mdc-icon-button-icon-size: 18px !important;
+  font-size: 18px !important;
+  width: 18px !important;
+  height: 18px !important;
 }

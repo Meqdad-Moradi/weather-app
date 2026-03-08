@@ -1,0 +1,7 @@
+.submit-button {
+  background: var(--electric-violet);
+}
+
+.submit-button:hover {
+  background: color-mix(in srgb, var(--electric-violet) 95%, var(--bright-blue) 30%);
+}
