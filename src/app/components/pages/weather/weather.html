@@ -50,7 +50,7 @@
             ></mat-progress-spinner>
           </mat-option>
         } @else {
-          @for (option of results(); track option) {
+          @for (option of filteredResult(); track option) {
             <mat-option [value]="option">{{ option.name }} ({{ option.country }})</mat-option>
           }
         }
@@ -59,6 +59,10 @@
   </div>
 
   <div>
-    {{ weather()?.current_weather?.temperature }}
+    @if (isLoading()) {
+      <mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>
+    } @else {
+      {{ weather()?.current_weather?.temperature }}
+    }
   </div>
 </section>

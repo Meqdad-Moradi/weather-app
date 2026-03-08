@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { GeoResult } from '../../../models/geocoding.model';
 import { WeatherResponse } from '../../../models/weather.model';
 import { ApiGeocoding } from '../../../services/api/api-geocoding';
@@ -11,6 +11,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { map, startWith } from 'rxjs';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-weather',
@@ -36,6 +38,31 @@ export class Weather {
   public weather = signal<WeatherResponse | null>(null);
   public isLoading = signal(false);
   public searchControl = new FormControl<GeoResult | string>('');
+
+  private controlValueChanges = toSignal(this.searchControl.valueChanges.pipe(startWith('')), {
+    initialValue: '',
+  });
+
+  /**
+   * computed signals
+   */
+  public filteredResult = computed(() => {
+    const currentValue = this.controlValueChanges();
+
+    if (typeof currentValue === 'string') {
+      let values: string[] = currentValue.split(' ');
+
+      return this.results().filter((r) =>
+        values.every(
+          (x) =>
+            r.name.toLocaleLowerCase().includes(x.toLocaleLowerCase()) ||
+            r.country.toLocaleLowerCase().includes(x),
+        ),
+      );
+    } else {
+      return [];
+    }
+  });
 
   /**
    * searchPlace
@@ -63,7 +90,6 @@ export class Weather {
     const city = this.searchControl.value!;
 
     this.isLoading.set(true);
-    this.results.set([]);
 
     this.apiWeatherService.getWeather(city.latitude, city.longitude).subscribe((data) => {
       this.isLoading.set(false);
