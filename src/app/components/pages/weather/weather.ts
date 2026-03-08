@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { GeoResult } from '../../../models/geocoding.model';
 import { WeatherResponse } from '../../../models/weather.model';
 import { ApiGeocoding } from '../../../services/api/api-geocoding';
@@ -33,6 +33,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 export class Weather {
   private readonly apiGeoService = inject(ApiGeocoding);
   private readonly apiWeatherService = inject(ApiWeather);
+  private readonly destroyRef = inject(DestroyRef);
 
   public results = signal<GeoResult[]>([]);
   public weather = signal<WeatherResponse | null>(null);
@@ -70,7 +71,10 @@ export class Weather {
    * searchPlace
    * @returns void
    */
-  searchPlace(): void {
+  searchPlace(e: Event): void {
+    e.preventDefault();
+    e.stopPropagation();
+
     if (!this.searchControl.value || typeof this.searchControl.value !== 'string') return;
     const q = this.searchControl.value?.trim();
 
@@ -79,7 +83,7 @@ export class Weather {
 
     this.apiGeoService
       .searchCity(q)
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
         this.isLoading.set(false);
         this.results.set(res.results || []);
@@ -99,7 +103,7 @@ export class Weather {
 
     this.apiWeatherService
       .getWeather(city.latitude, city.longitude)
-      .pipe(takeUntilDestroyed())
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
         this.isWeatherLoading.set(false);
         this.weather.set(data);

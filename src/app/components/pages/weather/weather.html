@@ -9,7 +9,7 @@
         matInput
         [formControl]="searchControl"
         [matAutocomplete]="auto"
-        (keydown.enter)="searchPlace()"
+        (keydown.enter)="searchPlace($event)"
       />
 
       <!-- suffix button -->
@@ -25,7 +25,7 @@
           mat-raised-button
           color="primary"
           class="bg-(--electric-violet)! text-white!"
-          (click)="searchPlace()"
+          (click)="searchPlace($event)"
         >
           Search
         </button>
@@ -50,16 +50,18 @@
             ></mat-progress-spinner>
           </mat-option>
         } @else {
-          @for (option of filteredResult(); track option) {
-            <mat-option [value]="option">{{ option.name }} ({{ option.country }})</mat-option>
-          }
+          <div animate.enter="enter-animation">
+            @for (option of filteredResult(); track option) {
+              <mat-option [value]="option"> {{ option.name }} ({{ option.country }}) </mat-option>
+            }
+          </div>
         }
       </mat-autocomplete>
     </mat-form-field>
   </div>
 
   <div>
-    @if (isLoading()) {
+    @if (isWeatherLoading()) {
       <mat-progress-spinner mode="indeterminate" diameter="20"></mat-progress-spinner>
     } @else {
       {{ weather()?.current_weather?.temperature }}
