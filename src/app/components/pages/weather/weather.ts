@@ -13,6 +13,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { DisplayWeather } from './display-weather/display-weather';
 
 @Component({
   selector: 'app-weather',
@@ -20,6 +21,7 @@ import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
     MainTitle,
     FormsModule,
     ReactiveFormsModule,
+    DisplayWeather,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
@@ -36,6 +38,7 @@ export class Weather {
   private readonly destroyRef = inject(DestroyRef);
 
   public results = signal<GeoResult[]>([]);
+  public selectedCity = signal<GeoResult | null>(null);
   public weather = signal<WeatherResponse | null>(null);
   public isLoading = signal(false);
   public isWeatherLoading = signal(false);
@@ -79,7 +82,6 @@ export class Weather {
     const q = this.searchControl.value?.trim();
 
     this.isLoading.set(true);
-    this.weather.set(null);
 
     this.apiGeoService
       .searchCity(q)
@@ -100,6 +102,7 @@ export class Weather {
     const city = this.searchControl.value!;
 
     this.isWeatherLoading.set(true);
+    this.selectedCity.set(city);
 
     this.apiWeatherService
       .getWeather(city.latitude, city.longitude)
@@ -107,6 +110,10 @@ export class Weather {
       .subscribe((data) => {
         this.isWeatherLoading.set(false);
         this.weather.set(data);
+        console.log(data);
+        const now = new Date();
+        now.setMilliseconds(data.generationtime_ms);
+        console.log(now);
       });
 
     // don't show anything in the input box
