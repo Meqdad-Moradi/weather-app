@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { GeoResult } from '../../../models/geocoding.model';
 import { WeatherResponse } from '../../../models/weather.model';
 import { ApiGeocoding } from '../../../services/api/api-geocoding';
@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { map, startWith } from 'rxjs';
+import { startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
@@ -37,6 +37,7 @@ export class Weather {
   public results = signal<GeoResult[]>([]);
   public weather = signal<WeatherResponse | null>(null);
   public isLoading = signal(false);
+  public isWeatherLoading = signal(false);
   public searchControl = new FormControl<GeoResult | string>('');
 
   private controlValueChanges = toSignal(this.searchControl.valueChanges.pipe(startWith('')), {
@@ -45,6 +46,7 @@ export class Weather {
 
   /**
    * computed signals
+   * filteredResult
    */
   public filteredResult = computed(() => {
     const currentValue = this.controlValueChanges();
@@ -75,26 +77,33 @@ export class Weather {
     this.isLoading.set(true);
     this.weather.set(null);
 
-    this.apiGeoService.searchCity(q).subscribe((res) => {
-      this.isLoading.set(false);
-      this.results.set(res.results || []);
-    });
+    this.apiGeoService
+      .searchCity(q)
+      .pipe(takeUntilDestroyed())
+      .subscribe((res) => {
+        this.isLoading.set(false);
+        this.results.set(res.results || []);
+      });
   }
 
   /**
    * chooseCity
+   * by choosing a city, tempreature for the choosen city will be searched
    * @returns void
    */
   public chooseCity(): void {
     if (typeof this.searchControl.value === 'string') return;
     const city = this.searchControl.value!;
 
-    this.isLoading.set(true);
+    this.isWeatherLoading.set(true);
 
-    this.apiWeatherService.getWeather(city.latitude, city.longitude).subscribe((data) => {
-      this.isLoading.set(false);
-      this.weather.set(data);
-    });
+    this.apiWeatherService
+      .getWeather(city.latitude, city.longitude)
+      .pipe(takeUntilDestroyed())
+      .subscribe((data) => {
+        this.isWeatherLoading.set(false);
+        this.weather.set(data);
+      });
 
     // don't show anything in the input box
     this.searchControl.reset();
@@ -110,6 +119,9 @@ export class Weather {
     return value && value.name ? value.name : '';
   }
 
+  /**
+   * resetControl
+   */
   public resetControl(): void {
     this.searchControl.reset();
   }
