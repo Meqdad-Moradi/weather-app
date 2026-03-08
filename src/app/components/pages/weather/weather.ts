@@ -111,9 +111,6 @@ export class Weather {
         this.isWeatherLoading.set(false);
         this.weather.set(data);
         console.log(data);
-        const now = new Date();
-        now.setMilliseconds(data.generationtime_ms);
-        console.log(now);
       });
 
     // don't show anything in the input box
