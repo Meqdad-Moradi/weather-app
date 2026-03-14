@@ -1,14 +1,16 @@
 @if (weather()) {
-  <section class="relative mt-4">
-    <picture>
+  <section
+    class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-between overflow-hidden min-h-65.75 bg-today bg-cover rounded-[1.5em] mt-4 p-8"
+  >
+    <!-- <picture>
       <source media="(max-width: 600px)" srcset="assets/images/bg-today-small.svg" />
       <img src="assets/images/bg-today-large.svg" alt="weather-background" />
-    </picture>
+    </picture> -->
 
     <!-- diplay select place -->
 
     @if (selectedCity()) {
-      <div class="flex flex-col gap-2 absolute left-8 top-1/2 -translate-y-1/2 text-white">
+      <div class="flex flex-col gap-2 text-white">
         <span class="font-bold text-3xl">
           {{ selectedCity().name }}, {{ selectedCity().country }}
         </span>
@@ -16,7 +18,7 @@
       </div>
     }
 
-    <div class="flex items-center absolute top-1/2 right-10 -translate-y-1/2 text-white">
+    <div class="flex items-center text-white lg:ml-auto mr-5">
       <!-- display weather icon -->
       <img
         class="max-w-24 truncate"
@@ -25,9 +27,9 @@
       />
 
       <div class="relative">
-        <span class="absolute -right-6 -top-1 font-bold text-4xl">{{
-          weather().current_weather_units.winddirection
-        }}</span>
+        <span class="absolute -right-6 -top-1 font-bold text-4xl">
+          {{ weather().current_weather_units.winddirection }}
+        </span>
         <span class="text-6xl font-bold italic">
           {{ weather().current_weather.temperature.toFixed() }}
         </span>
