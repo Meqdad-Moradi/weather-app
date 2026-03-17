@@ -3,6 +3,7 @@
 @theme {
   /* define an alias for the bg */
   --background-image-today: url('/assets/images/bg-today-large.svg');
+  --background-image-home: url('https://images.pexels.com/photos/15779836/pexels-photo-15779836.jpeg');
 }
 
 :root {
@@ -30,7 +31,7 @@
   --gray-400: hsl(264, 5%, 64%);
   --bg: hsl(0, 0%, 96%);
   --fg: hsl(0, 0%, 98%);
-  --text: hsl(220, 9%, 36%);
+  --text: hsl(220, 9%, 26%);
 
   --red-to-pink-to-purple-vertical-gradient: linear-gradient(
     180deg,
@@ -69,7 +70,7 @@
   --gray-400: hsl(264, 60%, 95%);
   --bg: hsl(0, 0%, 17%);
   --fg: hsl(0, 0%, 19%);
-  --text: hsl(220, 9%, 76%);
+  --text: hsl(220, 9%, 96%);
 
   --red-to-pink-to-purple-vertical-gradient: linear-gradient(
     180deg,
