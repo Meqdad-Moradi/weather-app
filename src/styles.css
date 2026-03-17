@@ -5,6 +5,11 @@
   --background-image-today: url('/assets/images/bg-today-large.svg');
 }
 
+:root {
+  /* material color */
+  --mat-sys-surface: var(--primary);
+}
+
 :root[data-theme='light'] {
   color-scheme: light;
 
@@ -14,6 +19,7 @@
   --vivid-pink: oklch(69.02% 0.277 332.77);
   --hot-red: oklch(61.42% 0.238 15.34);
   --orange-red: oklch(63.32% 0.24 31.68);
+  --primary: hsl(28, 100%, 52%);
 
   /* blue */
   --blue-500: hsl(233, 67%, 56%);
@@ -52,6 +58,7 @@
   --vivid-pink: oklch(69.02% 0.277 332.77);
   --hot-red: oklch(61.42% 0.238 15.34);
   --orange-red: oklch(63.32% 0.24 31.68);
+  --primary: hsl(28, 100%, 52%);
 
   /* blue */
   --blue-500: hsl(233, 67%, 56%);
@@ -116,6 +123,11 @@ body {
 
 .pill:hover {
   background: color-mix(in srgb, var(--pill-accent) 15%, transparent);
+}
+
+/* mat-button */
+.mat-mdc-raised-button:not(:disabled) {
+  --mat-sys-primary: var(--color-white);
 }
 
 /* Schiebt den gesamten Inhalt (inkl. Icons) von den runden Rändern weg */

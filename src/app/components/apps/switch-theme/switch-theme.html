@@ -1,4 +1,10 @@
-<button class="pill !text-gray-100" matIconButton (click)="toggleTheme()" matTooltip="Switch Theme">
+<button
+  class="text-white!"
+  color="primary"
+  matIconButton
+  (click)="toggleTheme()"
+  matTooltip="Switch Theme"
+>
   @if (theme() === 'light') {
     <mat-icon>light_mode</mat-icon>
   } @else {
