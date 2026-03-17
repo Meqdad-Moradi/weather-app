@@ -1,6 +1,6 @@
 import { Component, computed, DestroyRef, inject, signal } from '@angular/core';
 import { GeoResult } from '../../../models/geocoding.model';
-import { WeatherResponse } from '../../../models/weather.model';
+import { IWeather } from '../../../models/weather.model';
 import { ApiGeocoding } from '../../../services/api/api-geocoding';
 import { ApiWeather } from '../../../services/api/api-weather';
 import { MainTitle } from '../../apps/main-title/main-title';
@@ -14,6 +14,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { DisplayWeather } from './display-weather/display-weather';
+import { WeatherCard } from './weather-card/weather-card';
 
 @Component({
   selector: 'app-weather',
@@ -28,6 +29,7 @@ import { DisplayWeather } from './display-weather/display-weather';
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
+    WeatherCard,
   ],
   templateUrl: './weather.html',
   styleUrl: './weather.css',
@@ -39,13 +41,38 @@ export class Weather {
 
   public results = signal<GeoResult[]>([]);
   public selectedCity = signal<GeoResult | null>(null);
-  public weather = signal<WeatherResponse | null>(null);
+  public weather = signal<IWeather | null>(null);
   public isLoading = signal(false);
   public isWeatherLoading = signal(false);
   public searchControl = new FormControl<GeoResult | string>('');
 
   private controlValueChanges = toSignal(this.searchControl.valueChanges.pipe(startWith('')), {
     initialValue: '',
+  });
+
+  /**
+   * computed signals
+   */
+  public feelsLike = computed(() => {
+    // const now = this.weather()?.hourly.time[0];
+    const temperature = this.weather()?.hourly.apparent_temperature[0];
+    const unit = this.weather()?.hourly_units.apparent_temperature[0];
+    return `${temperature}${unit}`;
+  });
+  public wind = computed(() => {
+    const windspeed = this.weather()?.current_weather.windspeed;
+    const unit = this.weather()?.current_weather_units.windspeed;
+    return `${windspeed} ${unit}`;
+  });
+  public humidity = computed(() => {
+    const hm = this.weather()?.hourly.relative_humidity_2m[0];
+    const unit = this.weather()?.hourly_units.relative_humidity_2m[0];
+    return `${hm}${unit}`;
+  });
+  public precipitation = computed(() => {
+    const pr = this.weather()?.hourly.precipitation[0];
+    const unit = this.weather()?.hourly_units.apparent_temperature[0];
+    return `${pr} ${unit}`;
   });
 
   /**
@@ -104,8 +131,34 @@ export class Weather {
     this.isWeatherLoading.set(true);
     this.selectedCity.set(city);
 
+    const params = {
+      latitude: city.latitude,
+      longitude: city.longitude,
+      current_weather: true,
+      hourly: [
+        'temperature_2m',
+        'apparent_temperature',
+        'relative_humidity_2m',
+        'precipitation',
+        'weathercode',
+        'windspeed_10m',
+        'winddirection_10m',
+      ].join(','),
+      daily: [
+        'temperature_2m_max',
+        'temperature_2m_min',
+        'apparent_temperature_max',
+        'apparent_temperature_min',
+        'precipitation_sum',
+        'sunrise',
+        'sunset',
+        'weathercode',
+      ].join(','),
+      timezone: 'GMT',
+    };
+
     this.apiWeatherService
-      .getWeather(city.latitude, city.longitude)
+      .getWeather(params)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((data) => {
         this.isWeatherLoading.set(false);

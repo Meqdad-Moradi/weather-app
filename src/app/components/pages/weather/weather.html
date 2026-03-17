@@ -1,4 +1,4 @@
-<section class="container">
+<section class="container mb-8">
   <app-main-title title="How is the sky looking today?" />
 
   <div class="grid place-items-center">
@@ -54,9 +54,18 @@
   </div>
 
   <!-- display weather -->
-  <app-display-weather
-    [weather]="weather()!"
-    [selectedCity]="selectedCity()!"
-    [isWeatherLoading]="isWeatherLoading()"
-  />
+  @if (weather()) {
+    <app-display-weather
+      [weather]="weather()!"
+      [selectedCity]="selectedCity()!"
+      [isWeatherLoading]="isWeatherLoading()"
+    />
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <app-weather-card title="Feels Like" [value]="feelsLike()" />
+      <app-weather-card title="Humidity" [value]="humidity()" />
+      <app-weather-card title="Wind" [value]="wind()" />
+      <app-weather-card title="Precipitation" [value]="precipitation()" />
+    </div>
+  }
 </section>
