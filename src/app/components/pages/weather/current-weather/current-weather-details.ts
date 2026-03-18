@@ -1,12 +1,12 @@
 import { Component, input } from '@angular/core';
 
 @Component({
-  selector: 'app-weather-card',
+  selector: 'app-current-weather-details',
   imports: [],
-  templateUrl: './weather-card.html',
-  styleUrl: './weather-card.css',
+  templateUrl: './current-weather-details.html',
+  styleUrl: './current-weather-details.css',
 })
-export class WeatherCard {
+export class CurrentWeatherDetails {
   readonly title = input.required<string>();
   readonly value = input.required<string>();
 }

@@ -13,8 +13,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
-import { DisplayWeather } from './display-weather/display-weather';
-import { WeatherCard } from './weather-card/weather-card';
+import { CurrentWeatherDisplay } from './current-weather-display/current-weather-display';
+import { CurrentWeatherDetails } from './current-weather/current-weather-details';
 
 @Component({
   selector: 'app-weather',
@@ -22,14 +22,14 @@ import { WeatherCard } from './weather-card/weather-card';
     MainTitle,
     FormsModule,
     ReactiveFormsModule,
-    DisplayWeather,
+    CurrentWeatherDisplay,
     MatFormFieldModule,
     MatAutocompleteModule,
     MatInputModule,
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    WeatherCard,
+    CurrentWeatherDetails,
   ],
   templateUrl: './weather.html',
   styleUrl: './weather.css',

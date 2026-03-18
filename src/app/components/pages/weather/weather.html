@@ -55,17 +55,17 @@
 
   <!-- display weather -->
   @if (weather()) {
-    <app-display-weather
+    <app-current-weather-display
       [weather]="weather()!"
       [selectedCity]="selectedCity()!"
       [isWeatherLoading]="isWeatherLoading()"
     />
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-      <app-weather-card title="Feels Like" [value]="feelsLike()" />
-      <app-weather-card title="Humidity" [value]="humidity()" />
-      <app-weather-card title="Wind" [value]="wind()" />
-      <app-weather-card title="Precipitation" [value]="precipitation()" />
+      <app-current-weather-details title="Feels Like" [value]="feelsLike()" />
+      <app-current-weather-details title="Humidity" [value]="humidity()" />
+      <app-current-weather-details title="Wind" [value]="wind()" />
+      <app-current-weather-details title="Precipitation" [value]="precipitation()" />
     </div>
   }
 </section>

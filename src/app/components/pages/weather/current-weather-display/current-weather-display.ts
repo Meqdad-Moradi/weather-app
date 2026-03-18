@@ -6,12 +6,12 @@ import { WeatherIconPipe } from '../../../../pipes/weather-icon-pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
-  selector: 'app-display-weather',
+  selector: 'app-current-weather-display',
   imports: [DatePipe, WeatherIconPipe, MatProgressSpinnerModule],
-  templateUrl: './display-weather.html',
-  styleUrl: './display-weather.css',
+  templateUrl: './current-weather-display.html',
+  styleUrl: './current-weather-display.css',
 })
-export class DisplayWeather {
+export class CurrentWeatherDisplay {
   readonly weather = input.required<IWeather>();
   readonly selectedCity = input.required<GeoResult>();
   readonly isWeatherLoading = input.required<boolean>();
