@@ -29,7 +29,6 @@ import { CurrentWeatherDetails } from './current-weather/current-weather-details
     MatIconModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    CurrentWeatherDetails,
   ],
   templateUrl: './weather.html',
   styleUrl: './weather.css',
@@ -48,31 +47,6 @@ export class Weather {
 
   private controlValueChanges = toSignal(this.searchControl.valueChanges.pipe(startWith('')), {
     initialValue: '',
-  });
-
-  /**
-   * computed signals
-   */
-  public feelsLike = computed(() => {
-    // const now = this.weather()?.hourly.time[0];
-    const temperature = this.weather()?.hourly.apparent_temperature[0];
-    const unit = this.weather()?.hourly_units.apparent_temperature[0];
-    return `${temperature}${unit}`;
-  });
-  public wind = computed(() => {
-    const windspeed = this.weather()?.current_weather.windspeed;
-    const unit = this.weather()?.current_weather_units.windspeed;
-    return `${windspeed} ${unit}`;
-  });
-  public humidity = computed(() => {
-    const hm = this.weather()?.hourly.relative_humidity_2m[0];
-    const unit = this.weather()?.hourly_units.relative_humidity_2m[0];
-    return `${hm}${unit}`;
-  });
-  public precipitation = computed(() => {
-    const pr = this.weather()?.hourly.precipitation[0];
-    const unit = this.weather()?.hourly_units.apparent_temperature[0];
-    return `${pr} ${unit}`;
   });
 
   /**

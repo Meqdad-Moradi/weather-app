@@ -1,39 +1,54 @@
-@if (weather()) {
-  <section
-    class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-between overflow-hidden min-h-65.75 bg-today bg-cover rounded-2xl mt-4 p-8"
-  >
-    <!-- <picture>
-      <source media="(max-width: 600px)" srcset="assets/images/bg-today-small.svg" />
-      <img src="assets/images/bg-today-large.svg" alt="weather-background" />
-    </picture> -->
+<section class="grid grid-cols-1 lg:grid-cols-[1fr_10em] gap-4">
+  <div>
+    <div
+      class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-between overflow-hidden min-h-65.75 bg-today bg-cover rounded-2xl mt-4 p-8"
+    >
+      <!-- <picture>
+        <source media="(max-width: 600px)" srcset="assets/images/bg-today-small.svg" />
+        <img src="assets/images/bg-today-large.svg" alt="weather-background" />
+      </picture> -->
 
-    <!-- diplay select place -->
+      <!-- diplay select place -->
 
-    @if (selectedCity()) {
-      <div class="flex flex-col gap-2 text-white">
-        <span class="font-bold text-3xl">
-          {{ selectedCity().name }}, {{ selectedCity().country }}
-        </span>
-        <span class="text-xl">{{ weather().current_weather.time | date }}</span>
-      </div>
-    }
+      @if (selectedCity()) {
+        <div class="flex flex-col gap-2 text-white">
+          <span class="font-bold text-3xl">
+            {{ selectedCity().name }}, {{ selectedCity().country }}
+          </span>
+          <span class="text-xl">{{ weather().current_weather.time | date }}</span>
+        </div>
+      }
 
-    <div class="flex items-center text-white lg:ml-auto mr-5">
-      <!-- display weather icon -->
-      <img
-        class="max-w-24 truncate"
-        src="{{ weather().current_weather.weathercode | weatherIcon }}"
-        alt="weather-icon"
-      />
+      <div class="flex items-center text-white lg:ml-auto mr-5">
+        <!-- display weather icon -->
+        <img
+          class="max-w-24 truncate"
+          src="{{ weather().current_weather.weathercode | weatherIcon }}"
+          alt="weather-icon"
+        />
 
-      <div class="relative">
-        <span class="absolute -right-6 -top-1 font-bold text-4xl">
-          {{ weather().current_weather_units.winddirection }}
-        </span>
-        <span class="text-6xl font-bold italic">
-          {{ weather().current_weather.temperature.toFixed() }}
-        </span>
+        <div class="relative">
+          <span class="absolute -right-6 -top-1 font-bold text-4xl">
+            {{ weather().current_weather_units.winddirection }}
+          </span>
+          <span class="text-6xl font-bold italic">
+            {{ weather().current_weather.temperature.toFixed() }}
+          </span>
+        </div>
       </div>
     </div>
-  </section>
-}
+
+    <!-- current weather forecast -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+      <app-current-weather-details title="Feels Like" [value]="feelsLike()" />
+      <app-current-weather-details title="Humidity" [value]="humidity()" />
+      <app-current-weather-details title="Wind" [value]="wind()" />
+      <app-current-weather-details title="Precipitation" [value]="precipitation()" />
+    </div>
+
+    <!-- daily forecast -->
+  </div>
+
+  <!-- hourly forecast -->
+  <div class="bg-(--fg) rounded-lg"></div>
+</section>
