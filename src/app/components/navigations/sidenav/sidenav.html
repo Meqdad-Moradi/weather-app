@@ -1,6 +1,10 @@
 <app-header />
 <mat-drawer-container class="h-[calc(100vh-64px)] bg-(--bg)!">
-  <mat-drawer class="bg-(--fg)! shadow-lg! rounded-none!" mode="side" [opened]="isSidenavOpen()">
+  <mat-drawer
+    class="bg-(--fg)! shadow-lg! rounded-none! max-w-72"
+    mode="side"
+    [opened]="isSidenavOpen()"
+  >
     <div class="h-full w-full flex flex-col justify-between">
       <mat-action-list>
         <mat-divider></mat-divider>

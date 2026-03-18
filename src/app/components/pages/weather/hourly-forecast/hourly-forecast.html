@@ -1,0 +1,23 @@
+<div class="bg-(--fg) rounded-2xl p-4">
+  <div class="flex flex-wrap justify-between gap-4">
+    <h2 class="font-semibold">Hourly forecast</h2>
+    <mat-form-field class="max-w-[8em]" appearance="outline">
+      <mat-select>
+        <mat-option value="tuesday">Tuesday</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <div class="grid gap-2">
+    @for (t of hourly().time.slice(0, 8); track $index) {
+      <div class="flex items-center gap-2 bg-(--text)/6 px-4 py-2 rounded-lg">
+        <span class="text-2xl">
+          {{ hourly().weathercode[$index] | weatherIcon: t : sunrise()[$index] : sunset()[$index] }}
+        </span>
+        <span>{{ t | date: 'h a' | lowercase }}</span>
+        <span class="ml-auto">
+          {{ hourly().temperature_2m[$index] }} {{ hourlyUnit().temperature_2m }}
+        </span>
+      </div>
+    }
+  </div>
+</div>

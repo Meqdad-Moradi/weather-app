@@ -14,7 +14,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { startWith } from 'rxjs';
 import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
 import { CurrentWeatherDisplay } from './current-weather-display/current-weather-display';
-import { CurrentWeatherDetails } from './current-weather/current-weather-details';
 
 @Component({
   selector: 'app-weather',
@@ -75,7 +74,7 @@ export class Weather {
    * searchPlace
    * @returns void
    */
-  searchPlace(e: Event): void {
+  public searchPlace(e: Event): void {
     e.preventDefault();
     e.stopPropagation();
 
@@ -128,7 +127,7 @@ export class Weather {
         'sunset',
         'weathercode',
       ].join(','),
-      timezone: 'GMT',
+      timezone: 'Europe/Berlin',
     };
 
     this.apiWeatherService

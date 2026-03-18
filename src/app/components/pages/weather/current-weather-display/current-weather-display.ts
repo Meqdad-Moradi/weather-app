@@ -4,12 +4,12 @@ import { GeoResult } from '../../../../models/geocoding.model';
 import { DatePipe } from '@angular/common';
 import { WeatherIconPipe } from '../../../../pipes/weather-icon-pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { CurrentWeatherDetails } from '../current-weather/current-weather-details';
-import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { CurrentWeatherDetails } from '../current-weather-details/current-weather-details';
+import { HourlyForecast } from "../hourly-forecast/hourly-forecast";
 
 @Component({
   selector: 'app-current-weather-display',
-  imports: [DatePipe, WeatherIconPipe, MatProgressSpinnerModule, CurrentWeatherDetails, MatFormField, MatLabel],
+  imports: [DatePipe, WeatherIconPipe, MatProgressSpinnerModule, CurrentWeatherDetails, HourlyForecast],
   templateUrl: './current-weather-display.html',
   styleUrl: './current-weather-display.css',
 })
