@@ -185,6 +185,13 @@ body {
   height: 18px !important;
 }
 
+/* shrink height */
+.custom-small-field {
+  --mat-form-field-container-height: 40px;
+  /* for vertical padding and text centering */
+  --mat-form-field-container-vertical-padding: 8px;
+}
+
 /* enter animation */
 .enter-animation {
   animation: fadeIn linear 0.2s forwards;

@@ -1,13 +1,14 @@
-<section class="grid grid-cols-1 lg:grid-cols-[1fr_20em] gap-6 mt-6">
-  <div>
+<!-- <picture>
+  <source media="(max-width: 600px)" srcset="assets/images/bg-today-small.svg" />
+  <img src="assets/images/bg-today-large.svg" alt="weather-background" />
+</picture> -->
+
+<section class="grid grid-cols-1 lg:grid-cols-[1fr_17em] gap-6 mt-6">
+  <div class="flex flex-col gap-6">
+    <!-- current weather -->
     <div
       class="grid grid-cols-1 lg:grid-cols-2 gap-4 items-center justify-between overflow-hidden min-h-65.75 bg-today bg-cover rounded-2xl p-8"
     >
-      <!-- <picture>
-        <source media="(max-width: 600px)" srcset="assets/images/bg-today-small.svg" />
-        <img src="assets/images/bg-today-large.svg" alt="weather-background" />
-      </picture> -->
-
       <!-- diplay select place -->
       @if (selectedCity()) {
         <div class="flex flex-col gap-2 text-white">
@@ -42,14 +43,15 @@
     </div>
 
     <!-- current weather forecast -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
-      <app-current-weather-details title="Feels Like" [value]="feelsLike()" />
-      <app-current-weather-details title="Humidity" [value]="humidity()" />
-      <app-current-weather-details title="Wind" [value]="wind()" />
-      <app-current-weather-details title="Precipitation" [value]="precipitation()" />
+    <div class="flex flex-wrap gap-4">
+      <app-current-weather-details class="flex-1" title="Feels Like" [value]="feelsLike()" />
+      <app-current-weather-details class="flex-1" title="Humidity" [value]="humidity()" />
+      <app-current-weather-details class="flex-1" title="Wind" [value]="wind()" />
+      <app-current-weather-details class="flex-1" title="Precipitation" [value]="precipitation()" />
     </div>
 
     <!-- daily forecast -->
+    <app-daily-forecast [daily]="weather().daily" [dailyUnit]="weather().daily_units" />
   </div>
 
   <!-- hourly forecast -->

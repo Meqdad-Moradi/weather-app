@@ -1,9 +1,8 @@
 import { Component, input } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { WeatherIconPipe } from '../../../../pipes/weather-icon-pipe';
-import { Daily, Hourly, HourlyUnits } from '../../../../models/weather.model';
+import { Hourly, HourlyUnits } from '../../../../models/weather.model';
 import { DatePipe, LowerCasePipe } from '@angular/common';
 
 @Component({

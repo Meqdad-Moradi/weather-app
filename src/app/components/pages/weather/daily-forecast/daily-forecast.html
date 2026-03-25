@@ -1,0 +1,23 @@
+<h2 class="font-semibold mb-2">Daily forecast</h2>
+
+<div class="grid grid-cols-[repeat(auto-fit,minmax(4em,1fr))] gap-2">
+  @for (t of daily().time; track t) {
+    <div class="flex flex-col items-center gap-2 bg-(--fg) rounded-2xl p-3">
+      <span class="text-sm">{{ t | weekDay }}</span>
+      <span class="text-2xl">
+        {{
+          daily().weathercode[$index]
+            | weatherIcon: t : daily().sunrise[$index] : daily().sunset[$index]
+        }}
+      </span>
+      <div class="w-full flex items-center justify-between text-xs">
+        <span>
+          {{ daily().temperature_2m_max[$index].toFixed() }}{{ dailyUnit().temperature_2m_max }}
+        </span>
+        <span>
+          {{ daily().temperature_2m_min[$index].toFixed() }}{{ dailyUnit().temperature_2m_min }}
+        </span>
+      </div>
+    </div>
+  }
+</div>

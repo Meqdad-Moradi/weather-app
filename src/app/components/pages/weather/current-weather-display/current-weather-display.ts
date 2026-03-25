@@ -6,10 +6,11 @@ import { WeatherIconPipe } from '../../../../pipes/weather-icon-pipe';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CurrentWeatherDetails } from '../current-weather-details/current-weather-details';
 import { HourlyForecast } from "../hourly-forecast/hourly-forecast";
+import { DailyForecast } from "../daily-forecast/daily-forecast";
 
 @Component({
   selector: 'app-current-weather-display',
-  imports: [DatePipe, WeatherIconPipe, MatProgressSpinnerModule, CurrentWeatherDetails, HourlyForecast],
+  imports: [DatePipe, WeatherIconPipe, MatProgressSpinnerModule, CurrentWeatherDetails, HourlyForecast, DailyForecast],
   templateUrl: './current-weather-display.html',
   styleUrl: './current-weather-display.css',
 })
