@@ -10,9 +10,9 @@
         <mat-divider></mat-divider>
 
         <!-- weather -->
-        <button mat-list-item [routerLink]="['/', 'weather']">
-          <span class="material-icons-outlined" matListItemIcon>cloud</span>
-          <span matListItemTitle>Weather</span>
+        <button mat-list-item [routerLink]="['/', env.apps.weather.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{ env.apps.weather.icon }}</span>
+          <span matListItemTitle>{{ env.apps.weather.name }}</span>
         </button>
 
         <mat-divider></mat-divider>
