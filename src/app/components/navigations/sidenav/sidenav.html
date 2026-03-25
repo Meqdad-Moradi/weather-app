@@ -16,6 +16,16 @@
         </button>
 
         <mat-divider></mat-divider>
+
+        <!-- extensions -->
+        <button mat-list-item [routerLink]="['/', env.apps.extensions.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{
+            env.apps.extensions.icon
+          }}</span>
+          <span matListItemTitle>{{ env.apps.extensions.name }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
       </mat-action-list>
       <div class="grid place-content-center py-4">
         <img

@@ -1,0 +1,22 @@
+<section class="container mb-8">
+  <app-main-title title="Extensions" />
+
+  <div class="flex items-center justify-end gap-1 mb-2">
+    @for (btn of filterBtns(); track $index) {
+      <button [matButton]="btn.active ? 'filled' : 'outlined'" (click)="onFilter(btn.name)">
+        {{ btn.name }}
+      </button>
+    }
+  </div>
+  <article
+    class="grid grid-cols-[repeat(auto-fit,minmax(15em,1fr))] items-start justify-between gap-6"
+  >
+    @for (ext of filteredExtensions(); track $index) {
+      <app-extension-card
+        [extension]="ext"
+        (remove)="onRemove($event)"
+        (toggleActive)="onToggleActive($event)"
+      />
+    }
+  </article>
+</section>

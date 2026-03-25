@@ -6,5 +6,11 @@ export const environment = {
       abbr: '',
       icon: 'cloud',
     },
+    extensions: {
+      route: 'extensions',
+      name: 'Extensions Management',
+      abbr: 'EXT',
+      icon: 'extension',
+    },
   },
 };

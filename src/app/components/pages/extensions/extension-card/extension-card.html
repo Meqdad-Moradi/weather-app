@@ -1,0 +1,16 @@
+<div
+  class="flex flex-col justify-between min-h-52 bg-(--fg) p-4 rounded-2xl border border-(--text)/10"
+>
+  <div class="flex items-start gap-4">
+    <img class="max-w-10" src="{{ extension().logo }}" alt="logo" />
+    <div>
+      <h2 class="text-base text-(--text) font-bold mb-1">{{ extension().name }}</h2>
+      <span class="text-sm text-(--text)">{{ extension().description }}</span>
+    </div>
+  </div>
+
+  <div class="flex items-center justify-between">
+    <button matButton="outlined" (click)="onRemove()">Remove</button>
+    <mat-slide-toggle [(ngModel)]="extension().isActive" (change)="onToggleActive()" />
+  </div>
+</div>
