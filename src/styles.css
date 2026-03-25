@@ -7,8 +7,11 @@
 }
 
 :root {
+  --primary: #ff7c0a;
+  --primary2: #353ecb;
+
   /* material color */
-  --mat-sys-surface: var(--primary);
+  --mat-sys-surface: var(--primary2);
 }
 
 :root[data-theme='light'] {
@@ -20,7 +23,6 @@
   --vivid-pink: oklch(69.02% 0.277 332.77);
   --hot-red: oklch(61.42% 0.238 15.34);
   --orange-red: oklch(63.32% 0.24 31.68);
-  --primary: hsl(28, 100%, 52%);
 
   /* blue */
   --blue-500: hsl(233, 67%, 56%);
@@ -59,7 +61,6 @@
   --vivid-pink: oklch(69.02% 0.277 332.77);
   --hot-red: oklch(61.42% 0.238 15.34);
   --orange-red: oklch(63.32% 0.24 31.68);
-  --primary: hsl(28, 100%, 52%);
 
   /* blue */
   --blue-500: hsl(233, 67%, 56%);

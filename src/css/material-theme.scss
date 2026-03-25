@@ -1,12 +1,13 @@
 @use '@angular/material' as mat;
 @use './scss_theme-colors.scss' as theme;
+@use './_theme-colors.scss' as theme2;
 
 html {
   height: 100%;
   @include mat.theme(
     (
       color: (
-        primary: theme.$primary-palette,
+        primary: theme2.$primary-palette,
       ),
       typography: Roboto,
       density: 0,
