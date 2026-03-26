@@ -1,10 +1,10 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MainTitle } from '../../apps/main-title/main-title';
-import { ApiExtensions } from '../../../services/api/api-extensions';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { IExtension, IFilterBtn } from '../../../models/extensions.model';
+import { IExtension } from '../../../models/extensions.model';
 import { ExtensionCard } from './extension-card/extension-card';
 import { MatAnchor } from '@angular/material/button';
+import { BaseEntry } from '../../../directives/base-entry';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-extensions',
@@ -12,42 +12,13 @@ import { MatAnchor } from '@angular/material/button';
   templateUrl: './extensions.html',
   styleUrl: './extensions.css',
 })
-export class Extensions implements OnInit {
-  private readonly apiExtensionsService = inject(ApiExtensions);
-  private readonly dsRef = inject(DestroyRef);
-
-  private extensions = signal<IExtension[]>([]);
-  protected filteredExtensions = signal<IExtension[]>([]);
-  protected filterBtns = signal<IFilterBtn[]>([
-    {
-      name: 'All',
-      active: true,
-    },
-    {
-      name: 'Active',
-      active: false,
-    },
-    {
-      name: 'Inactive',
-      active: false,
-    },
-  ]);
-
-  ngOnInit(): void {
-    this.getExtensions();
-  }
-
+export class Extensions extends BaseEntry<IExtension> implements OnInit {
   /**
    * getExtensions
+   * @returns Observable<IExtension[]>
    */
-  private getExtensions(): void {
-    this.apiExtensionsService
-      .getExtensions()
-      .pipe(takeUntilDestroyed(this.dsRef))
-      .subscribe((res) => {
-        this.extensions.set(res);
-        this.filteredExtensions.set(res);
-      });
+  protected getExtensions(): Observable<IExtension[]> {
+    return this.apiExtensionsService.getExtensions();
   }
 
   /**
