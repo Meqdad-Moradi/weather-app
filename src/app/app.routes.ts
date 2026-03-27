@@ -4,6 +4,7 @@ import { Sidenav } from './components/navigations/sidenav/sidenav';
 import { Weather } from './components/pages/weather/weather';
 import { Home } from './components/pages/home/home';
 import { Extensions } from './components/pages/extensions/extensions';
+import { Todos } from './components/pages/todos/todos';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,7 @@ export const routes: Routes = [
       { path: '', component: Home, pathMatch: 'full' },
       { path: 'weather', component: Weather, pathMatch: 'full' },
       { path: 'extensions', component: Extensions, pathMatch: 'full' },
+      { path: 'todos', component: Todos, pathMatch: 'full' },
     ],
   },
   {

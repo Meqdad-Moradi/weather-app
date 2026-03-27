@@ -193,9 +193,14 @@ body {
   --mat-form-field-container-vertical-padding: 8px;
 }
 
+/* remove padding error/hint */
+.mat-mdc-form-field-error-wrapper {
+  padding: 0 !important;
+}
+
 /* enter animation */
 .enter-animation {
-  animation: fadeIn linear 0.2s forwards;
+  animation: fadeIn linear 0.3s forwards;
 }
 
 @keyframes fadeIn {

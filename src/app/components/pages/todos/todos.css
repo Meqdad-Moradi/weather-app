@@ -1,0 +1,13 @@
+.wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  overflow: hidden;
+  transition: grid-template-rows 0.5s linear;
+}
+.wrapper.expanded {
+  grid-template-rows: 1fr;
+}
+
+.wrapper > div {
+  overflow: hidden;
+}

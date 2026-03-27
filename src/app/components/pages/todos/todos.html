@@ -1,0 +1,37 @@
+<header class="flex justify-end items-center p-2 mb-8 bg-(--fg) border-b border-(--text)/10">
+  <button matButton="outlined" (click)="toggleForm()">
+    {{ !isFormShowing() ? 'Add new todo' : 'Hide Form' }}
+  </button>
+</header>
+
+<section class="container">
+  <div
+    class="wrapper w-full max-w-lg bg-(--fg) p-6 mx-auto rounded-2xl border border-(--text)/10"
+    [ngClass]="{ expanded: isFormShowing() }"
+  >
+    <div class="min-h-8">
+      <h2 class="text-2xl font-bold pb-6">Add your todo!</h2>
+
+      <form class="w-full grid grid-cols-1" (submit)="onSubmit($event)">
+        <mat-form-field appearance="outline" class="">
+          <mat-label>Description</mat-label>
+          <input type="text" matInput [formField]="todoForm.description" />
+          @if (todoForm.description().touched() && todoForm.description().invalid()) {
+            <mat-error>{{ todoForm.description().errors()[0].message }}</mat-error>
+          }
+        </mat-form-field>
+
+        <mat-checkbox [formField]="todoForm.isActive">Todo is active</mat-checkbox>
+
+        <button
+          class="justify-self-start mt-4"
+          matButton="filled"
+          type="submit"
+          [disabled]="todoForm().invalid()"
+        >
+          Add todo
+        </button>
+      </form>
+    </div>
+  </div>
+</section>

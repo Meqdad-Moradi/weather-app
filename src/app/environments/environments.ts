@@ -12,5 +12,11 @@ export const environment = {
       abbr: 'EXT',
       icon: 'extension',
     },
+    todos: {
+      route: 'todos',
+      name: 'Simple Todo',
+      abbr: 'TO',
+      icon: 'note_add',
+    },
   },
 };

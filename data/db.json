@@ -72,5 +72,17 @@
       "description": "Enhanced developer console with advanced filtering and logging.",
       "isActive": true
     }
+  ],
+  "todos": [
+    {
+      "id": "1",
+      "description": "Capture and export DOM structures quickly.",
+      "isActive": false
+    },
+    {
+      "id": "2",
+      "description": "Enables annotation and notes directly onto webpages for collaborative debugging.",
+      "isActive": false
+    }
   ]
 }

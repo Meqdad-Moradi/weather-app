@@ -26,6 +26,14 @@
         </button>
 
         <mat-divider></mat-divider>
+
+        <!-- todos -->
+        <button mat-list-item [routerLink]="['/', env.apps.todos.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{ env.apps.todos.icon }}</span>
+          <span matListItemTitle>{{ env.apps.todos.name }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
       </mat-action-list>
       <div class="grid place-content-center py-4">
         <img
