@@ -1,0 +1,22 @@
+<section class="mt-8">
+  <header
+    class="grid grid-cols-[auto_1fr] items-center gap-2 bg-(--fg) border-b border-(--text)/50 mb-2 border-l-4 border-l-transparent"
+  >
+    <mat-checkbox
+      [checked]="allSelected()"
+      [indeterminate]="isIndeterminate()"
+      (change)="onChange($event)"
+    />
+    <span class="text-base font-semibold">Description</span>
+  </header>
+
+  @if (isLoading()) {
+    <mat-progress-spinner class="mx-auto mt-4" mode="indeterminate" diameter="36" />
+  } @else {
+    <article class="flex flex-col bg-(--fg) border-t border-(--text)/10">
+      @for (todo of todos(); track todo.id) {
+        <app-todo [todo]="todo" (todoChange)="onTodoChange($event)" />
+      }
+    </article>
+  }
+</section>

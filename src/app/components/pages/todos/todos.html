@@ -4,7 +4,7 @@
   </button>
 </header>
 
-<section class="container">
+<section class="container mb-8">
   <div
     class="wrapper w-full max-w-lg bg-(--fg) p-6 mx-auto rounded-2xl border border-(--text)/10"
     [ngClass]="{ expanded: isFormShowing() }"
@@ -34,4 +34,7 @@
       </form>
     </div>
   </div>
+
+  <!-- display todos -->
+  <app-todos-result [isLoading]="isLoading" [todos]="filteredTodos()" />
 </section>

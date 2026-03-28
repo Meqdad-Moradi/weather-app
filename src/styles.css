@@ -10,6 +10,8 @@
   --primary: #ff7c0a;
   --primary2: #353ecb;
 
+  box-sizing: border-box;
+
   /* material color */
   --mat-sys-surface: var(--primary2);
 }

@@ -1,0 +1,22 @@
+<div
+  class="flex items-center gap-2 py-1 border-b border-(--text)/10 cursor-pointer {{
+    todo().isActive ? 'border-l-4 border-l-green-700' : 'border-l-4 border-l-red-400 bg-red-400/10'
+  }}"
+  role="button"
+  tabindex="0"
+  (click)="toggleSelect()"
+  (keydown.enter)="toggleSelect()"
+>
+  <mat-checkbox [checked]="todo().isSelected" />
+  <span class="text-(--text) truncate">{{ todo().description }}</span>
+
+  <!-- actions -->
+  <div class="flex items-center justify-between ml-auto">
+    <button class="grid! place-items-center!" matIconButton>
+      <mat-icon>check</mat-icon>
+    </button>
+    <button class="grid! place-items-center!" matIconButton>
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

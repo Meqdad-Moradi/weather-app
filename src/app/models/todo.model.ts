@@ -6,6 +6,10 @@ export interface ITodo {
   isActive: boolean;
 }
 
+export interface ITodoResult extends ITodo {
+  isSelected: boolean;
+}
+
 export function createInitialTodo(): ITodo {
   return {
     id: '1',
