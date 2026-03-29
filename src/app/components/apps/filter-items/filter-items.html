@@ -1,0 +1,32 @@
+<section class="flex items-center justify-between mb-1">
+  <div>
+    <span>{{ itemsCount() }} Items</span>
+  </div>
+
+  <div>
+    <!-- filter options -->
+    @if (filterOptions()?.length) {
+      <mat-form-field class="custom-field no-hover-effect no-hint match-height">
+        <mat-select [value]="selectedFilter()" (selectionChange)="onFilterChange($event)">
+          <mat-select-trigger>{{ selectedFilter() }}</mat-select-trigger>
+          @for (option of filterOptions(); track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+
+    <!-- sort options -->
+    @if (sortOptions()?.length) {
+      <mat-form-field>
+        <mat-label>Sort Items</mat-label>
+        <mat-select [value]="selectedSort()" (selectionChange)="onSortChange($event)">
+          <mat-select-trigger>{{ selectedSort() }}</mat-select-trigger>
+          @for (option of sortOptions(); track option) {
+            <mat-option [value]="option">{{ option }}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+    }
+  </div>
+</section>

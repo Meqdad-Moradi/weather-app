@@ -1,4 +1,12 @@
 <section class="mt-8">
+  <h3 class="font-bold text-xl mb-3">All Todos</h3>
+
+  <app-filter-items
+    [itemsCount]="todosLength()"
+    [filterOptions]="filterOptions"
+    [selectedFilter]="selectedFilter()"
+  />
+
   <header
     class="grid grid-cols-[auto_1fr] items-center gap-2 bg-(--fg) border-b border-(--text)/50 mb-2 border-l-4 border-l-transparent"
   >
