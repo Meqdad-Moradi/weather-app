@@ -96,6 +96,5 @@
       "description": "Enables annotation and notes directly onto webpages for collaborative debugging.",
       "isActive": false
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
