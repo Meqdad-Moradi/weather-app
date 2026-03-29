@@ -5,6 +5,7 @@
     <mat-checkbox
       [checked]="allSelected()"
       [indeterminate]="isIndeterminate()"
+      [disabled]="!todosLength()"
       (change)="onChange($event)"
     />
     <span class="text-base font-semibold">Description</span>
@@ -16,6 +17,10 @@
     <article class="flex flex-col bg-(--fg) border-t border-(--text)/10">
       @for (todo of todos(); track todo.id) {
         <app-todo [todo]="todo" (todoChange)="onTodoChange($event)" />
+      } @empty {
+        <div class="py-3 border-b border-(--text)/10 text-center">
+          <span class="text-(--text)">No todo found!</span>
+        </div>
       }
     </article>
   }
