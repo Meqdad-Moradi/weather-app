@@ -22,3 +22,13 @@ export const todoSchema = schema<ITodo>((rootPath) => {
   required(rootPath.description, { message: "Can't be empty" });
   minLength(rootPath.description, 2, { message: 'At least 2 characters!' });
 });
+
+export enum EnTodoAction {
+  Done = 'done',
+  Delete = 'delete',
+}
+
+export interface TodoAction {
+  action: EnTodoAction;
+  id: string;
+}

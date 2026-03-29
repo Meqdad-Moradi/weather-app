@@ -1,6 +1,12 @@
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 
-import { createInitialTodo, ITodo, ITodoResult, todoSchema } from '../../../models/todo.model';
+import {
+  createInitialTodo,
+  EnTodoAction,
+  ITodo,
+  ITodoResult,
+  todoSchema,
+} from '../../../models/todo.model';
 import { form, FormField } from '@angular/forms/signals';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,6 +16,7 @@ import { NgClass } from '@angular/common';
 import { ApiTodos } from '../../../services/api/api-todos';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TodosResult } from './todos-result/todos-result';
+import { TodosService } from '../../../services/todos-service';
 
 @Component({
   selector: 'app-todos',
@@ -27,6 +34,7 @@ import { TodosResult } from './todos-result/todos-result';
 })
 export class Todos implements OnInit {
   private readonly apiTodosService = inject(ApiTodos);
+  private readonly todosService = inject(TodosService);
   private readonly destroyRef = inject(DestroyRef);
 
   private todos = signal<ITodoResult[]>([]);
@@ -39,6 +47,7 @@ export class Todos implements OnInit {
 
   ngOnInit(): void {
     this.getTodos();
+    this.onTodoAction();
   }
 
   /**
@@ -65,9 +74,62 @@ export class Todos implements OnInit {
   protected onSubmit(e: Event): void {
     e.preventDefault();
     if (this.todoForm().invalid()) return;
+
+    const newTodo: ITodo = { ...this.todoForm().value(), id: crypto.randomUUID() };
+
+    this.apiTodosService
+      .addTodo(newTodo)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.filteredTodos.update((todos) => [...todos, { ...res, isSelected: false }]);
+        this.todoModel.set(createInitialTodo());
+      });
   }
 
+  /**
+   * toggleForm
+   */
   protected toggleForm(): void {
     this.isFormShowing.set(!this.isFormShowing());
+  }
+
+  /**
+   * doneTodo
+   * @param id string
+   */
+  private doneTodo(id: string): void {
+    const todo = this.filteredTodos().find((x) => x.id === id);
+
+    this.apiTodosService
+      .updateTodo(todo!)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((res) => {
+        this.filteredTodos.update((todos) =>
+          todos.map((x) => (x.id === id ? { ...x, isActive: res.isActive } : x)),
+        );
+      });
+  }
+
+  /**
+   * deleteTodo
+   * @param id string
+   */
+  private deleteTodo(id: string): void {
+    this.filteredTodos.update((todos) => todos.filter((x) => x.id !== id));
+    this.apiTodosService.deleteTodo(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
+  }
+
+  /**
+   * onTodoAction
+   * delete or handle done todo based on the action type emitted from todo component
+   */
+  private onTodoAction(): void {
+    this.todosService.todoAction$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((todo) => {
+      if (todo.action === EnTodoAction.Done) {
+        this.doneTodo(todo.id);
+      } else if (todo.action === EnTodoAction.Delete) {
+        this.deleteTodo(todo.id);
+      }
+    });
   }
 }

@@ -17,4 +17,31 @@ export class ApiTodos {
   public getTodos(): Observable<ITodo[]> {
     return this.http.get<ITodo[]>(this.todoUrl);
   }
+
+  /**
+   * addTodo
+   * @param todo ITodo
+   * @returns Observable<ITodo>
+   */
+  public addTodo(todo: ITodo): Observable<ITodo> {
+    return this.http.post<ITodo>(this.todoUrl, todo);
+  }
+
+  /**
+   * updateTodo
+   * @param todo ITodo
+   * @returns Observable<ITodo>
+   */
+  public updateTodo(todo: ITodo): Observable<ITodo> {
+    return this.http.patch<ITodo>(`${this.todoUrl}/${todo.id}`, { isActive: false });
+  }
+
+  /**
+   * deleteTodo
+   * @param id string
+   * @returns Observable<void>
+   */
+  public deleteTodo(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.todoUrl}/${id}`);
+  }
 }

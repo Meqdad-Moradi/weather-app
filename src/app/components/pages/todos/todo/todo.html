@@ -11,11 +11,15 @@
   <span class="text-(--text) truncate">{{ todo().description }}</span>
 
   <!-- actions -->
-  <div class="flex items-center justify-between ml-auto">
-    <button class="grid! place-items-center!" matIconButton>
-      <mat-icon>check</mat-icon>
-    </button>
-    <button class="grid! place-items-center!" matIconButton>
+  <div class="flex items-center justify-between ml-auto gap-8">
+    @if (todo().isActive) {
+      <button class="grid! place-items-center!" matIconButton (click)="onDone($event)">
+        <mat-icon>check</mat-icon>
+      </button>
+    } @else {
+      <mat-icon>done_all</mat-icon>
+    }
+    <button class="grid! place-items-center!" matIconButton (click)="onDelete($event)">
       <mat-icon>delete</mat-icon>
     </button>
   </div>
