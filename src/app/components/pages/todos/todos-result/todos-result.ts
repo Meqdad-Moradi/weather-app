@@ -1,4 +1,4 @@
-import { Component, computed, input, model, signal } from '@angular/core';
+import { Component, computed, input, model } from '@angular/core';
 
 import { MatCheckbox, MatCheckboxChange } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -15,9 +15,8 @@ import { FilterItems } from '../../../apps/filter-items/filter-items';
 export class TodosResult {
   public readonly isLoading = input.required<boolean>();
   public readonly todos = model.required<ITodoResult[]>();
-
-  public filterOptions = ['All', 'Active', 'Completed'];
-  public selectedFilter = signal<string>('All');
+  public readonly filterOptions = input<string[]>([]);
+  public readonly selectedFilter = model<string>();
 
   protected todosLength = computed(() => this.todos().length);
   private countSelected = computed(() => this.todos().filter((x) => x.isSelected).length);

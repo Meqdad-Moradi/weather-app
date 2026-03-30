@@ -3,8 +3,8 @@
 
   <app-filter-items
     [itemsCount]="todosLength()"
-    [filterOptions]="filterOptions"
-    [selectedFilter]="selectedFilter()"
+    [filterOptions]="filterOptions()"
+    [(selectedFilter)]="selectedFilter"
   />
 
   <header

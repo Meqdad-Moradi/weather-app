@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 
 import {
   createInitialTodo,
@@ -38,12 +38,22 @@ export class Todos implements OnInit {
   private readonly destroyRef = inject(DestroyRef);
 
   private todos = signal<ITodoResult[]>([]);
-  protected filteredTodos = signal<ITodoResult[]>([]);
 
   protected todoModel = signal<ITodo>(createInitialTodo());
   protected todoForm = form(this.todoModel, todoSchema);
   protected isFormShowing = signal(true);
   protected isLoading = false;
+
+  protected filterOptions = ['All', 'Active', 'Completed'];
+  protected selectedFilter = signal<string>('All');
+
+  protected filteredTodos = computed(() => {
+    if (this.selectedFilter() === 'All') {
+      return this.todos();
+    }
+    const isActive = this.selectedFilter() === 'Active';
+    return this.todos().filter((x) => x.isActive === isActive);
+  });
 
   ngOnInit(): void {
     this.getTodos();
@@ -63,7 +73,6 @@ export class Todos implements OnInit {
         this.isLoading = false;
         const response: ITodoResult[] = res.map((x) => ({ ...x, isSelected: false }));
         this.todos.set(response);
-        this.filteredTodos.set(response);
       });
   }
 
@@ -81,7 +90,7 @@ export class Todos implements OnInit {
       .addTodo(newTodo)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
-        this.filteredTodos.update((todos) => [...todos, { ...res, isSelected: false }]);
+        this.todos.update((todos) => [...todos, { ...res, isSelected: false }]);
         this.todoModel.set(createInitialTodo());
       });
   }
@@ -104,7 +113,7 @@ export class Todos implements OnInit {
       .updateTodo(todo!)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
-        this.filteredTodos.update((todos) =>
+        this.todos.update((todos) =>
           todos.map((x) => (x.id === id ? { ...x, isActive: res.isActive } : x)),
         );
       });
@@ -115,7 +124,7 @@ export class Todos implements OnInit {
    * @param id string
    */
   private deleteTodo(id: string): void {
-    this.filteredTodos.update((todos) => todos.filter((x) => x.id !== id));
+    this.todos.update((todos) => todos.filter((x) => x.id !== id));
     this.apiTodosService.deleteTodo(id).pipe(takeUntilDestroyed(this.destroyRef)).subscribe();
   }
 

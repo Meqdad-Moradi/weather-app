@@ -34,5 +34,10 @@
   </div>
 
   <!-- display todos -->
-  <app-todos-result [isLoading]="isLoading" [todos]="filteredTodos()" />
+  <app-todos-result
+    [isLoading]="isLoading"
+    [todos]="filteredTodos()"
+    [filterOptions]="filterOptions"
+    [(selectedFilter)]="selectedFilter"
+  />
 </section>
