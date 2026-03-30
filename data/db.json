@@ -85,6 +85,22 @@
       "id": "43jQU3YsIxU"
     }
   ],
-  "todos": [],
+  "todos": [
+    {
+      "id": "cvccToH6beM",
+      "description": "foo",
+      "isActive": true
+    },
+    {
+      "id": "aDcAR49Cd0Q",
+      "description": "asdfa",
+      "isActive": true
+    },
+    {
+      "id": "GtLtorDT0d0",
+      "description": "asfkjlsf",
+      "isActive": true
+    }
+  ],
   "$schema": "./node_modules/json-server/schema.json"
 }

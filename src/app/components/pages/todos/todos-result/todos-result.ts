@@ -17,6 +17,8 @@ export class TodosResult {
   public readonly todos = model.required<ITodoResult[]>();
   public readonly filterOptions = input<string[]>([]);
   public readonly selectedFilter = model<string>();
+  public readonly searchQuery = model<string>('');
+  public readonly isSearchControlVisible = input<boolean>();
 
   protected todosLength = computed(() => this.todos().length);
   private countSelected = computed(() => this.todos().filter((x) => x.isSelected).length);

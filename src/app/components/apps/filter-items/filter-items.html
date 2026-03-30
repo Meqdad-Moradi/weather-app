@@ -4,10 +4,30 @@
   </div>
 
   <div>
+    <!-- search control -->
+    @if (isSearchControlVisible()) {
+      <mat-form-field class="custom-field max-w-xl no-hover-effect no-hint match-height mr-4">
+        <input
+          type="text"
+          matInput
+          placeholder="Search..."
+          [(ngModel)]="searchQuery"
+          [disabled]="allDisabled()"
+        />
+        <button class="cursor-pointer" matSuffix (click)="searchQuery.set('')">
+          <mat-icon>clear</mat-icon>
+        </button>
+      </mat-form-field>
+    }
+
     <!-- filter options -->
     @if (filterOptions()?.length) {
       <mat-form-field class="custom-field no-hover-effect no-hint match-height">
-        <mat-select [value]="selectedFilter()" (selectionChange)="onFilterChange($event)">
+        <mat-select
+          [value]="selectedFilter()"
+          [disabled]="allDisabled()"
+          (selectionChange)="onFilterChange($event)"
+        >
           <mat-select-trigger>{{ selectedFilter() }}</mat-select-trigger>
           @for (option of filterOptions(); track option) {
             <mat-option [value]="option">{{ option }}</mat-option>
@@ -20,7 +40,11 @@
     @if (sortOptions()?.length) {
       <mat-form-field>
         <mat-label>Sort Items</mat-label>
-        <mat-select [value]="selectedSort()" (selectionChange)="onSortChange($event)">
+        <mat-select
+          [value]="selectedSort()"
+          [disabled]="allDisabled()"
+          (selectionChange)="onSortChange($event)"
+        >
           <mat-select-trigger>{{ selectedSort() }}</mat-select-trigger>
           @for (option of sortOptions(); track option) {
             <mat-option [value]="option">{{ option }}</mat-option>

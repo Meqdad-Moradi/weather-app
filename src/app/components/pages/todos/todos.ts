@@ -46,13 +46,23 @@ export class Todos implements OnInit {
 
   protected filterOptions = ['All', 'Active', 'Completed'];
   protected selectedFilter = signal<string>('All');
+  protected searchQuery = signal<string>('');
 
   protected filteredTodos = computed(() => {
-    if (this.selectedFilter() === 'All') {
+    if (this.selectedFilter() === 'All' && !this.searchQuery()) {
       return this.todos();
     }
+
+    const searchQueries = this.searchQuery().trim().toLocaleLowerCase().split(' ');
     const isActive = this.selectedFilter() === 'Active';
-    return this.todos().filter((x) => x.isActive === isActive);
+
+    return this.todos().filter((x) =>
+      searchQueries.every(
+        (q) =>
+          x.description.toLocaleLowerCase().includes(q) &&
+          (x.isActive === isActive || this.selectedFilter() === 'All'),
+      ),
+    );
   });
 
   ngOnInit(): void {
