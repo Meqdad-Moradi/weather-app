@@ -48,6 +48,7 @@ export class Todos implements OnInit {
   protected selectedFilter = signal<string>('All');
   protected searchQuery = signal<string>('');
 
+  protected todosLength = computed(() => this.todos().length);
   protected filteredTodos = computed(() => {
     if (this.selectedFilter() === 'All' && !this.searchQuery()) {
       return this.todos();

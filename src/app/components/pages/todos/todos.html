@@ -35,6 +35,7 @@
 
   <!-- display todos -->
   <app-todos-result
+    [todosLength]="todosLength()"
     [isLoading]="isLoading"
     [todos]="filteredTodos()"
     [filterOptions]="filterOptions"

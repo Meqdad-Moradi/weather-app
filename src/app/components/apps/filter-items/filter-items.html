@@ -6,7 +6,10 @@
   <div>
     <!-- search control -->
     @if (isSearchControlVisible()) {
-      <mat-form-field class="custom-field max-w-xl no-hover-effect no-hint match-height mr-4">
+      <mat-form-field
+        class="custom-field max-w-xl no-hover-effect no-hint match-height mr-4"
+        matTooltip="{{ allDisabled() ? 'There is no item to search' : '' }}"
+      >
         <input
           type="text"
           matInput
@@ -22,7 +25,10 @@
 
     <!-- filter options -->
     @if (filterOptions()?.length) {
-      <mat-form-field class="custom-field no-hover-effect no-hint match-height">
+      <mat-form-field
+        class="custom-field no-hover-effect no-hint match-height"
+        matTooltip="{{ allDisabled() ? 'There is no item to filter' : '' }}"
+      >
         <mat-select
           [value]="selectedFilter()"
           [disabled]="allDisabled()"

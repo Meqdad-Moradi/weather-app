@@ -3,11 +3,19 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectChange, MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
-import { MatIcon } from "@angular/material/icon";
+import { MatIcon } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-filter-items',
-  imports: [MatFormFieldModule, MatSelectModule, MatInputModule, FormsModule, MatIcon],
+  imports: [
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatTooltipModule,
+    MatIcon,
+    FormsModule,
+  ],
   templateUrl: './filter-items.html',
   styleUrl: './filter-items.css',
 })
