@@ -93,6 +93,10 @@
   height: 16px !important;
 }
 
+// reset autocomplete panel padding
+.mat-mdc-autocomplete-panel,
+// reset mat-select panel padding
+.mat-mdc-select-panel,
 // mat menu adjustments
 .mat-mdc-menu-content {
   padding: 0 !important;
