@@ -19,8 +19,19 @@
     } @else {
       <mat-icon>done_all</mat-icon>
     }
-    <button class="grid! place-items-center!" matIconButton (click)="onDelete($event)">
-      <mat-icon>delete</mat-icon>
+    <button
+      class="grid! place-items-center!"
+      matIconButton
+      [matMenuTriggerFor]="menu"
+      (click)="$event.stopPropagation()"
+    >
+      <span class="material-icons-outlined">delete</span>
     </button>
+    <mat-menu #menu="matMenu">
+      <button class="flex gap-2 menu-item-warn" mat-menu-item (click)="onDelete($event)">
+        <span class="material-icons-outlined" matMenuItemIcon>delete</span>
+        <span>Delete</span>
+      </button>
+    </mat-menu>
   </div>
 </div>

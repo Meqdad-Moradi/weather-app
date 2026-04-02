@@ -92,3 +92,17 @@
   width: 16px !important;
   height: 16px !important;
 }
+
+// mat menu adjustments
+.mat-mdc-menu-content {
+  padding: 0 !important;
+}
+.menu-item-warn {
+  color: var(--mat-sys-error, var(--orange-red)) !important;
+
+  // Ändert auch die Farbe des Icons innerhalb des Items
+  .mat-icon,
+  .material-icons-outlined {
+    color: inherit !important;
+  }
+}

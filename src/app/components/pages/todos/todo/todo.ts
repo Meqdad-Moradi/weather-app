@@ -5,10 +5,11 @@ import { MatCheckbox } from '@angular/material/checkbox';
 import { MatIcon } from '@angular/material/icon';
 import { EnTodoAction, ITodoResult, TodoAction } from '../../../../models/todo.model';
 import { TodosService } from '../../../../services/todos-service';
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-todo',
-  imports: [MatCheckbox, MatIcon, MatButtonModule],
+  imports: [MatCheckbox, MatIcon, MatButtonModule, MatMenuModule],
   templateUrl: './todo.html',
   styleUrl: './todo.css',
 })
