@@ -1,33 +1,25 @@
 import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
 
-import {
-  createInitialTodo,
-  EnTodoAction,
-  ITodo,
-  ITodoResult,
-  todoSchema,
-} from '../../../models/todo.model';
-import { form, FormField } from '@angular/forms/signals';
+import { createInitialTodo, EnTodoAction, ITodo, ITodoResult } from '../../../models/todo.model';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonModule } from '@angular/material/button';
-import { NgClass } from '@angular/common';
 import { ApiTodos } from '../../../services/api/api-todos';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { TodosResult } from './todos-result/todos-result';
 import { TodosService } from '../../../services/todos-service';
+import { AddTodo } from './add-todo/add-todo';
 
 @Component({
   selector: 'app-todos',
   imports: [
     MatFormFieldModule,
     MatInputModule,
-    FormField,
     MatCheckboxModule,
     MatButtonModule,
-    NgClass,
     TodosResult,
+    AddTodo,
   ],
   templateUrl: './todos.html',
   styleUrl: './todos.css',
@@ -39,15 +31,15 @@ export class Todos implements OnInit {
 
   private todos = signal<ITodoResult[]>([]);
 
-  protected todoModel = signal<ITodo>(createInitialTodo());
-  protected todoForm = form(this.todoModel, todoSchema);
-  protected isFormShowing = signal(true);
+  protected isFormShowing = computed(() => this.todosService.isFormShowing());
   protected isLoading = false;
-
   protected filterOptions = ['All', 'Active', 'Completed'];
   protected selectedFilter = signal<string>('All');
   protected searchQuery = signal<string>('');
 
+  /**
+   * computed signals
+   */
   protected todosLength = computed(() => this.todos().length);
   protected filteredTodos = computed(() => {
     if (this.selectedFilter() === 'All' && !this.searchQuery()) {
@@ -91,18 +83,13 @@ export class Todos implements OnInit {
    * onSubmit
    * @param e Event
    */
-  protected onSubmit(e: Event): void {
-    e.preventDefault();
-    if (this.todoForm().invalid()) return;
-
-    const newTodo: ITodo = { ...this.todoForm().value(), id: crypto.randomUUID() };
-
+  protected onSubmit(newTodo: ITodo): void {
     this.apiTodosService
       .addTodo(newTodo)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
         this.todos.update((todos) => [...todos, { ...res, isSelected: false }]);
-        this.todoModel.set(createInitialTodo());
+        this.todosService.todoModel.set(createInitialTodo());
       });
   }
 
@@ -110,7 +97,8 @@ export class Todos implements OnInit {
    * toggleForm
    */
   protected toggleForm(): void {
-    this.isFormShowing.set(!this.isFormShowing());
+    const isFormShowing = this.isFormShowing();
+    this.todosService.isFormShowing.set(!isFormShowing);
   }
 
   /**
