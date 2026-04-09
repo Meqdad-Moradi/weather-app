@@ -85,32 +85,6 @@
       "id": "43jQU3YsIxU"
     }
   ],
-  "todos": [
-    {
-      "id": "xBb7cT4IATs",
-      "description": "slkjdf",
-      "isActive": true
-    },
-    {
-      "id": "KkYL10wAOlQ",
-      "description": "sdsdsdss",
-      "isActive": true
-    },
-    {
-      "id": "7S69SJoo5gg",
-      "description": "jksdjksd",
-      "isActive": true
-    },
-    {
-      "id": "1DfMIoc_8Ow",
-      "description": "jksdksdjksdjksd",
-      "isActive": true
-    },
-    {
-      "id": "Cg02F4A4hAw",
-      "description": "jkds",
-      "isActive": true
-    }
-  ],
+  "todos": [],
   "$schema": "./node_modules/json-server/schema.json"
 }
