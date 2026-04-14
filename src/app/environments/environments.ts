@@ -18,5 +18,11 @@ export const environment = {
       abbr: 'TO',
       icon: 'note_add',
     },
+    joblisting: {
+      route: 'joblisting',
+      name: 'Job Listing',
+      abbr: 'JL',
+      icon: 'work_outline',
+    },
   },
 };
