@@ -1,3 +1,13 @@
 <section class="container mb-8">
   <app-main-title title="Job Listing" />
+
+  @if (isLoading()) {
+    <mat-progress-spinner class="mx-auto mt-4" diameter="36" mode="indeterminate" />
+  } @else {
+    <article class="flex flex-col bg-(--fg) border-t border-(--text)/10">
+      @for (job of filteredJobListings(); track job.id) {
+        <span>{{ job.position }} - {{ job.company }}</span>
+      }
+    </article>
+  }
 </section>
