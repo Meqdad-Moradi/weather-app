@@ -1,6 +1,6 @@
 @if (job()) {
   <div
-    class="flex flex-wrap items-center justify-between gap-8 p-5 mt-4 bg-(--fg) rounded-md shadow hover:border-l-4 hover:border-(--pill-accent) transition-all duration-300"
+    class="flex flex-wrap items-center justify-between gap-8 p-5 pr-6 mt-4 bg-(--fg) rounded-md shadow border-l-4 border-(--fg) hover:border-l-4 hover:border-(--pill-accent) transition-all duration-300"
   >
     <div class="flex items-center gap-4">
       <div>
@@ -40,7 +40,14 @@
     <!-- languages -->
     <div class="flex items-center gap-2">
       @for (language of job().languages; track language) {
-        <span class="pill rounded-md px-3 py-1 cursor-pointer">{{ language }}</span>
+        <span
+          class="pill rounded-md px-3 py-1 cursor-pointer"
+          role="button"
+          tabindex="0"
+          (click)="onSetFilter(language)"
+        >
+          {{ language }}
+        </span>
       }
     </div>
   </div>

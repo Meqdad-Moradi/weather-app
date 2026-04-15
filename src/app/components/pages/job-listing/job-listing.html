@@ -8,7 +8,7 @@
       <!-- Job Listings Header Filter -->
       @if (filterItems().length) {
         <header
-          class="flex flex-wrap items-center justify-between bg-(--fg) p-5 rounded-lg shadow"
+          class="sticky top-0 w-full flex flex-wrap items-center justify-between bg-(--fg) p-5 mb-4 rounded-lg shadow"
           animate.enter="enter-animation"
         >
           <mat-chip-grid>
@@ -30,8 +30,13 @@
         </header>
       }
 
+      <!-- Job Listings count -->
+      <div class="flex items-center">
+        <p class="text-(--text)">{{ filteredJobListings().length }} jobs found</p>
+      </div>
+
       @for (job of filteredJobListings(); track job.id) {
-        <app-job-list-item [job]="job" />
+        <app-job-list-item [job]="job" (setFilter)="onSetFilter($event)" />
       } @empty {
         <span>No Job found...</span>
       }

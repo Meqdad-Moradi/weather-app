@@ -7,8 +7,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { JobListItem } from './job-list-item/job-list-item';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
-import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatButtonModule } from '@angular/material/button';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-job-listing',
@@ -26,12 +26,27 @@ import { MatButtonModule } from '@angular/material/button';
 export class JobListing implements OnInit {
   private readonly jobListingsService = inject(ApiJoblisting);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly snackBar = inject(MatSnackBar);
 
   private jobListings = signal<IJobListing[]>([]);
 
-  public filteredJobListings = computed(() => this.jobListings());
+  public filteredJobListings = computed(() => {
+    const filters = this.filterItems();
+    if (filters.length === 0) {
+      return this.jobListings();
+    }
+    const joblistings = this.jobListings();
+
+    return joblistings.filter((listing) =>
+      listing.languages.some((lang) => filters.includes(lang)),
+    );
+  });
+
   public isLoading = signal(false);
   public filterItems = signal<string[]>([]);
+
+  protected listingsLength = computed(() => this.jobListings().length);
+  protected filtersLength = computed(() => this.filterItems().length);
 
   ngOnInit(): void {
     this.getJobListings();
@@ -74,5 +89,15 @@ export class JobListing implements OnInit {
    */
   public clearAll(): void {
     this.filterItems.set([]);
+  }
+
+  public onSetFilter(item: string): void {
+    this.filterItems.update((items) => {
+      if (items.includes(item)) {
+        this.snackBar.open(`"${item}" is already added to filter`, 'Close', { duration: 3000 });
+        return items;
+      }
+      return [...items, item];
+    });
   }
 }
