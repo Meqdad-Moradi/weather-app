@@ -4,10 +4,11 @@ import { ApiJoblisting } from '../../../services/api/api-joblisting';
 import { IJobListing } from '../../../models/job-listing.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { JobListItem } from "./job-list-item/job-list-item";
 
 @Component({
   selector: 'app-job-listing',
-  imports: [MainTitle, MatProgressSpinnerModule],
+  imports: [MainTitle, MatProgressSpinnerModule, JobListItem],
   templateUrl: './job-listing.html',
   styleUrl: './job-listing.css',
 })

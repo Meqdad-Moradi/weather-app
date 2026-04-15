@@ -85,10 +85,26 @@
       "id": "43jQU3YsIxU"
     }
   ],
-  "todos": [],
+  "todos": [
+    {
+      "id": "oBtfQwo_6U8",
+      "description": "lksjdf",
+      "isActive": true
+    },
+    {
+      "id": "uR2W4-xrsO4",
+      "description": "sda",
+      "isActive": true
+    },
+    {
+      "id": "ERfA4Jxj5bw",
+      "description": "asdfa",
+      "isActive": true
+    }
+  ],
   "joblisting": [
     {
-      "id": 1,
+      "id": "1",
       "company": "Photosnap",
       "logo": "./assets/images/photosnap.svg",
       "new": true,
@@ -99,11 +115,15 @@
       "postedAt": "1d ago",
       "contract": "Full Time",
       "location": "USA Only",
-      "languages": ["HTML", "CSS", "JavaScript"],
+      "languages": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
       "tools": []
     },
     {
-      "id": 2,
+      "id": "2",
       "company": "Manage",
       "logo": "./assets/images/manage.svg",
       "new": true,
@@ -114,11 +134,15 @@
       "postedAt": "1d ago",
       "contract": "Part Time",
       "location": "Remote",
-      "languages": ["Python"],
-      "tools": ["React"]
+      "languages": [
+        "Python"
+      ],
+      "tools": [
+        "React"
+      ]
     },
     {
-      "id": 3,
+      "id": "3",
       "company": "Account",
       "logo": "./assets/images/account.svg",
       "new": true,
@@ -129,11 +153,16 @@
       "postedAt": "2d ago",
       "contract": "Part Time",
       "location": "USA Only",
-      "languages": ["JavaScript"],
-      "tools": ["React", "Sass"]
+      "languages": [
+        "JavaScript"
+      ],
+      "tools": [
+        "React",
+        "Sass"
+      ]
     },
     {
-      "id": 4,
+      "id": "4",
       "company": "MyHome",
       "logo": "./assets/images/myhome.svg",
       "new": false,
@@ -144,11 +173,14 @@
       "postedAt": "5d ago",
       "contract": "Contract",
       "location": "USA Only",
-      "languages": ["CSS", "JavaScript"],
+      "languages": [
+        "CSS",
+        "JavaScript"
+      ],
       "tools": []
     },
     {
-      "id": 5,
+      "id": "5",
       "company": "Loop Studios",
       "logo": "./assets/images/loop-studios.svg",
       "new": false,
@@ -159,11 +191,16 @@
       "postedAt": "1w ago",
       "contract": "Full Time",
       "location": "Worldwide",
-      "languages": ["JavaScript", "Ruby"],
-      "tools": ["Sass"]
+      "languages": [
+        "JavaScript",
+        "Ruby"
+      ],
+      "tools": [
+        "Sass"
+      ]
     },
     {
-      "id": 6,
+      "id": "6",
       "company": "FaceIt",
       "logo": "./assets/images/faceit.svg",
       "new": false,
@@ -174,11 +211,15 @@
       "postedAt": "2w ago",
       "contract": "Full Time",
       "location": "UK Only",
-      "languages": ["Ruby"],
-      "tools": ["RoR"]
+      "languages": [
+        "Ruby"
+      ],
+      "tools": [
+        "RoR"
+      ]
     },
     {
-      "id": 7,
+      "id": "7",
       "company": "Shortly",
       "logo": "./assets/images/shortly.svg",
       "new": false,
@@ -189,11 +230,16 @@
       "postedAt": "2w ago",
       "contract": "Full Time",
       "location": "Worldwide",
-      "languages": ["HTML", "JavaScript"],
-      "tools": ["Sass"]
+      "languages": [
+        "HTML",
+        "JavaScript"
+      ],
+      "tools": [
+        "Sass"
+      ]
     },
     {
-      "id": 8,
+      "id": "8",
       "company": "Insure",
       "logo": "./assets/images/insure.svg",
       "new": false,
@@ -204,11 +250,16 @@
       "postedAt": "2w ago",
       "contract": "Full Time",
       "location": "USA Only",
-      "languages": ["JavaScript"],
-      "tools": ["Vue", "Sass"]
+      "languages": [
+        "JavaScript"
+      ],
+      "tools": [
+        "Vue",
+        "Sass"
+      ]
     },
     {
-      "id": 9,
+      "id": "9",
       "company": "Eyecam Co.",
       "logo": "./assets/images/eyecam-co.svg",
       "new": false,
@@ -219,11 +270,16 @@
       "postedAt": "3w ago",
       "contract": "Full Time",
       "location": "Worldwide",
-      "languages": ["JavaScript", "Python"],
-      "tools": ["Django"]
+      "languages": [
+        "JavaScript",
+        "Python"
+      ],
+      "tools": [
+        "Django"
+      ]
     },
     {
-      "id": 10,
+      "id": "10",
       "company": "The Air Filter Company",
       "logo": "./assets/images/the-air-filter-company.svg",
       "new": false,
@@ -234,8 +290,14 @@
       "postedAt": "1mo ago",
       "contract": "Part Time",
       "location": "Worldwide",
-      "languages": ["JavaScript"],
-      "tools": ["React", "Sass"]
+      "languages": [
+        "JavaScript"
+      ],
+      "tools": [
+        "React",
+        "Sass"
+      ]
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

@@ -4,9 +4,11 @@
   @if (isLoading()) {
     <mat-progress-spinner class="mx-auto mt-4" diameter="36" mode="indeterminate" />
   } @else {
-    <article class="flex flex-col bg-(--fg) border-t border-(--text)/10">
+    <article class="flex flex-col">
       @for (job of filteredJobListings(); track job.id) {
-        <span>{{ job.position }} - {{ job.company }}</span>
+        <app-job-list-item [job]="job" />
+      } @empty {
+        <span>No Job found...</span>
       }
     </article>
   }

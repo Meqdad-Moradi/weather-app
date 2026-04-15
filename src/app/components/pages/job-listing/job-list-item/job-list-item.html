@@ -1,0 +1,47 @@
+@if (job()) {
+  <div
+    class="flex flex-wrap items-center justify-between gap-8 p-5 mt-4 bg-(--fg) rounded-md shadow hover:border-l-4 hover:border-(--pill-accent) transition-all duration-300"
+  >
+    <div class="flex items-center gap-4">
+      <div>
+        <img class="max-w-16" src="{{ job().logo }}" alt="{{ job().company }}" />
+      </div>
+
+      <!-- details -->
+      <div class="flex flex-col gap-1 text-sm">
+        <div class="flex items-center gap-4 text-(--pill-accent) font-semibold">
+          <span> {{ job().company }} </span>
+          @if (job().new) {
+            <span class="bg-(--pill-accent) text-(--fg) px-2 py-1 rounded-full text-xs">
+              NEW!
+            </span>
+          }
+          @if (job().featured) {
+            <span class="bg-(--gray-700) text-(--fg) px-2 py-1 rounded-full text-xs">
+              FEATURED
+            </span>
+          }
+        </div>
+
+        <h3 class="font-bold text-base text-(--text) hover:text-(--pill-accent) cursor-pointer">
+          {{ job().position }}
+        </h3>
+
+        <div class="flex items-center text-(--text)/80">
+          <span>{{ job().postedAt }}</span>
+          <mat-icon class="scale-25 opacity-50">fiber_manual_record</mat-icon>
+          <span>{{ job().contract }}</span>
+          <mat-icon class="scale-25 opacity-50">fiber_manual_record</mat-icon>
+          <span>{{ job().location }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- languages -->
+    <div class="flex items-center gap-2">
+      @for (language of job().languages; track language) {
+        <span class="pill rounded-md px-3 py-1 cursor-pointer">{{ language }}</span>
+      }
+    </div>
+  </div>
+}
