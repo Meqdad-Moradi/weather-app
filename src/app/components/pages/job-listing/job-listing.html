@@ -5,6 +5,31 @@
     <mat-progress-spinner class="mx-auto mt-4" diameter="36" mode="indeterminate" />
   } @else {
     <article class="flex flex-col">
+      <!-- Job Listings Header Filter -->
+      @if (filterItems().length) {
+        <header
+          class="flex flex-wrap items-center justify-between bg-(--fg) p-5 rounded-lg shadow"
+          animate.enter="enter-animation"
+        >
+          <mat-chip-grid>
+            @for (item of filterItems(); track $index) {
+              <mat-chip-row (removed)="remove(item)">
+                {{ item }}
+                <button matChipRemove [attr.aria-label]="'remove ' + item">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+          </mat-chip-grid>
+
+          <!-- clear all -->
+          <button mat-raised-button (click)="clearAll()">
+            Clear
+            <mat-icon>cancel</mat-icon>
+          </button>
+        </header>
+      }
+
       @for (job of filteredJobListings(); track job.id) {
         <app-job-list-item [job]="job" />
       } @empty {
