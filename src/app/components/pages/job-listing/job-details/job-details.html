@@ -1,12 +1,7 @@
 <section class="container py-8">
   @if (job()) {
     <div class="flex items-center gap-4 mb-6">
-      <button
-        class="grid place-items-center text-(--pill-accent) hover:text-(--pill-accent)/80"
-        mat-icon-button
-        (click)="goBack()"
-        matTooltip="Back to Job Listing"
-      >
+      <button matIconButton (click)="goBack()" matTooltip="Back to Job Listing">
         <mat-icon>arrow_back</mat-icon>
       </button>
       <div>
@@ -71,7 +66,7 @@
             <ul class="space-y-2">
               @for (responsibility of jobDetailInfo()!.responsibilities; track $index) {
                 <li class="flex items-start gap-3 text-(--text)/70">
-                  <span class="text-(--pill-accent) font-bold mt-1">•</span>
+                  <span class="text-(--pill-accent) font-bold">•</span>
                   <span>{{ responsibility }}</span>
                 </li>
               }
