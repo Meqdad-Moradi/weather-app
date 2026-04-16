@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { Observable } from 'rxjs';
 import { IJobListing } from '../../models/job-listing.model';
 
@@ -10,6 +10,8 @@ export class ApiJoblisting {
   private readonly http = inject(HttpClient);
 
   private readonly baseUrl = 'http://localhost:3000/joblisting';
+
+  public jobListings = signal<IJobListing[]>([]);
 
   /**
    * getJobListings

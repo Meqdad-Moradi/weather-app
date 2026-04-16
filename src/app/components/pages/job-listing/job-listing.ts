@@ -24,11 +24,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrl: './job-listing.css',
 })
 export class JobListing implements OnInit {
-  private readonly jobListingsService = inject(ApiJoblisting);
+  private readonly apiJobListingsService = inject(ApiJoblisting);
   private readonly destroyRef = inject(DestroyRef);
   private readonly snackBar = inject(MatSnackBar);
 
-  private jobListings = signal<IJobListing[]>([]);
+  private jobListings = computed(() => this.apiJobListingsService.jobListings());
 
   public filteredJobListings = computed(() => {
     const filters = this.filterItems();
@@ -58,12 +58,12 @@ export class JobListing implements OnInit {
   private getJobListings(): void {
     this.isLoading.set(true);
 
-    this.jobListingsService
+    this.apiJobListingsService
       .getJobListings()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((listings) => {
         this.isLoading.set(false);
-        this.jobListings.set(listings);
+        this.apiJobListingsService.jobListings.set(listings);
       });
   }
 

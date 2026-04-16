@@ -1,0 +1,159 @@
+<section class="container py-8">
+  @if (job()) {
+    <div class="flex items-center gap-4 mb-6">
+      <button
+        class="grid place-items-center text-(--pill-accent) hover:text-(--pill-accent)/80"
+        mat-icon-button
+        (click)="goBack()"
+        matTooltip="Back to Job Listing"
+      >
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div>
+        <h1 class="text-2xl font-bold text-(--text)">{{ job()!.position }}</h1>
+        <p class="text-(--text)/60">{{ job()!.company }}</p>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Main Content -->
+      <div class="lg:col-span-2 flex flex-col gap-6">
+        <!-- Job Header Card -->
+        <div class="bg-(--fg) p-6 rounded-lg shadow">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-center gap-4">
+              <img class="w-20 h-20" src="{{ job()!.logo }}" alt="{{ job()!.company }} logo" />
+              <div>
+                <p class="text-sm text-(--text)/60">{{ job()!.company }}</p>
+                <h2 class="text-xl font-bold text-(--text)">{{ job()!.position }}</h2>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 mb-4">
+            <div class="flex items-center gap-2 px-3 py-2 bg-(--bg) rounded-md text-(--text)/70">
+              <mat-icon class="scale-60">work</mat-icon>
+              <span class="text-sm">{{ job()!.role }}</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 bg-(--bg) rounded-md text-(--text)/70">
+              <mat-icon class="scale-60">signal_cellular_alt</mat-icon>
+              <span class="text-sm">{{ job()!.level }}</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 bg-(--bg) rounded-md text-(--text)/70">
+              <mat-icon class="scale-60">work_outline</mat-icon>
+              <span class="text-sm">{{ job()!.contract }}</span>
+            </div>
+            <div class="flex items-center gap-2 px-3 py-2 bg-(--bg) rounded-md text-(--text)/70">
+              <mat-icon class="scale-60">location_on</mat-icon>
+              <span class="text-sm">{{ job()!.location }}</span>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap gap-2">
+            @for (language of job()!.languages; track language) {
+              <span class="pill rounded-md px-3 py-1 text-sm">{{ language }}</span>
+            }
+          </div>
+        </div>
+
+        <!-- Description -->
+        @if (jobDetailInfo()?.description) {
+          <div class="bg-(--fg) p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold text-(--text) mb-3">About the Role</h3>
+            <p class="text-(--text)/70 leading-relaxed">{{ jobDetailInfo()!.description }}</p>
+          </div>
+        }
+
+        <!-- Responsibilities -->
+        @if (jobDetailInfo()?.responsibilities) {
+          <div class="bg-(--fg) p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold text-(--text) mb-4">Responsibilities</h3>
+            <ul class="space-y-2">
+              @for (responsibility of jobDetailInfo()!.responsibilities; track $index) {
+                <li class="flex items-start gap-3 text-(--text)/70">
+                  <span class="text-(--pill-accent) font-bold mt-1">•</span>
+                  <span>{{ responsibility }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        <!-- Requirements -->
+        @if (jobDetailInfo()?.requirements) {
+          <div class="bg-(--fg) p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold text-(--text) mb-4">Requirements</h3>
+            <ul class="space-y-2">
+              @for (requirement of jobDetailInfo()!.requirements; track $index) {
+                <li class="flex items-start gap-3 text-(--text)/70">
+                  <mat-icon class="text-(--pill-accent) scale-75">check_circle</mat-icon>
+                  <span>{{ requirement }}</span>
+                </li>
+              }
+            </ul>
+          </div>
+        }
+
+        <!-- Benefits -->
+        @if (jobDetailInfo()?.benefits) {
+          <div class="bg-(--fg) p-6 rounded-lg shadow">
+            <h3 class="text-lg font-bold text-(--text) mb-4">Benefits</h3>
+            <div class="grid grid-cols-2 gap-3">
+              @for (benefit of jobDetailInfo()!.benefits; track $index) {
+                <div class="flex items-start gap-2 text-(--text)/70">
+                  <mat-icon class="text-(--pill-accent) scale-75 mt-1">star</mat-icon>
+                  <span class="text-sm">{{ benefit }}</span>
+                </div>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Sidebar -->
+      <div class="lg:col-span-1">
+        <!-- About Company Card -->
+        @if (jobDetailInfo()?.about) {
+          <div class="bg-(--pill-accent) p-6 rounded-lg shadow sticky top-4">
+            <h3 class="text-lg font-bold text-(--bg) mb-3">About Company</h3>
+            <p class="text-(--bg)/80 leading-relaxed text-sm mb-6">
+              {{ jobDetailInfo()!.about }}
+            </p>
+
+            <!-- Tools/Skills -->
+            <div class="mb-6">
+              <h4 class="font-semibold text-(--bg) mb-2 text-sm">Skills & Tools</h4>
+              <div class="flex flex-wrap gap-2">
+                @for (tool of job()!.tools; track tool) {
+                  <span
+                    class="bg-(--bg) text-(--pill-accent) px-3 py-1 rounded text-xs font-medium"
+                  >
+                    {{ tool }}
+                  </span>
+                }
+              </div>
+            </div>
+
+            <!-- Apply Button -->
+            <button
+              mat-raised-button
+              (click)="applyNow()"
+              class="w-full bg-(--bg) text-(--pill-accent) hover:opacity-90"
+            >
+              <mat-icon class="mr-2">send</mat-icon>
+              Apply Now
+            </button>
+          </div>
+        }
+      </div>
+    </div>
+  } @else {
+    <div class="flex flex-col items-center justify-center py-12">
+      <mat-icon class="text-6xl text-(--text)/30 mb-4">not_found</mat-icon>
+      <p class="text-(--text)/60 mb-6">Job not found</p>
+      <button mat-raised-button (click)="goBack()" class="text-(--pill-accent)">
+        Back to Job Listing
+      </button>
+    </div>
+  }
+</section>

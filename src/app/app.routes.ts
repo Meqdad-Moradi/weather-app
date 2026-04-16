@@ -6,6 +6,7 @@ import { Home } from './components/pages/home/home';
 import { Extensions } from './components/pages/extensions/extensions';
 import { Todos } from './components/pages/todos/todos';
 import { JobListing } from './components/pages/job-listing/job-listing';
+import { JobDetails } from './components/pages/job-listing/job-details/job-details';
 
 export const routes: Routes = [
   {
@@ -17,6 +18,7 @@ export const routes: Routes = [
       { path: 'extensions', component: Extensions, pathMatch: 'full' },
       { path: 'todos', component: Todos, pathMatch: 'full' },
       { path: 'joblisting', component: JobListing, pathMatch: 'full' },
+      { path: 'joblisting/:id', component: JobDetails, pathMatch: 'full' },
     ],
   },
   {

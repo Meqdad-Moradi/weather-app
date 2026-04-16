@@ -13,3 +13,11 @@ export interface IJobListing {
   languages: string[];
   tools: string[];
 }
+
+export interface IJobListingDetailInfo {
+  description: string;
+  responsibilities: string[];
+  requirements: string[];
+  benefits: string[];
+  about: string;
+}

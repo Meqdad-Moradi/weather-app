@@ -23,7 +23,10 @@
           }
         </div>
 
-        <h3 class="font-bold text-base text-(--text) hover:text-(--pill-accent) cursor-pointer">
+        <h3
+          class="font-bold text-base text-(--text) hover:text-(--pill-accent) cursor-pointer"
+          [routerLink]="['/joblisting', job().id]"
+        >
           {{ job().position }}
         </h3>
 
