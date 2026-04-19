@@ -37,8 +37,20 @@
 
         <!-- joblisting -->
         <button mat-list-item [routerLink]="['/', env.apps.joblisting.route]">
-          <span class="material-icons-outlined" matListItemIcon>{{ env.apps.joblisting.icon }}</span>
+          <span class="material-icons-outlined" matListItemIcon>{{
+            env.apps.joblisting.icon
+          }}</span>
           <span matListItemTitle>{{ env.apps.joblisting.name }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
+
+        <!-- character counter -->
+        <button mat-list-item [routerLink]="['/', env.apps.characterCounter.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{
+            env.apps.characterCounter.icon
+          }}</span>
+          <span matListItemTitle>{{ env.apps.characterCounter.name }}</span>
         </button>
 
         <mat-divider></mat-divider>

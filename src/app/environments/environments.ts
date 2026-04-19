@@ -24,5 +24,11 @@ export const environment = {
       abbr: 'JL',
       icon: 'work_outline',
     },
+    characterCounter: {
+      route: 'character-counter',
+      name: 'Character counter',
+      abbr: 'CC',
+      icon: 'functions',
+    },
   },
 };
