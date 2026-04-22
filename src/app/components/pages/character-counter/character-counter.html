@@ -8,8 +8,50 @@
       rows="5"
       [(ngModel)]="text"
       (input)="onInput($event)"
+      [maxlength]="setCharacterLimit() ? characterLimit() : null"
     ></textarea>
   </mat-form-field>
+
+  <!-- Options -->
+  <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+    <div class="flex items-center gap-4">
+      <div>
+        <mat-checkbox [(ngModel)]="excludeSpaces">Exclude Spaces</mat-checkbox>
+        <mat-checkbox [(ngModel)]="setCharacterLimit">Set Character Limit</mat-checkbox>
+      </div>
+      @if (setCharacterLimit()) {
+        <input
+          class="ring-1 ring-(--text)/40 rounded-md max-w-24 px-1"
+          type="number"
+          [ngModel]="characterLimit()"
+          (ngModelChange)="characterLimit.set($event)"
+          min="1"
+        />
+      }
+    </div>
+
+    <!-- Approx. reading time: Based on average reading speed of 200 words per minute -->
+    <span>Approx. reading time: {{ approxReadingTime() | number: '1.2-2' }} min</span>
+  </div>
+
+  <!-- total characters, words and sentence Count -->
+  <div class="flex flex-wrap items-center gap-4 *:flex-1 mb-8">
+    <app-character-count-card
+      backgroundColor="bg-pink-300"
+      text="Total Characters"
+      [count]="totalChars()"
+    />
+    <app-character-count-card
+      backgroundColor="bg-yellow-500"
+      text="Word Count"
+      [count]="wordCount()"
+    />
+    <app-character-count-card
+      backgroundColor="bg-red-400"
+      text="Sentence Count"
+      [count]="sentenceCount()"
+    />
+  </div>
 
   <!-- Letter Density -->
 
@@ -17,13 +59,17 @@
 
   @if (enteredChars().length) {
     <article class="flex flex-col gap-2">
-      @for (char of enteredChars(); track $index) {
-        <div class="max-w-full flex items-center justify-between gap-4">
-          <span> {{ char.char | uppercase }}</span>
-          <mat-progress-bar mode="determinate" value="{{ char.percenter }}"></mat-progress-bar>
-          <div class="flex items-center justify-between gap-2">
-            <span>{{ char.count }}</span>
-            <span>({{ char.percenter | number: '1.2-2' }}%)</span>
+      @for (item of enteredChars(); track $index) {
+        <div class="max-w-full grid grid-cols-[10px_1fr_100px] items-center justify-between gap-4">
+          <span> {{ item.char | uppercase }}</span>
+          <mat-progress-bar
+            [matTooltip]="item.char === ' ' ? 'Space' : ''"
+            mode="determinate"
+            value="{{ item.percenter }}"
+          ></mat-progress-bar>
+          <div class="flex items-center gap-2">
+            <span>{{ item.count }}</span>
+            <span>({{ item.percenter | number: '1.2-2' }}%)</span>
           </div>
         </div>
       }
