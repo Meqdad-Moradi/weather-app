@@ -59,7 +59,7 @@
 
   @if (enteredChars().length) {
     <article class="flex flex-col gap-2">
-      @for (item of enteredChars(); track $index) {
+      @for (item of enteredChars() | slice: 0 : sliceItems(); track $index) {
         <div class="max-w-full grid grid-cols-[10px_1fr_100px] items-center justify-between gap-4">
           <span> {{ item.char | uppercase }}</span>
           <mat-progress-bar
@@ -74,6 +74,7 @@
         </div>
       }
     </article>
+    <button class="cursor-pointer" (click)="onLoadMore()">{{ loadMoreLabel() }}</button>
   } @else {
     <p class="text-(--text)/80">No characters found Start typing to see letter density.</p>
   }

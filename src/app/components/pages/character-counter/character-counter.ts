@@ -1,5 +1,5 @@
 import { Component, computed, signal } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, SlicePipe } from '@angular/common';
 import { MainTitle } from '../../apps/main-title/main-title';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -18,6 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     MainTitle,
     CharacterCountCard,
+    SlicePipe,
     MatFormFieldModule,
     MatInputModule,
     MatProgressBarModule,
@@ -34,6 +35,18 @@ export class CharacterCounter {
   protected setCharacterLimit = signal<boolean>(false);
   protected characterLimit = signal<number>(10);
   protected enteredChars = signal<CharacterCount[]>([]);
+  protected sliceItems = signal<number>(5);
+
+  /**
+   * loadMoreLabel
+   * This computed property determines the label for the "Load More" button based on the number of characters currently displayed.
+   * If the number of characters displayed (sliceItems) is greater than or equal to the total number of unique characters entered (enteredChars.length),
+   * it returns 'No more characters to load'. Otherwise, it returns 'Load More', indicating that there are more characters to display.
+   * @returns label for the Load More button
+   */
+  protected loadMoreLabel = computed(() =>
+    this.sliceItems() >= this.enteredChars().length ? 'No more characters to load' : 'Load More...',
+  );
 
   /**
    * totalChars
@@ -128,5 +141,13 @@ export class CharacterCounter {
         percenter: totalChars > 0 ? (count / totalChars) * 100 : 0,
       })),
     );
+  }
+
+  onLoadMore(): void {
+    if (this.sliceItems() > this.enteredChars().length) {
+      this.sliceItems.set(5);
+      return;
+    }
+    this.sliceItems.update((current) => current + 5);
   }
 }
