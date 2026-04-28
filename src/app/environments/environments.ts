@@ -30,5 +30,11 @@ export const environment = {
       abbr: 'CC',
       icon: 'functions',
     },
+    ageCalculator: {
+      route: 'age-calculator',
+      name: 'Age Calculator',
+      abbr: 'AC',
+      icon: 'cake',
+    },
   },
 };

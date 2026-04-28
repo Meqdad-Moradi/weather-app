@@ -1,0 +1,27 @@
+<section class="container">
+  <app-main-title title="Age Calculator" />
+
+  <div class="bg-(--fg) rounded-2xl p-4 max-w-md mx-auto">
+    <form class="flex flex-col" (submit)="onSubmit($event)">
+      <!-- Day -->
+      <mat-form-field appearance="outline">
+        <mat-label>DAY</mat-label>
+        <input matInput type="number" [formField]="ageCalculatorForm.day" />
+      </mat-form-field>
+
+      <!-- Month -->
+      <mat-form-field appearance="outline">
+        <mat-label>MONTH</mat-label>
+        <input matInput type="number" [formField]="ageCalculatorForm.month" />
+      </mat-form-field>
+
+      <!-- Year -->
+      <mat-form-field appearance="outline">
+        <mat-label>YEAR</mat-label>
+        <input matInput type="number" [formField]="ageCalculatorForm.year" />
+      </mat-form-field>
+
+      <button type="submit" mat-raised-button color="primary">Calculate Age</button>
+    </form>
+  </div>
+</section>

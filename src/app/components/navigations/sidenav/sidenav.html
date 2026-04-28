@@ -54,6 +54,16 @@
         </button>
 
         <mat-divider></mat-divider>
+
+        <!-- age calculator -->
+        <button mat-list-item [routerLink]="['/', env.apps.ageCalculator.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{
+            env.apps.ageCalculator.icon
+          }}</span>
+          <span matListItemTitle>{{ env.apps.ageCalculator.name }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
       </mat-action-list>
       <div class="grid place-content-center py-4">
         <img

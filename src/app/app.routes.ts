@@ -9,6 +9,7 @@ import { JobListing } from './components/pages/job-listing/job-listing';
 import { JobDetails } from './components/pages/job-listing/job-details/job-details';
 import { CharacterCounter } from './components/pages/character-counter/character-counter';
 import { environment } from './environments/environments';
+import { AgeCalculator } from './components/pages/age-calculator/age-calculator';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,11 @@ export const routes: Routes = [
       {
         path: environment.apps.characterCounter.route,
         component: CharacterCounter,
+        pathMatch: 'full',
+      },
+      {
+        path: environment.apps.ageCalculator.route,
+        component: AgeCalculator,
         pathMatch: 'full',
       },
     ],
