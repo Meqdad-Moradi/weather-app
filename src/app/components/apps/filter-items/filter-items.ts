@@ -5,6 +5,7 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { MatIcon } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CustomSearchDropdown } from "../custom-search-dropdown/custom-search-dropdown";
 
 @Component({
   selector: 'app-filter-items',
@@ -15,7 +16,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatIcon,
     FormsModule,
-  ],
+    CustomSearchDropdown
+],
   templateUrl: './filter-items.html',
   styleUrl: './filter-items.css',
 })

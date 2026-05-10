@@ -38,6 +38,11 @@
           @for (option of filterOptions(); track option) {
             <mat-option [value]="option">{{ option }}</mat-option>
           }
+
+          <!-- search option -->
+          <mat-option>
+            <app-custom-search-dropdown />
+          </mat-option>
         </mat-select>
       </mat-form-field>
     }
