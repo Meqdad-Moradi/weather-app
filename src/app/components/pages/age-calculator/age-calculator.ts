@@ -10,6 +10,8 @@ import {
   IAgeCalculator,
 } from '../../../models/age-calculator.model';
 import { form, FormField } from '@angular/forms/signals';
+import moment from 'moment';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-age-calculator',
@@ -21,6 +23,8 @@ export class AgeCalculator {
   protected ageCalculatorModel = signal<IAgeCalculator>(createInitialAgeCalculator());
   protected ageCalculatorForm = form(this.ageCalculatorModel, ageCalculatorSchema);
 
+  protected age = signal<IAgeCalculator | null>(null);
+
   /**
    * onSubmit
    * @returns void
@@ -30,20 +34,42 @@ export class AgeCalculator {
 
     if (this.ageCalculatorForm().invalid()) return;
 
-    const { day, month, year } = this.ageCalculatorForm().value();
-    const today = new Date();
+    const { days: day, months: month, years: year } = this.ageCalculatorForm().value();
     const birthDate = new Date(year!, month! - 1, day!);
-    let age = today.getFullYear() - birthDate.getFullYear();
-    const m = today.getMonth() - birthDate.getMonth();
-    const d = today.getDate() - birthDate.getDate();
+    this.calculateAgeDiff(birthDate.toISOString().split('T')[0]);
+  }
 
-    console.log(today.getDate() - birthDate.getDate());
-    // Adjust age if birthday hasn't occurred yet this year
-    // m < 0: birth month is later this year
-    // m === 0 && today.getDate() < birthDate.getDate(): same month but day hasn't arrived
-    if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-      age--;
+  /**
+   * calculateAgeDiff
+   * Method to calculate the difference in years, months, and days between the input date and the current date
+   * @param value string
+   * @returns void
+   */
+  private calculateAgeDiff(value: string): void {
+    // Format the input date to 'yyyy-MM-dd'
+    const formattedDate = formatDate(value, 'yyyy-MM-dd', 'de-DE');
+    // Create a moment object from the formatted date
+    const birthdate = moment(formattedDate);
+    const now = moment();
+
+    // Calculate full years
+    const years = now.diff(birthdate, 'years');
+    // Add years to birth date for the remaining diff
+    const updatedBirth = birthdate.clone().add(years, 'years');
+
+    // Calculate full months after years
+    const months = now.diff(updatedBirth, 'months');
+    const updatedBirthWithMonths = updatedBirth.clone().add(months, 'months');
+
+    // Remaining days difference
+    const days = now.diff(updatedBirthWithMonths, 'days');
+
+    const result = { years, months, days };
+    if (!result) {
+      // this.displaySnackbar('No date or birthdate is selected!');
+      return;
     }
-    console.log(`Age: ${age} years, ${m} months, and ${d} days`);
+
+    this.age.set(result);
   }
 }

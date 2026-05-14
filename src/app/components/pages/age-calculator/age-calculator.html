@@ -6,22 +6,34 @@
       <!-- Day -->
       <mat-form-field appearance="outline">
         <mat-label>DAY</mat-label>
-        <input matInput type="number" [formField]="ageCalculatorForm.day" />
+        <input matInput type="number" [formField]="ageCalculatorForm.days" />
       </mat-form-field>
 
       <!-- Month -->
       <mat-form-field appearance="outline">
         <mat-label>MONTH</mat-label>
-        <input matInput type="number" [formField]="ageCalculatorForm.month" />
+        <input matInput type="number" [formField]="ageCalculatorForm.months" />
       </mat-form-field>
 
       <!-- Year -->
       <mat-form-field appearance="outline">
         <mat-label>YEAR</mat-label>
-        <input matInput type="number" [formField]="ageCalculatorForm.year" />
+        <input matInput type="number" [formField]="ageCalculatorForm.years" />
       </mat-form-field>
 
       <button type="submit" mat-raised-button color="primary">Calculate Age</button>
     </form>
   </div>
+
+  <!-- Result -->
+  @if (age()) {
+    <div class="bg-(--fg) rounded-2xl p-4 max-w-md mx-auto mt-4">
+      <h2 class="text-xl font-bold mb-2">Your Age:</h2>
+      <p>
+        <b class="text-2xl text-(--primary)">{{ age()?.years }}</b> years,
+        <b class="text-2xl text-(--primary)">{{ age()?.months }}</b> months,
+        <b class="text-2xl text-(--primary)">{{ age()?.days }}</b> days
+      </p>
+    </div>
+  }
 </section>
