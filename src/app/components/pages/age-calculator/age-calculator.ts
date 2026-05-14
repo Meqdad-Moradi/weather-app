@@ -36,7 +36,8 @@ export class AgeCalculator {
 
     const { days: day, months: month, years: year } = this.ageCalculatorForm().value();
     const birthDate = new Date(year!, month! - 1, day!);
-    this.calculateAgeDiff(birthDate.toISOString().split('T')[0]);
+
+    this.calculateAgeDiff(birthDate.toString());
   }
 
   /**
