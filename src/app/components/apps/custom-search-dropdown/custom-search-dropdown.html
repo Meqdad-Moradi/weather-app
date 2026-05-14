@@ -1,36 +1,20 @@
-<div ngCombobox filterMode="auto-select">
-  <div #origin class="material-autocomplete">
-    <span class="search-icon material-symbols-outlined" translate="no" aria-hidden="true"
-      >search</span
-    >
-    <input
-      aria-label="Label dropdown"
-      placeholder="Select a country"
-      [(ngModel)]="query"
-      ngComboboxInput
-      (click)="$event.preventDefault(); $event.stopPropagation()"
-    />
-  </div>
-  <ng-template ngComboboxPopupContainer>
-    <ng-template
-      [cdkConnectedOverlay]="{ origin, usePopover: 'inline', matchWidth: true }"
-      [cdkConnectedOverlayOpen]="true"
-    >
-      <div class="popup">
-        @if (countries().length === 0) {
-          <div class="no-results">No results found</div>
-        }
-        <div ngListbox>
-          @for (country of countries(); track country) {
-            <div ngOption [value]="country" [label]="country">
-              <span class="option-label">{{ country }}</span>
-              <span class="check-icon material-symbols-outlined" translate="no" aria-hidden="true"
-                >check</span
-              >
-            </div>
-          }
-        </div>
-      </div>
-    </ng-template>
-  </ng-template>
+<div class="flex flex-col gap-0.5">
+  <label class="text-sm" for="custom-option" (click)="$event.stopPropagation()">
+    {{ label() }}
+  </label>
+
+  <input
+    id="custom-option"
+    class="border-2 border-(--text)/50 rounded-md p-1 mb-1.5 w-full"
+    type="text"
+    [formControl]="control()"
+    [matAutocomplete]="auto"
+    (click)="$event.stopPropagation()"
+  />
+
+  <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)">
+    @for (country of countries(); track country) {
+      <mat-option [value]="country" (click)="$event.stopPropagation()">{{ country }}</mat-option>
+    }
+  </mat-autocomplete>
 </div>

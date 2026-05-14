@@ -30,7 +30,8 @@
         matTooltip="{{ allDisabled() ? 'There is no item to filter' : '' }}"
       >
         <mat-select
-          [value]="selectedFilter()"
+          #filterSelect
+          [(ngModel)]="selectedFilter"
           [disabled]="allDisabled()"
           (selectionChange)="onFilterChange($event)"
         >
@@ -40,8 +41,12 @@
           }
 
           <!-- search option -->
-          <mat-option>
-            <app-custom-search-dropdown />
+          <mat-option [value]="control.value">
+            <app-custom-search-dropdown
+              [control]="control"
+              label="Select country"
+              (optionSelected)="onOptionSelected()"
+            />
           </mat-option>
         </mat-select>
       </mat-form-field>

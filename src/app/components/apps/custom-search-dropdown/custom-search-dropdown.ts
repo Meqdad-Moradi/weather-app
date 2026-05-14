@@ -1,57 +1,35 @@
-import {
-  afterRenderEffect,
-  Component,
-  computed,
-  signal,
-  viewChild,
-  viewChildren,
-} from '@angular/core';
+import { Component, input, OnInit, output, signal } from '@angular/core';
 
-import { Combobox, ComboboxInput, ComboboxPopupContainer } from '@angular/aria/combobox';
-import { Listbox, Option } from '@angular/aria/listbox';
-import { OverlayModule } from '@angular/cdk/overlay';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  MatAutocompleteModule,
+  MatAutocompleteSelectedEvent,
+} from '@angular/material/autocomplete';
 
 @Component({
   selector: 'app-custom-search-dropdown',
-  imports: [
-    Combobox,
-    ComboboxInput,
-    ComboboxPopupContainer,
-    Listbox,
-    Option,
-    OverlayModule,
-    FormsModule,
-  ],
+  imports: [FormsModule, ReactiveFormsModule, MatAutocompleteModule],
   templateUrl: './custom-search-dropdown.html',
   styleUrl: './custom-search-dropdown.css',
 })
-export class CustomSearchDropdown {
-  /** The combobox listbox popup. */
-  listbox = viewChild<Listbox<string>>(Listbox);
-  /** The options available in the listbox. */
-  options = viewChildren<Option<string>>(Option);
-  /** A reference to the ng aria combobox. */
-  combobox = viewChild<Combobox<string>>(Combobox);
-  /** The query string used to filter the list of countries. */
-  query = signal('');
-  /** The list of countries filtered by the query. */
-  countries = computed(() =>
-    ALL_COUNTRIES.filter((country) => country.toLowerCase().startsWith(this.query().toLowerCase())),
-  );
-  constructor() {
-    // Scrolls to the active item when the active option changes.
-    // The slight delay here is to ensure animations are done before scrolling.
-    afterRenderEffect(() => {
-      const option = this.options().find((opt) => opt.active());
-      setTimeout(() => option?.element.scrollIntoView({ block: 'nearest' }), 50);
-    });
-    // Resets the listbox scroll position when the combobox is closed.
-    afterRenderEffect(() => {
-      if (!this.combobox()?.expanded()) {
-        setTimeout(() => this.listbox()?.element.scrollTo(0, 0), 150);
-      }
-    });
+export class CustomSearchDropdown implements OnInit {
+  readonly control = input.required<FormControl<string>>();
+  readonly label = input.required<string>();
+
+  readonly optionSelected = output<string>();
+
+  protected countries = signal<string[]>([]);
+
+  ngOnInit(): void {
+    this.countries.set(ALL_COUNTRIES);
+  }
+
+  /**
+   * onOptionSelected
+   * @param e MatAutocompleteSelectedEvent
+   */
+  protected onOptionSelected(e: MatAutocompleteSelectedEvent): void {
+    this.optionSelected.emit(e.option.value);
   }
 }
 
