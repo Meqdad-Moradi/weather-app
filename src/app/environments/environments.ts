@@ -36,5 +36,11 @@ export const environment = {
       abbr: 'AC',
       icon: 'cake',
     },
+    appointment: {
+      route: 'appointment',
+      name: 'Appointment',
+      abbr: 'AP',
+      icon: 'event',
+    },
   },
 };

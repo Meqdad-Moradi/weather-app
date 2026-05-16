@@ -10,6 +10,7 @@ import { JobDetails } from './components/pages/job-listing/job-details/job-detai
 import { CharacterCounter } from './components/pages/character-counter/character-counter';
 import { environment } from './environments/environments';
 import { AgeCalculator } from './components/pages/age-calculator/age-calculator';
+import { Appointment } from './components/pages/appointment/appointment';
 
 export const routes: Routes = [
   {
@@ -34,6 +35,11 @@ export const routes: Routes = [
       {
         path: environment.apps.ageCalculator.route,
         component: AgeCalculator,
+        pathMatch: 'full',
+      },
+      {
+        path: environment.apps.appointment.route,
+        component: Appointment,
         pathMatch: 'full',
       },
     ],

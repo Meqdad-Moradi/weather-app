@@ -64,7 +64,17 @@
         </button>
 
         <mat-divider></mat-divider>
+
+        <!-- appointment -->
+        <button mat-list-item [routerLink]="['/', env.apps.appointment.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{
+            env.apps.appointment.icon
+          }}</span>
+          <span matListItemTitle>{{ env.apps.appointment.name }}</span>
+        </button>
       </mat-action-list>
+
+      <!-- logo -->
       <div class="grid place-content-center py-4">
         <img
           class="cursor-pointer w-full max-h-8"
