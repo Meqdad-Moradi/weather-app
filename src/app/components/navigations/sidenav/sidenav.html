@@ -74,6 +74,16 @@
         </button>
 
         <mat-divider></mat-divider>
+
+        <!-- virtual scroll -->
+        <button mat-list-item [routerLink]="['/', env.apps.virtualScroll.route]">
+          <span class="material-icons-outlined" matListItemIcon>{{
+            env.apps.virtualScroll.icon
+          }}</span>
+          <span matListItemTitle>{{ env.apps.virtualScroll.name }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
       </mat-action-list>
 
       <!-- logo -->

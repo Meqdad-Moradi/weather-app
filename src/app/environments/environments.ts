@@ -42,5 +42,11 @@ export const environment = {
       abbr: 'AP',
       icon: 'event',
     },
+    virtualScroll: {
+      route: 'virtual-scroll',
+      name: 'Virtual Scroll',
+      abbr: 'VS',
+      icon: 'view_agenda',
+    },
   },
 };

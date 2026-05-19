@@ -11,6 +11,7 @@ import { CharacterCounter } from './components/pages/character-counter/character
 import { environment } from './environments/environments';
 import { AgeCalculator } from './components/pages/age-calculator/age-calculator';
 import { Appointment } from './components/pages/appointment/appointment';
+import { VirtualScroll } from './components/pages/virtual-scroll/virtual-scroll';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,11 @@ export const routes: Routes = [
       {
         path: environment.apps.appointment.route,
         component: Appointment,
+        pathMatch: 'full',
+      },
+      {
+        path: environment.apps.virtualScroll.route,
+        component: VirtualScroll,
         pathMatch: 'full',
       },
     ],
