@@ -1,4 +1,4 @@
-export interface Appointment {
+export interface IAppointment {
   id: number;
   customerName: string;
   date: string; // ISO format: 2025-01-20
@@ -7,7 +7,7 @@ export interface Appointment {
   status: 'scheduled' | 'completed' | 'cancelled';
 }
 
-export interface AppointmentDto {
+export interface IAppointmentDto {
   customerName: string;
   date: string;
   time: string;

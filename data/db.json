@@ -130,7 +130,11 @@
       "postedAt": "1d ago",
       "contract": "Full Time",
       "location": "USA Only",
-      "languages": ["HTML", "CSS", "JavaScript"],
+      "languages": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
       "tools": []
     },
     {
@@ -145,8 +149,12 @@
       "postedAt": "1d ago",
       "contract": "Part Time",
       "location": "Remote",
-      "languages": ["Python"],
-      "tools": ["React"]
+      "languages": [
+        "Python"
+      ],
+      "tools": [
+        "React"
+      ]
     },
     {
       "id": "3",
@@ -160,8 +168,13 @@
       "postedAt": "2d ago",
       "contract": "Part Time",
       "location": "USA Only",
-      "languages": ["JavaScript"],
-      "tools": ["React", "Sass"]
+      "languages": [
+        "JavaScript"
+      ],
+      "tools": [
+        "React",
+        "Sass"
+      ]
     },
     {
       "id": "4",
@@ -175,7 +188,10 @@
       "postedAt": "5d ago",
       "contract": "Contract",
       "location": "USA Only",
-      "languages": ["CSS", "JavaScript"],
+      "languages": [
+        "CSS",
+        "JavaScript"
+      ],
       "tools": []
     },
     {
@@ -190,8 +206,13 @@
       "postedAt": "1w ago",
       "contract": "Full Time",
       "location": "Worldwide",
-      "languages": ["JavaScript", "Ruby"],
-      "tools": ["Sass"]
+      "languages": [
+        "JavaScript",
+        "Ruby"
+      ],
+      "tools": [
+        "Sass"
+      ]
     },
     {
       "id": "6",
@@ -205,8 +226,12 @@
       "postedAt": "2w ago",
       "contract": "Full Time",
       "location": "UK Only",
-      "languages": ["Ruby"],
-      "tools": ["RoR"]
+      "languages": [
+        "Ruby"
+      ],
+      "tools": [
+        "RoR"
+      ]
     },
     {
       "id": "7",
@@ -220,8 +245,13 @@
       "postedAt": "2w ago",
       "contract": "Full Time",
       "location": "Worldwide",
-      "languages": ["HTML", "JavaScript"],
-      "tools": ["Sass"]
+      "languages": [
+        "HTML",
+        "JavaScript"
+      ],
+      "tools": [
+        "Sass"
+      ]
     },
     {
       "id": "8",
@@ -235,8 +265,13 @@
       "postedAt": "2w ago",
       "contract": "Full Time",
       "location": "USA Only",
-      "languages": ["JavaScript"],
-      "tools": ["Vue", "Sass"]
+      "languages": [
+        "JavaScript"
+      ],
+      "tools": [
+        "Vue",
+        "Sass"
+      ]
     },
     {
       "id": "9",
@@ -250,8 +285,13 @@
       "postedAt": "3w ago",
       "contract": "Full Time",
       "location": "Worldwide",
-      "languages": ["JavaScript", "Python"],
-      "tools": ["Django"]
+      "languages": [
+        "JavaScript",
+        "Python"
+      ],
+      "tools": [
+        "Django"
+      ]
     },
     {
       "id": "10",
@@ -265,35 +305,80 @@
       "postedAt": "1mo ago",
       "contract": "Part Time",
       "location": "Worldwide",
-      "languages": ["JavaScript"],
-      "tools": ["React", "Sass"]
+      "languages": [
+        "JavaScript"
+      ],
+      "tools": [
+        "React",
+        "Sass"
+      ]
     }
   ],
-
   "appointments": [
     {
-      "id": 1,
+      "id": "1",
       "customerName": "Ali Rezaei",
-      "date": "2025-02-10",
+      "date": "2026-04-20",
       "time": "14:30",
       "description": "Consultation about project",
       "status": "scheduled"
     },
     {
-      "id": 2,
+      "id": "2",
       "customerName": "Sara Mohammadi",
-      "date": "2025-02-11",
+      "date": "2026-04-21",
       "time": "10:00",
       "description": "Follow-up meeting",
       "status": "completed"
     },
     {
-      "id": 3,
+      "id": "3",
       "customerName": "Hossein Karimi",
-      "date": "2025-02-12",
+      "date": "2026-04-22",
       "time": "16:15",
       "description": "",
       "status": "cancelled"
+    },
+    {
+      "id": "B3Jh1DB4t6Q",
+      "customerName": "foo",
+      "date": "2026-05-17T22:00:00.000Z",
+      "time": "2026-05-16T22:00:00.000Z",
+      "description": "foooooo",
+      "status": "scheduled"
+    },
+    {
+      "id": "LEG9CLSskgs",
+      "customerName": "foooo",
+      "date": "2026-05-11T22:00:00.000Z",
+      "time": "2026-05-16T22:00:00.000Z",
+      "description": "ddddd",
+      "status": "scheduled"
+    },
+    {
+      "id": "ZkNwjaWXQ9o",
+      "customerName": "sdsdd",
+      "date": "2026-05-13T22:00:00.000Z",
+      "time": "2026-05-16T22:00:00.000Z",
+      "description": "sdsdsd",
+      "status": "scheduled"
+    },
+    {
+      "id": "bcWcabHDSQU",
+      "customerName": "asfasfasfadf",
+      "date": "2026-05-17T22:00:00.000Z",
+      "time": "2026-05-17T19:33:00.000Z",
+      "description": "asfasf",
+      "status": "scheduled"
+    },
+    {
+      "id": "CD06RV9X4R8",
+      "customerName": "slkjf",
+      "date": "2026-05-17T22:00:00.000Z",
+      "time": "2026-05-17T20:13:00.000Z",
+      "description": "asf",
+      "status": "scheduled"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
