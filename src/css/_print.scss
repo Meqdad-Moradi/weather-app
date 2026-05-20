@@ -1,0 +1,16 @@
+@media only print {
+  * {
+    color: var(--bg) !important;
+  }
+
+  .cdk-overlay-pane,
+  app-header,
+  mat-drawer {
+    display: none !important;
+  }
+
+  mat-drawer-content {
+    width: 100% !important;
+    margin-inline: auto !important;
+  }
+}

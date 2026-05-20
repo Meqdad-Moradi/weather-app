@@ -1,1 +1,39 @@
-<p>virtual-scroll works!</p>
+<header class="sticky top-0 w-full flex items-center justify-between gap-8 px-4 py-2 bg-(--fg)">
+  <span>Second header</span>
+  <button matIconButton [matMenuTriggerFor]="menu" class="grid! place-items-center!">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="printPage()">
+      Print page
+      <mat-icon>print</mat-icon>
+    </button>
+  </mat-menu>
+</header>
+
+<section class="viewport" cdkVirtualScrollingElement>
+  <app-main-title title="Virtual Scroll Test" />
+
+  <app-filter-items [itemsCount]="photos().length" [isSearchControlVisible]="true" />
+
+  <header class="sticky top-0 z-50 w-full bg-(--fg) mb-2 border-b border-(--text)/50 px-4 py-2">
+    <span>Title</span>
+  </header>
+
+  <article class="flex flex-col truncate border-t border-(--text)/10">
+    <cdk-virtual-scroll-viewport itemSize="50">
+      <div
+        *cdkVirtualFor="let photo of photos()"
+        class="item flex items-start border-b border-(--text)/10 px-4"
+      >
+        <div class="flex flex-col">
+          <img class="text-sm italic" [src]="photo.url" alt="photo" />
+          <h3 class="font-semibold truncate leading-normal first-letter:uppercase">
+            {{ photo.title }}
+          </h3>
+        </div>
+      </div>
+    </cdk-virtual-scroll-viewport>
+  </article>
+</section>

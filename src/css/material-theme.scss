@@ -2,6 +2,7 @@
 @use './scss_theme-colors.scss' as theme;
 @use './_theme-colors.scss' as theme2;
 @use './reset-form-field.scss';
+@use './_print.scss';
 
 html {
   height: 100%;
