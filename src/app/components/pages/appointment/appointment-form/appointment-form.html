@@ -1,63 +1,72 @@
 <div class="container">
-  <h2>Create New Appointment</h2>
+  <article class="flex flex-col gap-8 bg-(--fg) rounded-2xl p-8 mb-8">
+    <h2 class="text-xl font-bold">Create New Appointment</h2>
 
-  <form class="flex flex-col gap-2" [formGroup]="appointmentForm" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
-      <mat-label>Customer Name</mat-label>
-      <input matInput formControlName="customerName" />
-    </mat-form-field>
-
-    <div class="flex gap-4">
+    <form class="flex flex-col gap-2" (ngSubmit)="onSubmit()">
       <mat-form-field appearance="outline">
-        <mat-label>Select Date</mat-label>
-        <input
-          matInput
-          [matDatepickerFilter]="dateFilter"
-          [matDatepicker]="dp"
-          formControlName="date"
-        />
-        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp></mat-datepicker>
+        <mat-label>Customer Name</mat-label>
+        <input matInput [formField]="appointmentForm.customerName" />
       </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Pick a time</mat-label>
-        <input
-          matInput
-          [matTimepicker]="tp"
-          [matTimepickerMin]="currentDate | date: 'HH:mm'"
-          formControlName="time"
-        />
-        <mat-timepicker-toggle matIconSuffix [for]="tp" />
-        <mat-timepicker #tp />
+      <div class="flex gap-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Select Date</mat-label>
+          <input
+            matInput
+            [matDatepickerFilter]="dateFilter"
+            [matDatepicker]="dp"
+            [formField]="appointmentForm.date"
+          />
+          <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+          <mat-datepicker #dp></mat-datepicker>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="outline">
+          <mat-label>Pick a time</mat-label>
+          <input
+            matInput
+            [matTimepicker]="tp"
+            [matTimepickerMin]="currentDate | date: 'HH:mm'"
+            [formField]="appointmentForm.time"
+          />
+          <mat-timepicker-toggle matIconSuffix [for]="tp" />
+          <mat-timepicker #tp /> -->
 
         <!-- timepicker errors -->
-        @if (appointmentForm.get('time')?.errors?.['matTimepickerMin']) {
-          <mat-error>Value is too early</mat-error>
-        }
-        @if (appointmentForm.get('time')?.errors?.['matTimepickerParse']) {
-          <mat-error>Value isn't a valid time</mat-error>
-        }
-        @if (appointmentForm.get('time')?.errors?.['errorMsg']) {
-          <mat-error>{{ appointmentForm.get('time')?.errors?.['errorMsg'] }}</mat-error>
-        }
+        <!-- @if (appointmentForm.get('time')?.errors?.['matTimepickerMin']) {
+            <mat-error>Value is too early</mat-error>
+          }
+          @if (appointmentForm.get('time')?.errors?.['matTimepickerParse']) {
+            <mat-error>Value isn't a valid time</mat-error>
+          }
+          @if (appointmentForm.get('time')?.errors?.['errorMsg']) {
+            <mat-error>{{ appointmentForm.get('time')?.errors?.['errorMsg'] }}</mat-error>
+          }
+        </mat-form-field> -->
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput [formField]="appointmentForm.description!"></textarea>
       </mat-form-field>
-    </div>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Description</mat-label>
-      <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Status</mat-label>
+        <mat-select [formField]="appointmentForm.status">
+          <mat-option value="scheduled">Scheduled</mat-option>
+          <mat-option value="completed">Completed</mat-option>
+          <mat-option value="cancelled">Cancelled</mat-option>
+        </mat-select>
+      </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Status</mat-label>
-      <mat-select formControlName="status">
-        <mat-option value="scheduled">Scheduled</mat-option>
-        <mat-option value="completed">Completed</mat-option>
-        <mat-option value="cancelled">Cancelled</mat-option>
-      </mat-select>
-    </mat-form-field>
-
-    <button mat-raised-button color="primary" type="submit">Create Appointment</button>
-  </form>
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="appointmentForm().invalid()"
+      >
+        Create Appointment
+      </button>
+    </form>
+  </article>
 </div>

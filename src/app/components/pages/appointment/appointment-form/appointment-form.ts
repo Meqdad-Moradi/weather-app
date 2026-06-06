@@ -1,4 +1,11 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -17,12 +24,17 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ApiAppointment } from '../../../../services/api/api-appointment';
-import { IAppointment } from '../../../../models/appointment.model';
+import {
+  appointmentSchema,
+  createInitialAppointment,
+  IAppointment,
+} from '../../../../models/appointment.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { take } from 'rxjs/operators';
 import { DatePipe } from '@angular/common';
+import { form, required, Field, FormField } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-appointment-form',
@@ -37,26 +49,22 @@ import { DatePipe } from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     DatePipe,
+    FormField,
   ],
   templateUrl: './appointment-form.html',
   styleUrl: './appointment-form.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppointmentForm implements OnInit {
-  private readonly fb = inject(FormBuilder);
   private readonly destroyRef = inject(DestroyRef);
   private readonly apiAppointmentService = inject(ApiAppointment);
   private readonly snackbar = inject(MatSnackBar);
 
-  protected appointmentForm: FormGroup = this.fb.group({
-    customerName: ['', Validators.required],
-    date: ['', Validators.required],
-    time: ['', [Validators.required, this.validateTime()]],
-    description: [''],
-    status: ['scheduled', Validators.required],
-  });
+  private readonly model = signal<IAppointment>(createInitialAppointment());
 
-  private bookedTimes: string[] = [];
+  protected appointmentForm = form(this.model, appointmentSchema);
+
+  private bookedDateAndTime: Date[] = [];
   protected currentDate = new Date();
 
   ngOnInit(): void {
@@ -71,8 +79,7 @@ export class AppointmentForm implements OnInit {
       .getAllAppointments()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(
-        (appointments) =>
-          (this.bookedTimes = appointments.map((a) => new Date(a.time).toTimeString().slice(0, 5))),
+        (appointments) => (this.bookedDateAndTime = appointments.map((a) => new Date(a.date))),
       );
   }
 
@@ -88,43 +95,38 @@ export class AppointmentForm implements OnInit {
     return day !== 0 && day !== 6 && d?.getTime()! > new Date().getTime();
   };
 
-  /**
-   * validateTime
-   * @returns ValidatorFn
-   */
-  private validateTime(): ValidatorFn {
-    let errorMsg = '';
+  // /**
+  //  * validateTime
+  //  * @returns ValidatorFn
+  //  */
+  // private validateTime(): ValidatorFn {
+  //   let errorMsg = '';
 
-    return (control: AbstractControl): ValidationErrors | null => {
-      const selectedTime = new Date(control.value).toTimeString().slice(0, 5);
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const selectedTime = new Date(control.value).toTimeString().slice(0, 5);
 
-      if (this.bookedTimes?.includes(selectedTime)) {
-        errorMsg = 'This time slot is already booked.';
-        return {
-          errorMsg,
-        };
-      }
-      return null;
-    };
-  }
+  //     if (this.bookedDateAndTime?.includes(selectedTime)) {
+  //       errorMsg = 'This time slot is already booked.';
+  //       return {
+  //         errorMsg,
+  //       };
+  //     }
+  //     return null;
+  //   };
+  // }
 
   /**
    * onSubmit
    */
   protected onSubmit(): void {
-    if (this.appointmentForm.valid) {
-      const newAppointment: IAppointment = {
-        id: Date.now(),
-        ...this.appointmentForm.value,
-      };
-
+    if (this.appointmentForm().valid()) {
       this.apiAppointmentService
-        .createAppointment(newAppointment)
+        .createAppointment(this.model())
         .pipe(take(1)) // unsbuscribe automatically
         .subscribe((res) => {
           this.snackbar.open('Appointment created successfully!', 'Close', { duration: 3000 });
-          this.bookedTimes.push(res.time);
-          this.appointmentForm.reset({ status: 'scheduled' });
+          this.bookedDateAndTime.push(new Date(res.date));
+          this.model.set(createInitialAppointment());
         });
     }
   }
