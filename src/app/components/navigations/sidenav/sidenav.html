@@ -84,6 +84,16 @@
         </button>
 
         <mat-divider></mat-divider>
+
+        <!-- signal form -->
+        <button mat-list-item [routerLink]="['/', env.apps.signalForm.route]">
+          <span class="material-icons-outlined" matListItemIcon>
+            {{ env.apps.signalForm.icon }}
+          </span>
+          <span matListItemTitle>{{ env.apps.signalForm.name }}</span>
+        </button>
+
+        <mat-divider></mat-divider>
       </mat-action-list>
 
       <!-- logo -->

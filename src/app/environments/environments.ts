@@ -48,5 +48,11 @@ export const environment = {
       abbr: 'VS',
       icon: 'view_agenda',
     },
+    signalForm: {
+      route: 'signal-form',
+      name: 'Signal Form',
+      abbr: 'SF',
+      icon: 'ballot',
+    },
   },
 };

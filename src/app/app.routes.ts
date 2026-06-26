@@ -12,6 +12,7 @@ import { environment } from './environments/environments';
 import { AgeCalculator } from './components/pages/age-calculator/age-calculator';
 import { Appointment } from './components/pages/appointment/appointment';
 import { VirtualScroll } from './components/pages/virtual-scroll/virtual-scroll';
+import { SignalForm } from './components/pages/signal-form/signal-form';
 
 export const routes: Routes = [
   {
@@ -46,6 +47,11 @@ export const routes: Routes = [
       {
         path: environment.apps.virtualScroll.route,
         component: VirtualScroll,
+        pathMatch: 'full',
+      },
+      {
+        path: environment.apps.signalForm.route,
+        component: SignalForm,
         pathMatch: 'full',
       },
     ],
