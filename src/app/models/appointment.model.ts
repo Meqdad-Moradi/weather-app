@@ -3,26 +3,18 @@ import { schema, required } from '@angular/forms/signals';
 export interface IAppointment {
   id: string;
   customerName: string;
-  date: Date;
-  description?: string;
+  date: Date | null;
+  description: string;
   status: 'scheduled' | 'completed' | 'cancelled';
 }
-
-export interface IAppointmentDto {
-  customerName: string;
-  date: string;
-  time: string;
-  description?: string;
-  status: 'scheduled' | 'completed' | 'cancelled';
-}
-
+  
 export function createInitialAppointment(): IAppointment {
   return {
     id: '',
     customerName: '',
-    date: new Date(),
-    description: '',
+    date: null,
     status: 'scheduled',
+    description: '',
   };
 }
 

@@ -6,35 +6,26 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { form, FormField } from '@angular/forms/signals';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
-import { ApiAppointment } from '../../../../services/api/api-appointment';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatTimepickerModule } from '@angular/material/timepicker';
+import { take } from 'rxjs/operators';
 import {
   appointmentSchema,
   createInitialAppointment,
   IAppointment,
 } from '../../../../models/appointment.model';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatTimepickerModule } from '@angular/material/timepicker';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { take } from 'rxjs/operators';
+import { ApiAppointment } from '../../../../services/api/api-appointment';
 import { DatePipe } from '@angular/common';
-import { form, required, Field, FormField } from '@angular/forms/signals';
 
 @Component({
   selector: 'app-appointment-form',
@@ -79,7 +70,7 @@ export class AppointmentForm implements OnInit {
       .getAllAppointments()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(
-        (appointments) => (this.bookedDateAndTime = appointments.map((a) => new Date(a.date))),
+        (appointments) => (this.bookedDateAndTime = appointments.map((a) => new Date(a.date!))),
       );
   }
 
@@ -95,39 +86,19 @@ export class AppointmentForm implements OnInit {
     return day !== 0 && day !== 6 && d?.getTime()! > new Date().getTime();
   };
 
-  // /**
-  //  * validateTime
-  //  * @returns ValidatorFn
-  //  */
-  // private validateTime(): ValidatorFn {
-  //   let errorMsg = '';
-
-  //   return (control: AbstractControl): ValidationErrors | null => {
-  //     const selectedTime = new Date(control.value).toTimeString().slice(0, 5);
-
-  //     if (this.bookedDateAndTime?.includes(selectedTime)) {
-  //       errorMsg = 'This time slot is already booked.';
-  //       return {
-  //         errorMsg,
-  //       };
-  //     }
-  //     return null;
-  //   };
-  // }
-
   /**
    * onSubmit
    */
   protected onSubmit(): void {
-    if (this.appointmentForm().valid()) {
-      this.apiAppointmentService
-        .createAppointment(this.model())
-        .pipe(take(1)) // unsbuscribe automatically
-        .subscribe((res) => {
-          this.snackbar.open('Appointment created successfully!', 'Close', { duration: 3000 });
-          this.bookedDateAndTime.push(new Date(res.date));
-          this.model.set(createInitialAppointment());
-        });
-    }
+    if (this.appointmentForm().invalid()) return;
+    console.log(this.model());
+    this.apiAppointmentService
+      .createAppointment(this.model())
+      .pipe(take(1)) // unsbuscribe automatically
+      .subscribe((res) => {
+        this.snackbar.open('Appointment created successfully!', 'Close', { duration: 3000 });
+        this.bookedDateAndTime.push(new Date(res.date!));
+        this.model.set(createInitialAppointment());
+      });
   }
 }

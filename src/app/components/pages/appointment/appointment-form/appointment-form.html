@@ -15,34 +15,34 @@
             matInput
             [matDatepickerFilter]="dateFilter"
             [matDatepicker]="dp"
-            [formField]="appointmentForm.date"
+            [formField]="$any(appointmentForm.date)"
           />
           <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
           <mat-datepicker #dp></mat-datepicker>
         </mat-form-field>
 
-        <!-- <mat-form-field appearance="outline">
+        <mat-form-field appearance="outline">
           <mat-label>Pick a time</mat-label>
           <input
             matInput
             [matTimepicker]="tp"
             [matTimepickerMin]="currentDate | date: 'HH:mm'"
-            [formField]="appointmentForm.time"
+            [formField]="appointmentForm.date"
           />
           <mat-timepicker-toggle matIconSuffix [for]="tp" />
-          <mat-timepicker #tp /> -->
+          <mat-timepicker #tp />
 
-        <!-- timepicker errors -->
-        <!-- @if (appointmentForm.get('time')?.errors?.['matTimepickerMin']) {
-            <mat-error>Value is too early</mat-error>
+          <!-- timepicker errors -->
+          <!-- @if (appointmentForm.date().touched() && appointmentForm.date().invalid()) {
+            <mat-error>{{appointmentForm.date().errors()[0][message]}}</mat-error>
           }
-          @if (appointmentForm.get('time')?.errors?.['matTimepickerParse']) {
+          @if (appointmentForm.date().errors()?.['matTimepickerParse']) {
             <mat-error>Value isn't a valid time</mat-error>
           }
-          @if (appointmentForm.get('time')?.errors?.['errorMsg']) {
-            <mat-error>{{ appointmentForm.get('time')?.errors?.['errorMsg'] }}</mat-error>
-          }
-        </mat-form-field> -->
+          @if (appointmentForm.date().errors()?.['errorMsg']) {
+            <mat-error>{{ appointmentForm.date().errors()?.['errorMsg'] }}</mat-error>
+          } -->
+        </mat-form-field>
       </div>
 
       <mat-form-field appearance="outline">
