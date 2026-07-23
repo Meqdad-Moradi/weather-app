@@ -14,6 +14,7 @@ describe('FilterItems', () => {
 
     fixture = TestBed.createComponent(FilterItems);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('isSearchControlVisible', false);
     await fixture.whenStable();
   });
 

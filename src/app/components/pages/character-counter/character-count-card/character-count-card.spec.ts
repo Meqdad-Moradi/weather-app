@@ -8,12 +8,14 @@ describe('CharacterCountCard', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CharacterCountCard]
-    })
-    .compileComponents();
+      imports: [CharacterCountCard],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CharacterCountCard);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('backgroundColor', 'blue');
+    fixture.componentRef.setInput('text', 'Test Text');
+    fixture.componentRef.setInput('count', 10);
     await fixture.whenStable();
   });
 
