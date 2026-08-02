@@ -1,10 +1,67 @@
 <section class="container">
   <app-main-title title="Signal Form" />
 
-  <form class="bg-(--fg) border border-(--text)/10 rounded-2xl p-4">
-    <mat-form-field appearance="outline">
-      <mat-label>Name</mat-label>
-      <input matInput />
-    </mat-form-field>
-  </form>
+  <div class="flex flex-col gap-4 bg-(--fg) border border-(--text)/10 rounded-2xl p-4">
+    <h2 class="text-xl text-(--text) font-bold">Signup form</h2>
+
+    <!-- signup form -->
+    <form class="flex flex-col items-start justify-between gap-4">
+      <!-- first name -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput [formField]="signUpForm.firstName" />
+
+        <!-- display error -->
+        @for (error of signUpForm.firstName().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- last name -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput [formField]="signUpForm.lastName" />
+
+        <!-- display error -->
+        @for (error of signUpForm.lastName().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- email -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput [formField]="signUpForm.email" />
+
+        <!-- display error -->
+        @for (error of signUpForm.email().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- password -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput [formField]="signUpForm.password" type="password" />
+
+        <!-- display error -->
+        @for (error of signUpForm.password().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <!-- confirm password -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput [formField]="signUpForm.confirmPassword" type="password" />
+
+        <!-- display error -->
+        @for (error of signUpForm.confirmPassword().errors(); track error.kind) {
+          <mat-error>{{ error.message }}</mat-error>
+        }
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" [disabled]="signUpForm().invalid()">Submit</button>
+    </form>
+  </div>
 </section>
