@@ -1,7 +1,9 @@
 <section class="container">
   <app-main-title title="Signal Form" />
 
-  <div class="flex flex-col gap-4 bg-(--fg) border border-(--text)/10 rounded-2xl p-4">
+  <div
+    class="max-w-lg flex flex-col gap-4 bg-(--fg) border border-(--text)/10 rounded-2xl p-4 mx-auto"
+  >
     <h2 class="text-xl text-(--text) font-bold">Signup form</h2>
 
     <!-- signup form -->
@@ -49,7 +51,13 @@
           [appTogglePasswordVisibility]="isPasswordVisible()"
         />
         <!-- toggle password visibility -->
-        <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="togglePasswordVisibility()"
+          tabindex="-1"
+        >
           <mat-icon>{{ isPasswordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
 
@@ -69,7 +77,13 @@
           [appTogglePasswordVisibility]="isConfirmPasswordVisible()"
         />
         <!-- toggle confirm password visibility -->
-        <button mat-icon-button matSuffix type="button" (click)="toggleConfirmPasswordVisibility()">
+        <button
+          mat-icon-button
+          matSuffix
+          type="button"
+          (click)="toggleConfirmPasswordVisibility()"
+          tabindex="-1"
+        >
           <mat-icon>{{ isConfirmPasswordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
         </button>
 
