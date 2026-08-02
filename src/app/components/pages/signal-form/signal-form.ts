@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MainTitle } from '../../apps/main-title/main-title';
 import { SignalFormModel } from '../../../models/signal-form.model';
 import { form, FormField, minLength, pattern, required, validate } from '@angular/forms/signals';
+import { MatIconModule } from '@angular/material/icon';
+import { TogglePasswordVisibility } from '../../../directives/toggle-password-visibility';
 
 @Component({
   selector: 'app-signal-form',
@@ -14,13 +16,18 @@ import { form, FormField, minLength, pattern, required, validate } from '@angula
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatIconModule,
     MainTitle,
     FormField,
+    TogglePasswordVisibility,
   ],
   templateUrl: './signal-form.html',
   styleUrl: './signal-form.css',
 })
 export class SignalForm {
+  protected isPasswordVisible = signal<boolean>(false);
+  protected isConfirmPasswordVisible = signal<boolean>(false);
+
   private isUserNameAvailable = signal<boolean>(false);
   private formModel = signal<SignalFormModel>({
     lastName: '',
@@ -51,4 +58,35 @@ export class SignalForm {
       return null; // valid
     });
   });
+
+  /**
+   * onSubmit
+   * handles the form submission event, preventing the default behavior and validating the form.
+   * @param e Event
+   */
+  protected onSubmit(e: Event) {
+    e.preventDefault();
+
+    if (this.signUpForm().valid()) {
+      console.log('Form submitted successfully:', this.formModel());
+    } else {
+      console.log('Form submission failed. Please correct the errors and try again.');
+    }
+  }
+
+  /**
+   * togglePasswordVisibility
+   * toggles the visibility of the password input field between 'text' and 'password'.
+   */
+  protected togglePasswordVisibility(): void {
+    this.isPasswordVisible.update((x) => !x);
+  }
+
+  /**
+   * toggleConfirmPasswordVisibility
+   * toggles the visibility of the confirm password input field between 'text' and 'password'.
+   */
+  protected toggleConfirmPasswordVisibility(): void {
+    this.isConfirmPasswordVisible.update((x) => !x);
+  }
 }
