@@ -115,7 +115,7 @@ body {
 
 .container {
   max-width: 90%;
-  margin-inline: auto;
+  margin: 0 auto 40px auto;
 }
 
 input::placeholder {
