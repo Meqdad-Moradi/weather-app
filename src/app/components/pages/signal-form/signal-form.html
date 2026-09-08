@@ -42,56 +42,14 @@
       </mat-form-field>
 
       <!-- password -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>Password</mat-label>
-        <input
-          matInput
-          [formField]="signUpForm.password"
-          type="password"
-          [appTogglePasswordVisibility]="isPasswordVisible()"
-        />
-        <!-- toggle password visibility -->
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="togglePasswordVisibility()"
-          tabindex="-1"
-        >
-          <mat-icon>{{ isPasswordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-
-        <!-- display error -->
-        @for (error of signUpForm.password().errors(); track error.kind) {
-          <mat-error>{{ error.message }}</mat-error>
-        }
-      </mat-form-field>
+      <app-password-field class="block w-full" [field]="signUpForm.password" />
 
       <!-- confirm password -->
-      <mat-form-field class="w-full" appearance="outline">
-        <mat-label>Confirm Password</mat-label>
-        <input
-          matInput
-          [formField]="signUpForm.confirmPassword"
-          type="password"
-          [appTogglePasswordVisibility]="isConfirmPasswordVisible()"
-        />
-        <!-- toggle confirm password visibility -->
-        <button
-          mat-icon-button
-          matSuffix
-          type="button"
-          (click)="toggleConfirmPasswordVisibility()"
-          tabindex="-1"
-        >
-          <mat-icon>{{ isConfirmPasswordVisible() ? 'visibility_off' : 'visibility' }}</mat-icon>
-        </button>
-
-        <!-- display error -->
-        @for (error of signUpForm.confirmPassword().errors(); track error.kind) {
-          <mat-error>{{ error.message }}</mat-error>
-        }
-      </mat-form-field>
+      <app-password-field
+        class="block w-full"
+        [field]="signUpForm.confirmPassword"
+        label="Confirm Password"
+      />
 
       <button mat-raised-button color="primary" [disabled]="signUpForm().submitting()">
         @if (signUpForm().submitting()) {

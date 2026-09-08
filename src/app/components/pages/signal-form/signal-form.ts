@@ -14,8 +14,7 @@ import {
   required,
   validate,
 } from '@angular/forms/signals';
-import { MatIconModule } from '@angular/material/icon';
-import { TogglePasswordVisibility } from '../../../directives/toggle-password-visibility';
+import { PasswordField } from './password-field/password-field';
 
 @Component({
   selector: 'app-signal-form',
@@ -24,19 +23,15 @@ import { TogglePasswordVisibility } from '../../../directives/toggle-password-vi
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
-    MatIconModule,
     MainTitle,
     FormField,
     FormRoot,
-    TogglePasswordVisibility,
+    PasswordField,
   ],
   templateUrl: './signal-form.html',
   styleUrl: './signal-form.css',
 })
 export class SignalForm {
-  protected isPasswordVisible = signal<boolean>(false);
-  protected isConfirmPasswordVisible = signal<boolean>(false);
-
   private isUserNameAvailable = signal<boolean>(false);
   private formModel = signal<SignalFormModel>({
     lastName: '',
@@ -75,8 +70,10 @@ export class SignalForm {
           try {
             await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate async operation
             console.log('Form submitted successfully:', field().value());
+            return;
           } catch (error) {
             console.error('Form submission failed:', error);
+            return { kind: 'submissionError', message: 'Form submission failed' };
           }
         },
         onInvalid: (field) => {
@@ -90,20 +87,4 @@ export class SignalForm {
       },
     },
   );
-
-  /**
-   * togglePasswordVisibility
-   * toggles the visibility of the password input field between 'text' and 'password'.
-   */
-  protected togglePasswordVisibility(): void {
-    this.isPasswordVisible.update((x) => !x);
-  }
-
-  /**
-   * toggleConfirmPasswordVisibility
-   * toggles the visibility of the confirm password input field between 'text' and 'password'.
-   */
-  protected toggleConfirmPasswordVisibility(): void {
-    this.isConfirmPasswordVisible.update((x) => !x);
-  }
 }
