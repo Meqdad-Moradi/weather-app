@@ -79,10 +79,20 @@ export class SignalForm {
           }
         },
         onInvalid: (field) => {
-          const firstError = field().errors()?.[0];
-          if (firstError) {
-            firstError.fieldTree().formFieldBindings();
-            console.error('Form submission failed:', firstError.message);
+          // const firstError = field().errors()?.[0];
+          // if (firstError) {
+          //   firstError.fieldTree().formFieldBindings();
+          //   console.error('Form submission failed:', firstError.message);
+          // }
+          // ۱. گرفتن لیست تمام فیلدهایی که در این لحظه خطا دارند
+          const errors = field().errorSummary();
+
+          if (errors.length > 0) {
+            // ۲. انتخاب اولین فیلد خطا (مثلاً اگر نام پر باشد ولی شهر خالی باشد، فیلد شهر انتخاب می‌شود)
+            const firstErrorField = errors[0];
+
+            // ۳. فوکوس خودکار و اسکرول شدن صفحه روی همان کنترلر المان در HTML!
+            firstErrorField.fieldTree().focusBoundControl();
           }
         },
         ignoreValidators: 'none',
