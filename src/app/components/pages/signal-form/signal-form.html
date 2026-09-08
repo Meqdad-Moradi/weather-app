@@ -7,7 +7,7 @@
     <h2 class="text-xl text-(--text) font-bold">Signup form</h2>
 
     <!-- signup form -->
-    <form class="flex flex-col items-start justify-between gap-4" (submit)="onSubmit($event)">
+    <form class="flex flex-col items-start justify-between gap-4" [formRoot]="signUpForm">
       <!-- first name -->
       <mat-form-field class="w-full" appearance="outline">
         <mat-label>First Name</mat-label>
@@ -93,7 +93,13 @@
         }
       </mat-form-field>
 
-      <button mat-raised-button color="primary" [disabled]="signUpForm().invalid()">Submit</button>
+      <button mat-raised-button color="primary" [disabled]="signUpForm().submitting()">
+        @if (signUpForm().submitting()) {
+          submitting...
+        } @else {
+          Submit
+        }
+      </button>
     </form>
   </div>
 </section>
