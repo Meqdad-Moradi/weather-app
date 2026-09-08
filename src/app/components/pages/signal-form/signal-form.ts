@@ -72,10 +72,19 @@ export class SignalForm {
     {
       submission: {
         action: async (field) => {
-          setTimeout(() => {
+          try {
+            await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate async operation
             console.log('Form submitted successfully:', field().value());
-          }, 1000);
-          return null;
+          } catch (error) {
+            console.error('Form submission failed:', error);
+          }
+        },
+        onInvalid: (field) => {
+          const firstError = field().errors()?.[0];
+          if (firstError) {
+            firstError.fieldTree().formFieldBindings();
+            console.error('Form submission failed:', firstError.message);
+          }
         },
         ignoreValidators: 'none',
       },
