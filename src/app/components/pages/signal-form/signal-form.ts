@@ -15,6 +15,7 @@ import {
   validate,
 } from '@angular/forms/signals';
 import { PasswordField } from './password-field/password-field';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-signal-form',
@@ -23,6 +24,7 @@ import { PasswordField } from './password-field/password-field';
     MatInputModule,
     MatButtonModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
     MainTitle,
     FormField,
     FormRoot,

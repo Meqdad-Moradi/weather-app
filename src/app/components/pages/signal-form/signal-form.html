@@ -53,7 +53,9 @@
 
       <button mat-raised-button color="primary" [disabled]="signUpForm().submitting()">
         @if (signUpForm().submitting()) {
-          submitting...
+          <div class="flex items-center gap-2">
+            Submitting <mat-progress-spinner diameter="18" mode="indeterminate" />
+          </div>
         } @else {
           Submit
         }
