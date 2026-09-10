@@ -13,11 +13,14 @@ import { AgeCalculator } from './components/pages/age-calculator/age-calculator'
 import { Appointment } from './components/pages/appointment/appointment';
 import { VirtualScroll } from './components/pages/virtual-scroll/virtual-scroll';
 import { SignalForm } from './components/pages/signal-form/signal-form';
+import { Login } from './components/pages/login/login';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
     component: Sidenav,
+    canActivate: [authGuard],
     children: [
       { path: '', component: Home, pathMatch: 'full' },
       { path: environment.apps.weather.route, component: Weather, pathMatch: 'full' },
@@ -56,6 +59,7 @@ export const routes: Routes = [
       },
     ],
   },
+  { path: 'login', component: Login, pathMatch: 'full' },
   {
     path: '**',
     redirectTo: '',

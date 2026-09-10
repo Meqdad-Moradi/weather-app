@@ -5,5 +5,13 @@
     </button>
     <h1 class="font-semibold! text-white">{{ title() }}</h1>
   </div>
-  <app-switch-theme />
+  <div>
+    <!-- theme switcher -->
+    <app-switch-theme />
+
+    <!-- login button -->
+    <button matIconButton routerLink="/login">
+      <mat-icon>login</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>

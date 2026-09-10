@@ -4,14 +4,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidenavService } from '../../../services/sidenav-service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map } from 'rxjs/operators';
 import { getAppName } from '../../../helpers/utils';
 
 @Component({
   selector: 'app-header',
-  imports: [SwitchTheme, MatButtonModule, MatIconModule, MatToolbarModule],
+  imports: [SwitchTheme, MatButtonModule, MatIconModule, MatToolbarModule, RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
