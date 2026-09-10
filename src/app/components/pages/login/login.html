@@ -102,7 +102,7 @@
         <p class="mt-3.25 text-[0.96rem] text-(--login-muted)">Pick up right where you left off.</p>
       </div>
 
-      <form class="login-form grid gap-5.5" (submit)="submitLogin($event)">
+      <form class="login-form grid gap-5.5" autocomplete="off" (submit)="submitLogin($event)">
         <div class="field-group grid gap-2">
           <label class="text-[0.84rem] font-bold" for="email">Email address</label>
           <input
@@ -142,11 +142,21 @@
           <span>Keep me signed in</span>
         </label>
 
+        @if (errorMessage()) {
+          <p
+            class="rounded-lg border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-700"
+            role="alert"
+          >
+            {{ errorMessage() }}
+          </p>
+        }
+
         <button
           class="flex w-full cursor-pointer items-center justify-between rounded-xl border-0 bg-(--login-orange) px-5.25 py-4 font-inherit font-bold text-white transition-[background,box-shadow,transform] duration-200 hover:bg-[#e96a00] hover:-translate-y-px hover:shadow-[0_8px_18px_rgb(255_124_10/20%)] focus-visible:outline-3 focus-visible:outline-(--login-orange) focus-visible:outline-offset-4"
           type="submit"
+          [disabled]="isLoading()"
         >
-          <span>Sign in</span>
+          <span>{{ isLoading() ? 'Signing in...' : 'Sign in' }}</span>
           <span
             class="grid size-6.5 place-items-center rounded-full bg-white/20 text-[1.1rem]"
             aria-hidden="true"
