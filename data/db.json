@@ -3,8 +3,8 @@
     {
       "id": "user-1",
       "name": "Weather User",
-      "email": "demo@weathernow.app",
-      "password": "Weather123!"
+      "email": "demo@demo.app",
+      "password": "demo"
     }
   ],
   "extensions": [
