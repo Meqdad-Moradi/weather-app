@@ -9,7 +9,7 @@ import { IJobListing } from '../../models/job-listing.model';
 export class ApiJoblisting {
   private readonly http = inject(HttpClient);
 
-  private readonly baseUrl = 'http://localhost:3000/joblisting';
+  private readonly baseUrl = '/joblisting';
 
   public jobListings = signal<IJobListing[]>([]);
 

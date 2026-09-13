@@ -7,7 +7,7 @@ import { IAppointment } from '../../models/appointment.model';
   providedIn: 'root',
 })
 export class ApiAppointment {
-  private readonly baseUrl = 'http://localhost:3000/appointments';
+  private readonly baseUrl = '/appointments';
   private readonly http = inject(HttpClient);
 
   /**

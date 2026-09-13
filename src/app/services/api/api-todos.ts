@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class ApiTodos {
-  private readonly todoUrl = 'http://localhost:3000/todos';
+  private readonly todoUrl = '/todos';
   private readonly http = inject(HttpClient);
 
   /**

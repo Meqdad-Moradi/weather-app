@@ -9,7 +9,7 @@ import { IAuthUser, IStoredUser } from '../models/auth.model';
 export class Auth {
   private readonly sessionKey = 'weather-authenticated';
   private readonly userKey = 'weather-user';
-  private readonly usersUrl = 'http://localhost:3000/users';
+  private readonly usersUrl = '/users';
   private readonly http = inject(HttpClient);
 
   readonly currentUser = signal<IStoredUser | null>(this.readStoredUser());

@@ -2,10 +2,12 @@ import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { registerLocaleData } from '@angular/common';
 import deLocale from '@angular/common/locales/de';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { baseUrlInterceptor } from './interceptors/base-url.interceptor';
+import { httpErrorInterceptor } from './interceptors/http-error.interceptor';
 
 registerLocaleData(deLocale);
 
@@ -13,7 +15,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideRouter(routes),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([baseUrlInterceptor, httpErrorInterceptor])),
     provideNativeDateAdapter(),
   ],
 };

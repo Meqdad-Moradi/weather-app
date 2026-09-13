@@ -7,7 +7,7 @@ import { IExtension } from '../../models/extensions.model';
   providedIn: 'root',
 })
 export class ApiExtensions {
-  private readonly extensionsUrl = 'http://localhost:3000/extensions';
+  private readonly extensionsUrl = '/extensions';
   private readonly http = inject(HttpClient);
 
   /**
