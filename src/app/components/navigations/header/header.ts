@@ -1,23 +1,30 @@
-import { Component, computed, inject } from '@angular/core';
+import { Component, computed, DestroyRef, inject } from '@angular/core';
 import { SwitchTheme } from '../../apps/switch-theme/switch-theme';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidenavService } from '../../../services/sidenav-service';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { filter, map } from 'rxjs/operators';
+import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { filter, map, take } from 'rxjs/operators';
 import { getAppName } from '../../../helpers/utils';
+import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { Auth } from '../../../services/auth';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialog } from '../../apps/dialogs/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-header',
-  imports: [SwitchTheme, MatButtonModule, MatIconModule, MatToolbarModule, RouterLink],
+  imports: [SwitchTheme, MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
 export class Header {
   private sidenavService = inject(SidenavService);
+  private authService = inject(Auth);
   private readonly router = inject(Router);
+  private readonly dialogRef = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
 
   private url = toSignal(
     this.router.events.pipe(
@@ -29,7 +36,33 @@ export class Header {
 
   protected title = computed(() => getAppName(this.url()));
 
+  /**
+   * toggleSideNav
+   * @returns void
+   */
   public toggleSideNav(): void {
     this.sidenavService.isSidenavOpen.update((isOpen) => !isOpen);
+  }
+
+  /**
+   * logout
+   * @returns void
+   */
+  protected logout(): void {
+    this.dialogRef
+      .open(ConfirmDialog, {
+        data: {
+          title: 'Logout',
+          message: 'Are you sure you want to logout?',
+        },
+      })
+      .afterClosed()
+      .pipe(take(1)) // unsubscribe after the first emission to avoid memory leaks
+      .subscribe((result) => {
+        if (!result) return;
+
+        this.authService.logout();
+        this.router.navigate(['/login']);
+      });
   }
 }

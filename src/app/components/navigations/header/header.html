@@ -10,8 +10,14 @@
     <app-switch-theme />
 
     <!-- login button -->
-    <button matIconButton routerLink="/login">
-      <mat-icon>login</mat-icon>
+    <button class="text-white!" matIconButton [mat-menu-trigger-for]="menu">
+      <mat-icon>more_vert</mat-icon>
     </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </mat-menu>
   </div>
 </mat-toolbar>
