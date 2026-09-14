@@ -14,6 +14,7 @@ import { Appointment } from './components/pages/appointment/appointment';
 import { VirtualScroll } from './components/pages/virtual-scroll/virtual-scroll';
 import { SignalForm } from './components/pages/signal-form/signal-form';
 import { Login } from './components/pages/login/login';
+import { SignUp } from './components/pages/sign-up/sign-up';
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -60,6 +61,7 @@ export const routes: Routes = [
     ],
   },
   { path: 'login', component: Login, pathMatch: 'full' },
+  { path: 'sign-up', component: SignUp, pathMatch: 'full' },
   {
     path: '**',
     redirectTo: '',

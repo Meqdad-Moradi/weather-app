@@ -46,10 +46,6 @@
   background: #272e86;
 }
 
-:root[data-theme='dark'] .showcase-glow-bottom {
-  background: #181d62;
-}
-
 .forecast-dot {
   animation: forecast-dot-pulse 2.2s ease-out infinite;
 }
