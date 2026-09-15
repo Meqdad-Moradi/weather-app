@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   email,
   form,
@@ -11,6 +11,11 @@ import {
 } from '@angular/forms/signals';
 import { MatIconModule } from '@angular/material/icon';
 import { Logo } from '../../apps/logo/logo';
+import { firstValueFrom } from 'rxjs';
+import { Auth } from '../../../services/auth';
+import { IAuthUser } from '../../../models/auth.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -19,9 +24,14 @@ import { Logo } from '../../apps/logo/logo';
   styleUrl: './sign-up.css',
 })
 export class SignUp {
+  private readonly authService = inject(Auth);
+  private readonly snackbar = inject(MatSnackBar);
+  private readonly router = inject(Router);
+
   private signUpModel = signal({
     firstName: '',
     lastName: '',
+    username: '',
     email: '',
     password: '',
     confirmPassword: '',
@@ -50,7 +60,27 @@ export class SignUp {
     },
     {
       submission: {
-        action: async () => undefined,
+        action: async (fields) => {
+          try {
+            const id = crypto.randomUUID();
+            const token: IAuthUser = { ...fields().value(), id };
+            const result = await firstValueFrom(this.authService.register(token));
+
+            if (result) {
+              this.snackbar.open('Registration successful! You can now log in.', 'Close', {
+                duration: 5000,
+              });
+              this.router.navigate(['/']);
+            } else {
+              this.snackbar.open('Registration failed. Please try again.', 'Close', {
+                duration: 5000,
+              });
+            }
+            return;
+          } catch (error) {
+            console.log(error);
+          }
+        },
         onInvalid: (formData) => {
           const errors = formData().errorSummary();
           errors[0]?.fieldTree().focusBoundControl();

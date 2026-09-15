@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
-import { Observable, catchError, map, of, tap } from 'rxjs';
+import { Observable, catchError, concatMap, map, of, tap } from 'rxjs';
 import { IAuthUser, IStoredUser } from '../models/auth.model';
 
 @Injectable({
@@ -12,19 +12,25 @@ export class Auth {
   private readonly usersUrl = '/users';
   private readonly http = inject(HttpClient);
 
-  readonly currentUser = signal<IStoredUser | null>(this.readStoredUser());
-  readonly isLoggedIn = signal(
+  public readonly currentUser = signal<IStoredUser | null>(this.readStoredUser());
+  public readonly isLoggedIn = signal(
     localStorage.getItem(this.sessionKey) === 'true' && this.currentUser() !== null,
   );
 
-  login(email: string, password: string): Observable<boolean> {
+  /**
+   * login
+   * @param email string
+   * @param password string
+   * @returns Observable<boolean>
+   */
+  public login(email: string, password: string): Observable<boolean> {
     return this.http.get<IAuthUser[]>(this.usersUrl, { params: { email, password } }).pipe(
-      map((users) => users[0]),
+      map((users) => users.find((user) => user.email === email && user.password === password)),
       tap((user) => {
         if (user) {
           const storedUser: IStoredUser = {
             id: user.id,
-            name: user.name,
+            username: user.username,
             email: user.email,
           };
           localStorage.setItem(this.sessionKey, 'true');
@@ -38,6 +44,10 @@ export class Auth {
     );
   }
 
+  /**
+   * readStoredUser
+   * @returns IStoredUser | null
+   */
   private readStoredUser(): IStoredUser | null {
     const storedUser = localStorage.getItem(this.userKey);
 
@@ -53,10 +63,27 @@ export class Auth {
     }
   }
 
-  logout(): void {
+  /**
+   * logout
+   * @returns void
+   */
+  public logout(): void {
     localStorage.removeItem(this.sessionKey);
     localStorage.removeItem(this.userKey);
     this.currentUser.set(null);
     this.isLoggedIn.set(false);
+  }
+
+  /**
+   * register
+   * @param user IAuthUser
+   * @returns Observable<boolean>
+   */
+  public register(user: IAuthUser): Observable<boolean> {
+    return this.http.post<IAuthUser>(this.usersUrl, user).pipe(
+      concatMap((newUser) => this.login(newUser.email, newUser.password)),
+      map(() => true),
+      catchError(() => of(false)),
+    );
   }
 }
