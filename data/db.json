@@ -107,33 +107,18 @@
   ],
   "todos": [
     {
-      "id": "oBtfQwo_6U8",
-      "description": "lksjdf",
+      "id": "i1XYDYTkCe8",
+      "description": "fix check icon position in the list item",
       "isActive": false
     },
     {
-      "id": "uR2W4-xrsO4",
-      "description": "sda",
-      "isActive": true
-    },
-    {
-      "id": "ERfA4Jxj5bw",
-      "description": "asdfa",
+      "id": "A12FvTIuLW0",
+      "description": "add todo form submission should change to new signal base submission",
       "isActive": false
     },
     {
-      "id": "nu4hrYmx41M",
-      "description": "lksjdf",
-      "isActive": true
-    },
-    {
-      "id": "UNSpceeu7G4",
-      "description": "hisioaf",
-      "isActive": true
-    },
-    {
-      "id": "dcvf8V1XerA",
-      "description": "ssdfsd",
+      "id": "aU3i-QgLNpw",
+      "description": "create a new todo project for practicing angular signal form",
       "isActive": true
     }
   ],
