@@ -5,13 +5,13 @@
   <div class="min-h-8">
     <h2 class="text-2xl font-bold pb-6">Add your todo!</h2>
 
-    <form class="w-full grid grid-cols-1" (submit)="onSubmit($event)">
+    <form class="w-full grid grid-cols-1" autocomplete="off" [formRoot]="todoForm">
       <mat-form-field appearance="outline" class="">
         <mat-label>Description</mat-label>
         <input type="text" matInput [formField]="todoForm.description" />
 
         @if (todoForm.description().value().length) {
-          <button matIconButton matSuffix>
+          <button type="button" matIconButton matSuffix (click)="clearDescription()">
             <mat-icon>close</mat-icon>
           </button>
         }
@@ -25,9 +25,13 @@
         class="justify-self-start"
         matButton="filled"
         type="submit"
-        [disabled]="todoForm().invalid()"
+        [disabled]="todoForm().invalid() || isFormSubmitting()"
       >
-        Add todo
+        @if (isFormSubmitting()) {
+          <mat-progress-spinner mode="indeterminate" diameter="18" />
+        } @else {
+          Add todo
+        }
       </button>
     </form>
   </div>

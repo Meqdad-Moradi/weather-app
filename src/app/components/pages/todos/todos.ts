@@ -33,6 +33,7 @@ export class Todos implements OnInit {
 
   protected isFormShowing = computed(() => this.todosService.isFormShowing());
   protected isLoading = false;
+  protected isFormSubmitting = false;
   protected filterOptions = ['All', 'Active', 'Completed'];
   protected selectedFilter = signal<string>('All');
   protected searchQuery = signal<string>('');
@@ -84,10 +85,13 @@ export class Todos implements OnInit {
    * @param e Event
    */
   protected onSubmit(newTodo: ITodo): void {
+    this.isFormSubmitting = true;
+
     this.apiTodosService
       .addTodo(newTodo)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((res) => {
+        this.isFormSubmitting = false;
         this.todos.update((todos) => [...todos, { ...res, isSelected: false }]);
         this.todosService.todoModel.set(createInitialTodo());
       });

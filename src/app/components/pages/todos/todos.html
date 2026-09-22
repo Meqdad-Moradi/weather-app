@@ -5,7 +5,7 @@
 </header>
 
 <section class="container mb-8">
-  <app-add-todo (submitForm)="onSubmit($event)" />
+  <app-add-todo [isFormSubmitting]="isFormSubmitting" (submitForm)="onSubmit($event)" />
 
   <!-- display todos -->
   <app-todos-result
