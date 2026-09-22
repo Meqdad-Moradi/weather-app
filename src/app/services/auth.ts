@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, signal } from '@angular/core';
 import { Observable, catchError, concatMap, map, of, tap } from 'rxjs';
-import { IAuthUser, IStoredUser } from '../models/auth.model';
+import { IUser, IStoredUser } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
@@ -18,13 +18,21 @@ export class Auth {
   );
 
   /**
+   * getUsers
+   * @returns Observable<IUser[]>
+   */
+  public getUsers(): Observable<IUser[]> {
+    return this.http.get<IUser[]>(this.usersUrl);
+  }
+
+  /**
    * login
    * @param email string
    * @param password string
    * @returns Observable<boolean>
    */
   public login(email: string, password: string): Observable<boolean> {
-    return this.http.get<IAuthUser[]>(this.usersUrl, { params: { email, password } }).pipe(
+    return this.http.get<IUser[]>(this.usersUrl, { params: { email, password } }).pipe(
       map((users) => users.find((user) => user.email === email && user.password === password)),
       tap((user) => {
         if (user) {
@@ -79,8 +87,8 @@ export class Auth {
    * @param user IAuthUser
    * @returns Observable<boolean>
    */
-  public register(user: IAuthUser): Observable<boolean> {
-    return this.http.post<IAuthUser>(this.usersUrl, user).pipe(
+  public register(user: IUser): Observable<boolean> {
+    return this.http.post<IUser>(this.usersUrl, user).pipe(
       concatMap((newUser) => this.login(newUser.email, newUser.password)),
       map(() => true),
       catchError(() => of(false)),

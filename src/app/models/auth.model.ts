@@ -1,4 +1,4 @@
-export interface IAuthUser {
+export interface IUser {
   id: string;
   firstName: string;
   lastName: string;
@@ -11,4 +11,13 @@ export interface IStoredUser {
   id: string;
   username: string;
   email: string;
+}
+
+export interface IUserModel {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
 }

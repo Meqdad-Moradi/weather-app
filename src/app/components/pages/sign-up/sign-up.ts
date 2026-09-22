@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, DestroyRef, inject, signal } from '@angular/core';
 import {
   email,
   form,
@@ -8,14 +8,17 @@ import {
   pattern,
   required,
   validate,
+  validateAsync,
+  validateHttp,
 } from '@angular/forms/signals';
 import { MatIconModule } from '@angular/material/icon';
 import { Logo } from '../../apps/logo/logo';
-import { firstValueFrom } from 'rxjs';
+import { firstValueFrom, Observable } from 'rxjs';
 import { Auth } from '../../../services/auth';
-import { IAuthUser } from '../../../models/auth.model';
+import { IUser, IUserModel } from '../../../models/auth.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,8 +30,9 @@ export class SignUp {
   private readonly authService = inject(Auth);
   private readonly snackbar = inject(MatSnackBar);
   private readonly router = inject(Router);
+  private readonly destroyRef = inject(DestroyRef);
 
-  private signUpModel = signal({
+  private signUpModel = signal<IUserModel>({
     firstName: '',
     lastName: '',
     username: '',
@@ -57,13 +61,29 @@ export class SignUp {
           ? null
           : { kind: 'passwordMismatch', message: 'Passwords do not match' },
       );
+      // validateHttp(schema.username, {
+      //   request: ({ value }) => {
+      //     const username = value();
+      //     return username ? this.authService.getUsers() : undefined;
+      //   },
+      //   onSuccess: (respons: IUser[], { value }) => {
+      //     const available = !respons.some((x) => x.username === value());
+      //     return available
+      //       ? null
+      //       : { message: 'username is already taken!', kind: 'usernameTaken' };
+      //   },
+      //   onError(error) {
+      //     console.log('Validation request faild: ', error);
+      //     return { message: 'Could not verify username availability!', kind: 'serverError' };
+      //   },
+      // });
     },
     {
       submission: {
         action: async (fields) => {
           try {
             const id = crypto.randomUUID();
-            const token: IAuthUser = { ...fields().value(), id };
+            const token: IUser = { ...fields().value(), id };
             const result = await firstValueFrom(this.authService.register(token));
 
             if (result) {
