@@ -1,20 +1,20 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { Observable, catchError, concatMap, map, of, tap } from 'rxjs';
-import { IUser, IStoredUser } from '../models/auth.model';
+import { IUser } from '../models/auth.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class Auth {
-  private readonly sessionKey = 'weather-authenticated';
-  private readonly userKey = 'weather-user';
-  private readonly usersUrl = '/users';
   private readonly http = inject(HttpClient);
 
-  public readonly currentUser = signal<IStoredUser | null>(this.readStoredUser());
-  public readonly isLoggedIn = signal(
-    localStorage.getItem(this.sessionKey) === 'true' && this.currentUser() !== null,
+  private readonly usersUrl = '/users';
+  private readonly userKey = 'weather-user';
+
+  public readonly currentUser = signal<IUser | null>(this.readStoredUser());
+  public readonly isLoggedIn = computed(
+    () => !!localStorage.getItem(this.userKey) && this.currentUser() !== null,
   );
 
   /**
@@ -36,15 +36,8 @@ export class Auth {
       map((users) => users.find((user) => user.email === email && user.password === password)),
       tap((user) => {
         if (user) {
-          const storedUser: IStoredUser = {
-            id: user.id,
-            username: user.username,
-            email: user.email,
-          };
-          localStorage.setItem(this.sessionKey, 'true');
-          localStorage.setItem(this.userKey, JSON.stringify(storedUser));
-          this.currentUser.set(storedUser);
-          this.isLoggedIn.set(true);
+          localStorage.setItem(this.userKey, JSON.stringify(user));
+          this.currentUser.set(user);
         }
       }),
       map((user) => !!user),
@@ -56,7 +49,7 @@ export class Auth {
    * readStoredUser
    * @returns IStoredUser | null
    */
-  private readStoredUser(): IStoredUser | null {
+  private readStoredUser(): IUser | null {
     const storedUser = localStorage.getItem(this.userKey);
 
     if (!storedUser) {
@@ -64,7 +57,7 @@ export class Auth {
     }
 
     try {
-      return JSON.parse(storedUser) as IStoredUser;
+      return JSON.parse(storedUser) as IUser;
     } catch {
       localStorage.removeItem(this.userKey);
       return null;
@@ -76,10 +69,8 @@ export class Auth {
    * @returns void
    */
   public logout(): void {
-    localStorage.removeItem(this.sessionKey);
     localStorage.removeItem(this.userKey);
     this.currentUser.set(null);
-    this.isLoggedIn.set(false);
   }
 
   /**

@@ -109,6 +109,7 @@
               <button
                 type="button"
                 class="absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-1 pt-3 text-(--login-muted) transition-colors duration-200 hover:bg-(--login-field) hover:text-(--login-ink) focus-visible:outline-3 focus-visible:outline-(--login-orange) focus-visible:outline-offset-4 cursor-pointer active:scale-95"
+                tabindex="-1"
                 (click)="resetField('email')"
               >
                 <mat-icon>close</mat-icon>
@@ -151,6 +152,7 @@
               <button
                 class="absolute right-1 top-1/2 -translate-y-1/2 rounded-full p-1 pt-3 text-(--login-muted) transition-colors duration-200 hover:bg-(--login-field) hover:text-(--login-ink) focus-visible:outline-3 focus-visible:outline-(--login-orange) focus-visible:outline-offset-4 cursor-pointer active:scale-95"
                 type="button"
+                tabindex="-1"
                 (click)="resetField('password')"
               >
                 <mat-icon>close</mat-icon>

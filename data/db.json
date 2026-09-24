@@ -2,10 +2,11 @@
   "users": [
     {
       "id": "user-1",
-      "name": "Demo",
-      "email": "demo@demo.app",
+      "firstName": "John",
+      "lastName": "Doe",
+      "email": "john@doe.com",
       "password": "demo",
-      "username": "demoUser"
+      "username": "johndoe"
     }
   ],
   "extensions": [

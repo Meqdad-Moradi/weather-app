@@ -15,7 +15,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { Logo } from '../../apps/logo/logo';
 import { firstValueFrom, Observable } from 'rxjs';
 import { Auth } from '../../../services/auth';
-import { IUser, IUserModel } from '../../../models/auth.model';
+import { IUser } from '../../../models/auth.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
@@ -32,7 +32,7 @@ export class SignUp {
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
 
-  private signUpModel = signal<IUserModel>({
+  private signUpModel = signal<IUser>({
     firstName: '',
     lastName: '',
     username: '',
