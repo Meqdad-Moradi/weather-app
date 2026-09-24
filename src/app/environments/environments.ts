@@ -55,5 +55,11 @@ export const environment = {
       abbr: 'SF',
       icon: 'ballot',
     },
+    profile: {
+      route: 'profile',
+      name: 'Profile',
+      abbr: 'PF',
+      icon: '',
+    },
   },
 };

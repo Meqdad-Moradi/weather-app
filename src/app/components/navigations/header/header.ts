@@ -1,21 +1,28 @@
-import { Component, computed, DestroyRef, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { SwitchTheme } from '../../apps/switch-theme/switch-theme';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidenavService } from '../../../services/sidenav-service';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { takeUntilDestroyed, toSignal } from '@angular/core/rxjs-interop';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { filter, map, take } from 'rxjs/operators';
 import { getAppName } from '../../../helpers/utils';
-import { MatMenu, MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+import { MatMenuModule } from '@angular/material/menu';
 import { Auth } from '../../../services/auth';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialog } from '../../apps/dialogs/confirm-dialog/confirm-dialog';
 
 @Component({
   selector: 'app-header',
-  imports: [SwitchTheme, MatButtonModule, MatIconModule, MatToolbarModule, MatMenuModule],
+  imports: [
+    SwitchTheme,
+    RouterLink,
+    MatButtonModule,
+    MatIconModule,
+    MatToolbarModule,
+    MatMenuModule,
+  ],
   templateUrl: './header.html',
   styleUrl: './header.css',
 })
@@ -24,7 +31,6 @@ export class Header {
   private authService = inject(Auth);
   private readonly router = inject(Router);
   private readonly dialogRef = inject(MatDialog);
-  private readonly destroyRef = inject(DestroyRef);
 
   private url = toSignal(
     this.router.events.pipe(
