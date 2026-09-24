@@ -1,0 +1,78 @@
+<section class="container mb-8">
+  <app-main-title title="My Profile" />
+
+  <form class="max-w-lg flex flex-col gap-2 mx-auto" [formRoot]="profileForm">
+    <div class="flex items-center gap-6 mb-5">
+      <!-- user image -->
+      <div class="relative h-24 w-24 overflow-hidden rounded-2xl">
+        <img
+          class="absolute h-full w-full object-cover"
+          src="https://images.pexels.com/photos/9601452/pexels-photo-9601452.jpeg"
+          alt="user-image"
+        />
+      </div>
+      <!-- user info -->
+      <div>
+        <div class="flex flex-wrap items-center gap-2 text-xl font-semibold">
+          <span>{{ user()?.firstName || '' }}</span>
+          <span>{{ user()?.lastName || '' }}</span>
+        </div>
+        <span>{{ user()?.email || '' }}</span>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <!-- first name -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>First name</mat-label>
+        <input type="text" matInput [formField]="profileForm.firstName" />
+        <button type="button" matIconButton matSuffix (click)="clearInput('firstName')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error>{{ profileForm.firstName().errors()[0]?.message }}</mat-error>
+      </mat-form-field>
+
+      <!-- last name -->
+      <mat-form-field class="w-full" appearance="outline">
+        <mat-label>last name</mat-label>
+        <input type="text" matInput [formField]="profileForm.lastName" />
+        <button type="button" matIconButton matSuffix (click)="clearInput('lastName')">
+          <mat-icon>close</mat-icon>
+        </button>
+        <mat-error>{{ profileForm.lastName().errors()[0]?.message }}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- user name -->
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>user name</mat-label>
+      <input type="text" matInput [formField]="profileForm.username" />
+      <button type="button" matIconButton matSuffix (click)="clearInput('username')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error>{{ profileForm.username().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+
+    <!-- email -->
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Email</mat-label>
+      <input type="text" matInput [formField]="profileForm.email" />
+      <button type="button" matIconButton matSuffix (click)="clearInput('email')">
+        <mat-icon>close</mat-icon>
+      </button>
+      <mat-error>{{ profileForm.email().errors()[0]?.message }}</mat-error>
+    </mat-form-field>
+
+    <button
+      type="submit"
+      mat-raised-button
+      [disabled]="profileForm().submitting() || profileForm().invalid()"
+    >
+      @if (profileForm().submitting()) {
+        <mat-progress-spinner diameter="18" mode="indeterminate" />
+      } @else {
+        Update Info
+      }
+    </button>
+  </form>
+</section>
