@@ -1,0 +1,9 @@
+<h2 class="bg-(--bg) mb-0!" matDialogTitle>{{ data.title || 'Something went wrong' }}</h2>
+
+<mat-dialog-content class="bg-(--bg)">
+  <p class="m-0">{{ data.message || 'An unexpected error occurred.' }}</p>
+</mat-dialog-content>
+
+<mat-dialog-actions class="bg-(--bg)" align="end">
+  <button mat-flat-button color="primary" mat-dialog-close>Close</button>
+</mat-dialog-actions>

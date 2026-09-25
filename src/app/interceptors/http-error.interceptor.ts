@@ -1,38 +1,24 @@
 import { ErrorHandler, inject } from '@angular/core';
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
+import { ErrorService } from '../services/error-service';
 
+// Global HTTP error handler. It logs and normalizes the message, but does not open UI dialogs itself.
 export const httpErrorInterceptor: HttpInterceptorFn = (request, next) => {
   const errorHandler = inject(ErrorHandler);
+  const errorService = inject(ErrorService);
 
   return next(request).pipe(
     catchError((error: unknown) => {
-      // Report a useful message globally, then preserve the original error for callers.
       if (error instanceof HttpErrorResponse) {
-        const message = getErrorMessage(error);
+        const message = errorService.getErrorMessage(error);
         errorHandler.handleError(new Error(message, { cause: error }));
       } else {
         errorHandler.handleError(error);
       }
 
+      // Re-throw so the service-level catchError can decide whether to show a dialog or handle the error.
       return throwError(() => error);
     }),
   );
 };
-
-function getErrorMessage(error: HttpErrorResponse): string {
-  switch (error.status) {
-    case 0:
-      return 'Unable to connect to the server. Please check your connection and try again.';
-    case 401:
-      return 'Your session has expired. Please sign in again.';
-    case 403:
-      return 'You do not have permission to perform this action.';
-    case 404:
-      return 'The requested resource could not be found.';
-    case 500:
-      return 'The server encountered an error. Please try again later.';
-    default:
-      return error.message || 'An unexpected request error occurred.';
-  }
-}
