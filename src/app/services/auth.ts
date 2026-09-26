@@ -30,6 +30,51 @@ export class Auth {
   }
 
   /**
+   * getUser
+   * @param userId string
+   * @returns Observable<IUser | ErrorResponse<string>>
+   */
+  public getUser(userId: string): Observable<IUser | ErrorResponse<string>> {
+    return this.http.get<IUser>(this.usersUrl + '?id=' + userId).pipe(
+      catchError(
+        this.errorService.handleError<string>('authService::getUser', {
+          showErrorInDialog: true,
+        }),
+      ),
+    );
+  }
+
+  /**
+   * updateUser
+   * This call explicitly opts into a dialog for failed requests.
+   * Other methods can skip the dialog by leaving the HttpContext unset.
+   * @param user IUser
+   * @returns Observable<IUser>
+   */
+  public updateUser(user: IUser): Observable<IUser | ErrorResponse<string>> {
+    return this.http.patch<IUser>(this.usersUrl + '/' + user.id, user).pipe(
+      catchError(
+        this.errorService.handleError<string>('authService::updateUser', {
+          showErrorInDialog: true,
+        }),
+      ),
+    );
+  }
+
+  /**
+   * register
+   * @param user IAuthUser
+   * @returns Observable<boolean>
+   */
+  public registerNewUser(user: IUser): Observable<boolean | ErrorResponse<string>> {
+    return this.http.post<IUser>(this.usersUrl, user).pipe(
+      concatMap((newUser) => this.login(newUser.email, newUser.password)),
+      map(() => true),
+      catchError(this.errorService.handleError<string>('authService::register')),
+    );
+  }
+
+  /**
    * login
    * @param email string
    * @param password string
@@ -50,6 +95,15 @@ export class Auth {
   }
 
   /**
+   * logout
+   * @returns void
+   */
+  public logout(): void {
+    localStorage.removeItem(this.userKey);
+    this.currentUser.set(null);
+  }
+
+  /**
    * readStoredUser
    * @returns IStoredUser | null
    */
@@ -66,44 +120,5 @@ export class Auth {
       localStorage.removeItem(this.userKey);
       return null;
     }
-  }
-
-  /**
-   * logout
-   * @returns void
-   */
-  public logout(): void {
-    localStorage.removeItem(this.userKey);
-    this.currentUser.set(null);
-  }
-
-  /**
-   * register
-   * @param user IAuthUser
-   * @returns Observable<boolean>
-   */
-  public register(user: IUser): Observable<boolean | ErrorResponse<string>> {
-    return this.http.post<IUser>(this.usersUrl, user).pipe(
-      concatMap((newUser) => this.login(newUser.email, newUser.password)),
-      map(() => true),
-      catchError(this.errorService.handleError<string>('authService::register')),
-    );
-  }
-
-  /**
-   * updateUser
-   * This call explicitly opts into a dialog for failed requests.
-   * Other methods can skip the dialog by leaving the HttpContext unset.
-   * @param user IUser
-   * @returns Observable<IUser>
-   */
-  public updateUser(user: IUser): Observable<IUser | ErrorResponse<string>> {
-    return this.http.patch<IUser>(this.usersUrl + '/' + user.id, user).pipe(
-      catchError(
-        this.errorService.handleError<string>('authService::updateUser', {
-          showErrorInDialog: true,
-        }),
-      ),
-    );
   }
 }

@@ -33,6 +33,7 @@ export class SignUp {
   private readonly destroyRef = inject(DestroyRef);
 
   private signUpModel = signal<IUser>({
+    id: '',
     firstName: '',
     lastName: '',
     username: '',
@@ -84,7 +85,7 @@ export class SignUp {
           try {
             const id = crypto.randomUUID();
             const token: IUser = { ...fields().value(), id };
-            const result = await firstValueFrom(this.authService.register(token));
+            const result = await firstValueFrom(this.authService.registerNewUser(token));
 
             if (result) {
               this.snackbar.open('Registration successful! You can now log in.', 'Close', {
