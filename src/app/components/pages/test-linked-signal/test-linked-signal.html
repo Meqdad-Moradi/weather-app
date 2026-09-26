@@ -1,0 +1,187 @@
+@if (false) {
+  <div *ngTemplateOutlet="todo"></div>
+} @else {
+  <div *ngTemplateOutlet="checkout"></div>
+}
+
+<ng-template #todo>
+  <div class="linked-signal-demo" style="padding: 20px; font-family: 'Wazir', Tahoma, sans-serif">
+    <h2>تست عملی تفاوت سیگنال معمولی و linkedSignal</h2>
+
+    <div class="demo-actions" style="margin-bottom: 20px">
+      <button type="button" class="demo-action-btn" (click)="loadTodayTodos()">
+        بارگذاری کارهای امروز
+      </button>
+      <button type="button" class="demo-action-btn" (click)="loadTomorrowTodos()">
+        بارگذاری کارهای فردا
+      </button>
+    </div>
+
+    <hr />
+
+    <div class="demo-grid" style="display: flex; gap: 40px; margin-top: 20px">
+      <div
+        class="demo-panel demo-panel--normal"
+        style="flex: 1; border: 1px solid red; padding: 15px; background-color: #fff5f5"
+      >
+        <h3 style="color: red">۱. روش سیگنال معمولی (دارای باگ)</h3>
+        <p>برای تست باگ: ابتدا روی کار دوم کلیک کن، سپس دکمه کارهای فردا را از بالا بزن.</p>
+
+        <div class="todo-list">
+          @for (todo of todos(); track todo.id) {
+            <button
+              type="button"
+              class="todo-item"
+              [class.todo-item--selected]="normalSelectedTodo()?.id === todo.id"
+              [class.todo-item--normal]="true"
+              (click)="selectWithNormalSignal(todo)"
+            >
+              <span class="todo-title">{{ todo.title }}</span>
+              <span class="todo-badge">کلیک کنید</span>
+            </button>
+          }
+        </div>
+
+        <div style="margin-top: 15px; font-weight: bold; color: darkred">
+          آیتم انتخاب شده فعلی: {{ normalSelectedTodo()?.title || 'هیچکدام' }}
+        </div>
+      </div>
+
+      <div
+        class="demo-panel demo-panel--linked"
+        style="flex: 1; border: 1px solid green; padding: 15px; background-color: #f5fff5"
+      >
+        <h3 style="color: green">۲. روش linkedSignal (هوشمند و خودکار)</h3>
+        <p>تست رفتار درست: روی کار دوم کلیک کن، سپس دکمه کارهای فردا را از بالا بزن.</p>
+
+        <div class="todo-list">
+          @for (todo of todos(); track todo.id) {
+            <button
+              type="button"
+              class="todo-item"
+              [class.todo-item--selected]="linkedSelectedTodo()?.id === todo.id"
+              [class.todo-item--linked]="true"
+              (click)="selectWithLinkedSignal(todo)"
+            >
+              <span class="todo-title">{{ todo.title }}</span>
+              <span class="todo-badge">کلیک کنید</span>
+            </button>
+          }
+        </div>
+
+        <div style="margin-top: 15px; font-weight: bold; color: darkgreen">
+          آیتم انتخاب شده فعلی: {{ linkedSelectedTodo()?.title || 'هیچکدام' }}
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #checkout>
+  <div style="padding: 20px; font-family: Tahoma; direction: rtl; max-width: 800px; margin: 0 auto">
+    <h2>🛒 صفحه نهایی کردن خرید (Checkout)</h2>
+    <p style="color: #666; font-size: 14px">
+      برای تست: ابتدا آدرس فرعی یا روش دوم را انتخاب کنید، سپس دکمه لود دیتای جدید را بزنید تا رفتار
+      هوشمند ریست شدن را ببینید.
+    </p>
+
+    <button
+      (click)="simulateDataRefresh()"
+      style="
+        margin-bottom: 20px;
+        padding: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+      "
+    >
+      🔄 شبیه‌سازی لود مجدد دیتای کاربر از سرور
+    </button>
+
+    <div style="display: flex; gap: 20px">
+      <!-- بخش انتخاب آدرس -->
+      <div style="flex: 1; border: 1px solid #ccc; padding: 15px; border-radius: 8px">
+        <h3>📍 ۱. انتخاب آدرس ارسال</h3>
+        @for (address of userAddresses(); track address.id) {
+          <div
+            (click)="selectAddressManually(address)"
+            [style.border-color]="selectedAddress()?.id === address.id ? '#28a745' : '#eee'"
+            [style.background-color]="selectedAddress()?.id === address.id ? '#f4fbf6' : 'white'"
+            style="
+              padding: 10px;
+              margin: 10px 0;
+              border: 2px solid #eee;
+              cursor: pointer;
+              border-radius: 6px;
+            "
+          >
+            <strong>{{ address.title }}</strong>
+            @if (address.isPrimary) {
+              <span
+                style="
+                  background: #e2e3e5;
+                  padding: 2px 6px;
+                  font-size: 11px;
+                  border-radius: 4px;
+                  margin-right: 5px;
+                "
+                >اصلی</span
+              >
+            }
+            <p style="margin: 5px 0 0 0; font-size: 13px; color: #555">{{ address.fullAddress }}</p>
+          </div>
+        }
+      </div>
+
+      <!-- بخش انتخاب روش پرداخت -->
+      <div style="flex: 1; border: 1px solid #ccc; padding: 15px; border-radius: 8px">
+        <h3>💳 ۲. انتخاب روش پرداخت</h3>
+        @for (method of paymentMethods(); track method.id) {
+          <div
+            (click)="selectPaymentManually(method)"
+            [style.border-color]="selectedPaymentMethod()?.id === method.id ? '#17a2b8' : '#eee'"
+            [style.background-color]="
+              selectedPaymentMethod()?.id === method.id ? '#f4fcfe' : 'white'
+            "
+            style="
+              padding: 15px;
+              margin: 10px 0;
+              border: 2px solid #eee;
+              cursor: pointer;
+              border-radius: 6px;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+            "
+          >
+            <span>{{ method.name }}</span>
+            @if (selectedPaymentMethod()?.id === method.id) {
+              <span style="color: #17a2b8; font-weight: bold">✓ انتخاب شده</span>
+            }
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- فاکتور نهایی -->
+    <div
+      style="
+        margin-top: 30px;
+        background-color: #f8f9fa;
+        padding: 15px;
+        border-radius: 8px;
+        border-right: 5px solid #28a745;
+      "
+    >
+      <h3>📋 خلاصه سفارش:</h3>
+      <p>
+        آدرس ارسال: <b>{{ selectedAddress()?.fullAddress || 'انتخاب نشده' }}</b>
+      </p>
+      <p>
+        روش پرداخت: <b>{{ selectedPaymentMethod()?.name || 'انتخاب نشده' }}</b>
+      </p>
+    </div>
+  </div>
+</ng-template>

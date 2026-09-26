@@ -1,0 +1,82 @@
+:host {
+  display: block;
+}
+
+.linked-signal-demo {
+  color: var(--text, #1f2937);
+}
+
+.demo-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.demo-action-btn {
+  padding: 10px 16px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--text, #1f2937);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.demo-action-btn:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
+}
+
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-left-width: 4px;
+  border-radius: 10px;
+  background: #ffffff;
+  color: var(--text, #1f2937);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.todo-item:hover {
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+}
+
+.todo-item--normal {
+  border-left-color: #f87171;
+  background: rgba(248, 113, 113, 0.08);
+}
+
+.todo-item--linked {
+  border-left-color: #22c55e;
+  background: rgba(34, 197, 94, 0.08);
+}
+
+.todo-item--selected {
+  border-left-color: #166534;
+  background: rgba(34, 197, 94, 0.15);
+  box-shadow: inset 0 0 0 1px rgba(22, 101, 52, 0.12);
+}
+
+.todo-title {
+  flex: 1;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.todo-badge {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}

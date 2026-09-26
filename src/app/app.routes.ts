@@ -17,6 +17,7 @@ import { Login } from './components/pages/login/login';
 import { SignUp } from './components/pages/sign-up/sign-up';
 import { authGuard } from './guards/auth.guard';
 import { Profile } from './components/pages/profile/profile';
+import { TestLinkedSignal } from './components/pages/test-linked-signal/test-linked-signal';
 
 export const routes: Routes = [
   {
@@ -62,6 +63,11 @@ export const routes: Routes = [
       {
         path: environment.apps.profile.route,
         component: Profile,
+        pathMatch: 'full',
+      },
+      {
+        path: 'test',
+        component: TestLinkedSignal,
         pathMatch: 'full',
       },
     ],
