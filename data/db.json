@@ -2,11 +2,11 @@
   "users": [
     {
       "id": "user-1",
-      "firstName": "Meqdad",
-      "lastName": "Doe",
-      "email": "john@doe.co",
+      "firstName": "Fatima",
+      "lastName": "Rasa",
+      "email": "fr@yahoo.com",
       "password": "demo",
-      "username": "johndoe",
+      "username": "frasa",
       "confirmPassword": ""
     }
   ],

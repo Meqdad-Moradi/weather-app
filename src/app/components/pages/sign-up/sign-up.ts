@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import {
   email,
   form,
@@ -8,17 +8,14 @@ import {
   pattern,
   required,
   validate,
-  validateAsync,
-  validateHttp,
 } from '@angular/forms/signals';
 import { MatIconModule } from '@angular/material/icon';
 import { Logo } from '../../apps/logo/logo';
-import { firstValueFrom, Observable } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
 import { Auth } from '../../../services/auth';
 import { IUser } from '../../../models/auth.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-sign-up',
@@ -30,7 +27,6 @@ export class SignUp {
   private readonly authService = inject(Auth);
   private readonly snackbar = inject(MatSnackBar);
   private readonly router = inject(Router);
-  private readonly destroyRef = inject(DestroyRef);
 
   private signUpModel = signal<IUser>({
     id: '',
