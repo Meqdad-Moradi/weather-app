@@ -10,6 +10,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatIconModule } from '@angular/material/icon';
 import { firstValueFrom } from 'rxjs';
 import { ErrorResponse } from '../../../services/error-service';
+import { handleRequiredFields } from '../../../models/signal-form.model';
 
 @Component({
   selector: 'app-profile',
@@ -66,10 +67,8 @@ export class Profile {
   protected profileForm = form(
     this.profileModel,
     (schemaPath) => {
-      required(schemaPath.firstName, { message: "Can't be blank!" });
-      required(schemaPath.lastName, { message: "Can't be blank!" });
-      required(schemaPath.username, { message: "Can't be blank!" });
-      required(schemaPath.email, { message: "Can't be blank!" });
+      const requiredFields = ['firstName', 'lastName', 'username', 'email'] as (keyof IUser)[];
+      handleRequiredFields(schemaPath, requiredFields);
       email(schemaPath.email, { message: 'Email is incorrect!' });
       minLength(schemaPath.firstName, 2, { message: 'Min. 2 characters please' });
       minLength(schemaPath.lastName, 2, { message: 'Min. 2 characters please' });

@@ -4,7 +4,11 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MainTitle } from '../../apps/main-title/main-title';
-import { SignalFormModel } from '../../../models/signal-form.model';
+import {
+  disableMissingFields,
+  handleRequiredFields,
+  SignalFormModel,
+} from '../../../models/signal-form.model';
 import {
   form,
   FormField,
@@ -34,7 +38,9 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './signal-form.css',
 })
 export class SignalForm {
-  private isUserNameAvailable = signal<boolean>(false);
+  private readonly metadata = signal<string[]>(['firstName', 'lastName']);
+  private isNewUser = signal(false);
+
   private formModel = signal<SignalFormModel>({
     lastName: '',
     firstName: '',
@@ -45,22 +51,27 @@ export class SignalForm {
 
   protected signUpForm = form(
     this.formModel,
-    (schema) => {
-      required(schema.lastName, { message: 'Last Name is required' });
-      pattern(schema.lastName, /^[a-zA-Z]+$/, { message: 'Last Name must contain only letters' });
-      required(schema.firstName, { message: 'First Name is required' });
-      pattern(schema.firstName, /^[a-zA-Z]+$/, { message: 'First Name must contain only letters' });
-      required(schema.email, { message: 'Email is required' });
-      pattern(schema.email, /^\S+@\S+\.\S+$/, { message: 'Email is not valid' });
-      required(schema.password, { message: 'Password is required' });
-      minLength(schema.password, 8, { message: 'Password must be at least 8 characters long' });
-      pattern(schema.password, /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/, {
+    (schemaPath) => {
+      // handle disabled fields
+      const modelKeys = Object.keys(this.formModel()) as (keyof SignalFormModel)[];
+      disableMissingFields(schemaPath, modelKeys, this.metadata, this.isNewUser());
+      // handle required fields
+      handleRequiredFields(schemaPath, modelKeys);
+
+      pattern(schemaPath.lastName, /^[a-zA-Z]+$/, {
+        message: 'Last Name must contain only letters',
+      });
+      pattern(schemaPath.firstName, /^[a-zA-Z]+$/, {
+        message: 'First Name must contain only letters',
+      });
+      pattern(schemaPath.email, /^\S+@\S+\.\S+$/, { message: 'Email is not valid' });
+      minLength(schemaPath.password, 8, { message: 'Password must be at least 8 characters long' });
+      pattern(schemaPath.password, /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9]).+$/, {
         message:
           'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character',
       });
-      required(schema.confirmPassword, { message: 'Confirm Password is required' });
-      validate(schema.confirmPassword, ({ value, valueOf }) => {
-        if (value() !== valueOf(schema.password)) {
+      validate(schemaPath.confirmPassword, ({ value, valueOf }) => {
+        if (value() !== valueOf(schemaPath.password)) {
           return { kind: 'passwordMisMatch', message: 'Passwords do not match' };
         }
         return null; // valid
